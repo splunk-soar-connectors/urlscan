@@ -1,11 +1,11 @@
 {
     "appid": "c46c00cd-7231-4dd3-8d8e-02b9fa0e14a2",
-    "name": "UrlScan",
-    "description": "This app supports investigative actions on urlscan.io such as \"detonate url\" and \"get report\".",
+    "name": "urlscan.io",
+    "description": "This app supports <b>investigative</b> actions on urlscan.io",
     "type": "sandbox",
-    "product_vendor": "Urlscan.io",
+    "product_vendor": "urlscan.io",
     "logo": "urlscan.png",
-    "product_name": "urlscan",
+    "product_name": "urlscan.io",
     "product_version_regex": ".*",
     "publisher": "Phantom",
     "license": "Copyright Phantom 2017",
@@ -29,7 +29,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration.",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
             "verbose": "",
             "type": "test",
             "read_only": true,
@@ -50,9 +50,7 @@
                     "data_type": "string",
                     "required": true,
                     "primary": true,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
+                    "contains": [ "urlscan submission id" ],
                     "order": 0
                 }
             },
@@ -2336,7 +2334,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "hunt domain",
+            "action": "lookup domain",
             "identifier": "hunt_domain",
             "description": "Find information about a domain at urlscan.io",
             "verbose": "",
@@ -2344,7 +2342,7 @@
             "read_only": true,
             "parameters": {
                 "domain": {
-                    "description": "Domain to hunt at urlscan.io",
+                    "description": "Domain to lookup",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -2582,7 +2580,7 @@
             "versions": "EQ(*)"
         },
         {
-            "action": "hunt ip",
+            "action": "lookup ip",
             "identifier": "hunt_ip",
             "description": "Find information about an IP address at urlscan.io",
             "verbose": "",
@@ -2590,7 +2588,7 @@
             "read_only": true,
             "parameters": {
                 "ip": {
-                    "description": "IP to hunt at urlscan.io",
+                    "description": "IP to lookup",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -2850,8 +2848,6 @@
                     "contains": [
                         "url"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
                 }
             },
