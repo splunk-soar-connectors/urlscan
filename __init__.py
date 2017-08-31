@@ -1,5 +1,5 @@
 # --
-# File: urlscan_connector.py
+# File: __init__.py
 #
 # Copyright (c) Phantom Cyber Corporation, 2017
 #
