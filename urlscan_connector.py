@@ -1,6 +1,16 @@
-# -----------------------------------------
-# Phantom sample App Connector python file
-# -----------------------------------------
+# --
+# File: urlscan_connector.py
+#
+# Copyright (c) Phantom Cyber Corporation, 2017
+#
+# This unpublished material is proprietary to Phantom Cyber.
+# All rights reserved. The methods and
+# techniques described herein are considered trade secrets
+# and/or confidential. Reproduction or distribution, in whole
+# or in part, is forbidden except by express written permission
+# of Phantom Cyber.
+#
+# --
 
 # Phantom App imports
 import phantom.app as phantom
@@ -74,8 +84,17 @@ class UrlscanConnector(BaseConnector):
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
-        if resp_json["status"] == 404:
-            return RetVal(phantom.APP_SUCCESS, resp_json)
+        try:
+            # This is for test connectivity, so we can test the API key
+            #  without needing to create a token
+            if resp_json["status"] == 400:
+                return RetVal(phantom.APP_ERROR, resp_json)
+
+            # The server should return a 404 if a scan isn't finished yet
+            if resp_json["status"] == 404:
+                return RetVal(phantom.APP_SUCCESS, resp_json)
+        except KeyError:
+            pass
 
         # You should process the error returned in the json
         message = "Error from server. Status Code: {0} Data from server: {1}".format(
@@ -144,18 +163,18 @@ class UrlscanConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # NOTE: test connectivity does _NOT_ take any parameters
-        # i.e. the param dictionary passed to this handler will be empty.
-        # Also typically it does not add any data into an action_result either.
-        # The status and progress messages are more important.
+        if self._api_key:
+            self.save_progress("Validating API Key")
+            headers = {'API-Key': self._api_key}
+            data = {'url': 'aaaa', 'public': 'off'}
+            ret_val, response = self._make_rest_call('scan/', action_result, headers=headers, data=data, method="post")
+        else:
+            self.save_progress("No API key found, checking connectivity to urlscan.io")
+            ret_val, response = self._make_rest_call('search/?q=domain:urlscan.io', action_result)
 
-        # self.save_progress("Connecting to endpoint")
-        # make rest call
-        ret_val, response = self._make_rest_call('search/?q=domain:urlscan.io', action_result, params=None, headers=None)
-
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
+        # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
+        # If the API Key was invalid, it would return a 401
+        if (phantom.is_fail(ret_val)) and (self._api_key and response.get('status', 0) != 400):
             self.save_progress("Test Connectivity Failed. Error: {0}".format(action_result.get_message()))
             return action_result.get_status()
 
@@ -163,131 +182,51 @@ class UrlscanConnector(BaseConnector):
         self.save_progress("Test Connectivity Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
 
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # self.save_progress("Test Connectivity Failed, action not yet implemented")
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
-
     def _handle_get_report(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
-
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Access action parameters passed in the 'param' dictionary
-
-        # Required values can be accessed directly
         result_id = param['id']
 
-        # make rest call
-        ret_val, response = self._poll_submission(result_id, action_result)
-
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
-            return action_result.get_status()
-
-        ret_val, response = self._get_report(result_id, action_result)
-
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
-            return action_result.get_status()
-
-        # Add the response into the data section
-        action_result.add_data(response)
-
-        # Add a dictionary that is made up of the most important values from data into the summary
-        summary = action_result.update_summary({})
-        summary['important_data'] = "value"
-
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
-        return action_result.set_status(phantom.APP_SUCCESS)
-
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
+        return self._poll_submission(result_id, action_result)
 
     def _handle_hunt_domain(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
-
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Access action parameters passed in the 'param' dictionary
-
-        # Required values can be accessed directly
         domain = param['domain']
 
-        # make rest call
         ret_val, response = self._make_rest_call('search/?q=domain:{0}'.format(domain), action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
         action_result.add_data(response)
 
-        # Add a dictionary that is made up of the most important values from data into the summary
-        summary = action_result.update_summary({})
-        summary['important_data'] = "value"
-
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
-
-        # For now return Error with a message, in case of success we don't set the message, but use the summary
-        # return action_result.set_status(phantom.APP_ERROR, "Action not yet implemented")
 
     def _handle_hunt_ip(self, param):
 
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
-
-        # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Required values can be accessed directly
         ip = param['ip']
 
-        # make rest call
         ret_val, response = self._make_rest_call('search/?q=ip:{0}'.format(ip), action_result, params=None, headers=None)
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        # Now post process the data,  uncomment code as you deem fit
-
-        # Add the response into the data section
         action_result.add_data(response)
 
-        # Add a dictionary that is made up of the most important values from data into the summary
-        summary = action_result.update_summary({})
-        summary['important_data'] = "value"
-
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _poll_submission(self, report_uuid, action_result):
 
         polling_attempt = 0
-        max_polling_attempts = 15
+        max_polling_attempts = 10
         resp_json = None
 
-        while True:
+        while polling_attempt < max_polling_attempts:
 
             polling_attempt += 1
 
@@ -296,99 +235,45 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call('result/' + report_uuid, action_result)
 
             if (phantom.is_fail(ret_val)):
-                return (action_result.get_status(), None)
+                return ret_val
 
-            task = resp_json.get('task', None)
-            if (task):
-                visibility = task.get('visibility')
-            else:
-                visibility = None
+            # Scan isn't finished yet
+            if resp_json.get('status', 0) == 404:
+                time.sleep(15)
+                continue
 
-            if (visibility):
-                self.send_progress('Task status: {0}'.format(visibility))
+            action_result.add_data(resp_json)
+            return action_result.set_status(phantom.APP_SUCCESS)
 
-            if (visibility == 'public'):
-                break
-
-            if (polling_attempt == max_polling_attempts):
-                self.save_progress("Reached max polling attempts.")
-                break
-
-            time.sleep(10)
-
-        return (phantom.APP_SUCCESS, resp_json)
-
-    def _get_report(self, result_id, action_result):
-
-        ret_val, response = self._make_rest_call('result/' + result_id, action_result)
-
-        if (phantom.is_fail(ret_val)):
-            return action_result.get_status()
-
-        return (phantom.APP_SUCCESS, response)
+        summary = action_result.update_summary({})
+        summary['report_uuid'] = report_uuid
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_detonate_url(self, param):
-
-        config = self.get_config()
-        # Implement the handler here
-        # use self.save_progress(...) to send progress messages back to the platform
-        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        # Access action parameters passed in the 'param' dictionary
+        if not self._api_key:
+            return action_result.set_status(phantom.APP_ERROR, "API Key is required to run detonate url")
 
-        # Required values can be accessed directly
         url_to_scan = param['url']
+        private = param.get('private', False)
 
-        # Optional values should use the .get() function
-        # optional_parameter = param.get('optional_parameter', 'default_value')
-
-        headers = {'Content-Type': 'application/json', 'API-Key': config['api_key']}
-        data = {"url": url_to_scan, "public": "on"}
+        headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
+        data = {"url": url_to_scan, "public": "off" if private else "on"}
 
         # make rest call
         ret_val, response = self._make_rest_call('scan/', action_result, headers=headers, data=data, method="post")
 
         if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
             return action_result.get_status()
 
-        status = response['message']
-        if (status != 'Submission successful'):
-            return action_result.get_status()
         report_uuid = response.get('uuid')
         if (not report_uuid):
-            return action_result.get_status()
+            return action_result.set_status(phantom.APP_ERROR, "Unable to get report UUID from scan")
 
-        ret_val, response = self._poll_submission(report_uuid, action_result)
-
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
-            return action_result.get_status()
-
-        ret_val, response = self._get_report(report_uuid, action_result)
-
-        if (phantom.is_fail(ret_val)):
-            # the call to the 3rd party device or service failed, action result should contain all the error details
-            # so just return from here
-            return action_result.get_status()
-
-        # Add the response into the data section
-        action_result.add_data(response)
-
-        # action_result.add_data({})
-
-        # Add a dictionary that is made up of the most important values from data into the summary
-        summary = action_result.update_summary({})
-        summary['important_data'] = "value"
-
-        # Return success, no need to set the message, only the status
-        # BaseConnector will create a textual message based off of the summary dictionary
-        return action_result.set_status(phantom.APP_SUCCESS)
+        return self._poll_submission(report_uuid, action_result)
 
     def handle_action(self, param):
 
@@ -421,19 +306,8 @@ class UrlscanConnector(BaseConnector):
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
-
-        """
-        # get the asset config
         config = self.get_config()
-
-        # Access values in asset config by the name
-
-        # Required values can be accessed directly
-        required_config_name = config['required_config_name']
-
-        # Optional values should use the .get() function
-        optional_config_name = config.get('optional_config_name')
-        """
+        self._api_key = config.get('api_key')
 
         return phantom.APP_SUCCESS
 
@@ -465,3 +339,4 @@ if __name__ == '__main__':
         print (json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
+

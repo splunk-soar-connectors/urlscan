@@ -1,11 +1,11 @@
 {
     "appid": "c46c00cd-7231-4dd3-8d8e-02b9fa0e14a2",
-    "name": "UrlScan",
-    "description": "This app supports investigative actions on urlscan.io such as \"detonate url\" and \"get report\".",
+    "name": "urlscan.io",
+    "description": "This app supports <b>investigative</b> actions on urlscan.io",
     "type": "sandbox",
-    "product_vendor": "Urlscan.io",
+    "product_vendor": "urlscan.io",
     "logo": "urlscan.png",
-    "product_name": "urlscan",
+    "product_name": "urlscan.io",
     "product_version_regex": ".*",
     "publisher": "Phantom",
     "license": "Copyright Phantom 2017",
@@ -13,13 +13,13 @@
     "utctime_updated": "2017-09-01T00:49:10.000000Z",
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.pyc",
-    "min_phantom_version": "3.0.159",
+    "min_phantom_version": "3.0.247",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_key": {
             "description": "API key for urlscan.io",
             "data_type": "password",
-            "required": true,
+            "required": false,
             "value_list": [],
             "default": "",
             "order": 0
@@ -29,8 +29,8 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration.",
-            "verbose": "",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "This will attempt to connect by running an action which would require usage of the API key. If there is no API key set, it will still run a query to make sure the <b>urlscan.io</b> API can be queried.",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -50,9 +50,7 @@
                     "data_type": "string",
                     "required": true,
                     "primary": true,
-                    "contains": [],
-                    "value_list": [],
-                    "default": "",
+                    "contains": [ "urlscan submission id" ],
                     "order": 0
                 }
             },
@@ -60,17 +58,14 @@
                 {
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
-                    "column_name": "id",
-                    "column_order": 0,
                     "example_values": [
                         "86b7f70a-5039-419f-9aeb-8cba09404e92"
-                    ]
+                    ],
+                    "contains": [ "urlscan submission id" ]
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1,
                     "example_values": [
                         "success"
                     ]
@@ -121,7 +116,8 @@
                     "data_type": "string",
                     "example_values": [
                         "86b7f70a-5039-419f-9aeb-8cba09404e92"
-                    ]
+                    ],
+                    "contains": [ "urlscan submission id" ]
                 },
                 {
                     "data_path": "action_result.data.*.task.url",
@@ -2323,20 +2319,21 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.important_data",
+                    "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
+                    "contains": [ "urlscan submission id" ],
                     "example_values": [
                         "value"
                     ]
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "json"
             },
             "versions": "EQ(*)"
         },
         {
-            "action": "hunt domain",
+            "action": "lookup domain",
             "identifier": "hunt_domain",
             "description": "Find information about a domain at urlscan.io",
             "verbose": "",
@@ -2344,7 +2341,7 @@
             "read_only": true,
             "parameters": {
                 "domain": {
-                    "description": "Domain to hunt at urlscan.io",
+                    "description": "Domain to lookup",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -2363,8 +2360,6 @@
                     "contains": [
                         "domain"
                     ],
-                    "column_name": "domain",
-                    "column_order": 0,
                     "example_values": [
                         "buildandservice.uk"
                     ]
@@ -2372,8 +2367,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1,
                     "example_values": [
                         "success"
                     ]
@@ -2569,20 +2562,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.important_data",
-                    "data_type": "string",
-                    "example_values": [
-                        "value"
-                    ]
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "json"
             },
             "versions": "EQ(*)"
         },
         {
-            "action": "hunt ip",
+            "action": "lookup ip",
             "identifier": "hunt_ip",
             "description": "Find information about an IP address at urlscan.io",
             "verbose": "",
@@ -2590,7 +2580,7 @@
             "read_only": true,
             "parameters": {
                 "ip": {
-                    "description": "IP to hunt at urlscan.io",
+                    "description": "IP to lookup",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -2609,8 +2599,6 @@
                     "contains": [
                         "ip"
                     ],
-                    "column_name": "ip",
-                    "column_order": 0,
                     "example_values": [
                         "79.124.76.85"
                     ]
@@ -2618,8 +2606,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1,
                     "example_values": [
                         "success"
                     ]
@@ -2822,15 +2808,12 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.important_data",
-                    "data_type": "string",
-                    "example_values": [
-                        "value"
-                    ]
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "json"
             },
             "versions": "EQ(*)"
         },
@@ -2848,11 +2831,16 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "url"
+                        "url",
+                        "domain"
                     ],
-                    "value_list": [],
-                    "default": "",
                     "order": 0
+                },
+                "private": {
+                    "description": "Run a private scan",
+                    "data_type": "boolean",
+                    "require": false,
+                    "order": 1
                 }
             },
             "output": [
@@ -2860,19 +2848,24 @@
                     "data_path": "action_result.parameter.url",
                     "data_type": "string",
                     "contains": [
-                        "url"
+                        "url",
+                        "domain"
                     ],
-                    "column_name": "url",
-                    "column_order": 0,
                     "example_values": [
-                        "http://netismi.com/images/guffiaa.pne"
+                        "http://www.yahoo.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.private",
+                    "data_type": "boolean",
+                    "example_values" : [
+                        true,
+                        false
                     ]
                 },
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 1,
                     "example_values": [
                         "success"
                     ]
@@ -2923,7 +2916,8 @@
                     "data_type": "string",
                     "example_values": [
                         "f04f2a29-d455-4830-874a-88191fb79352"
-                    ]
+                    ],
+                    "contains": [ "urlscan submission id" ]
                 },
                 {
                     "data_path": "action_result.data.*.task.url",
@@ -5444,15 +5438,16 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.important_data",
+                    "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
+                    "contains": [ "urlscan submission id" ],
                     "example_values": [
                         "value"
                     ]
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "json"
             },
             "versions": "EQ(*)"
         }
