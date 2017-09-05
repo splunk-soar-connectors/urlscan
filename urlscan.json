@@ -9,8 +9,8 @@
     "product_version_regex": ".*",
     "publisher": "Phantom",
     "license": "Copyright Phantom 2017",
-    "app_version": "1.0.1",
-    "utctime_updated": "2017-09-01T00:49:10.000000Z",
+    "app_version": "1.0.2",
+    "utctime_updated": "2017-09-05T21:12:18.000000Z",
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.pyc",
     "min_phantom_version": "3.0.247",
@@ -50,7 +50,9 @@
                     "data_type": "string",
                     "required": true,
                     "primary": true,
-                    "contains": [ "urlscan submission id" ],
+                    "contains": [
+                        "urlscan submission id"
+                    ],
                     "order": 0
                 }
             },
@@ -61,7 +63,9 @@
                     "example_values": [
                         "86b7f70a-5039-419f-9aeb-8cba09404e92"
                     ],
-                    "contains": [ "urlscan submission id" ]
+                    "contains": [
+                        "urlscan submission id"
+                    ]
                 },
                 {
                     "data_path": "action_result.status",
@@ -117,7 +121,9 @@
                     "example_values": [
                         "86b7f70a-5039-419f-9aeb-8cba09404e92"
                     ],
-                    "contains": [ "urlscan submission id" ]
+                    "contains": [
+                        "urlscan submission id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.task.url",
@@ -2321,7 +2327,9 @@
                 {
                     "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
-                    "contains": [ "urlscan submission id" ],
+                    "contains": [
+                        "urlscan submission id"
+                    ],
                     "example_values": [
                         "value"
                     ]
@@ -2858,7 +2866,7 @@
                 {
                     "data_path": "action_result.parameter.private",
                     "data_type": "boolean",
-                    "example_values" : [
+                    "example_values": [
                         true,
                         false
                     ]
@@ -2917,7 +2925,9 @@
                     "example_values": [
                         "f04f2a29-d455-4830-874a-88191fb79352"
                     ],
-                    "contains": [ "urlscan submission id" ]
+                    "contains": [
+                        "urlscan submission id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.task.url",
@@ -5440,7 +5450,9 @@
                 {
                     "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
-                    "contains": [ "urlscan submission id" ],
+                    "contains": [
+                        "urlscan submission id"
+                    ],
                     "example_values": [
                         "value"
                     ]
