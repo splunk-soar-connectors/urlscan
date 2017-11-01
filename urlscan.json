@@ -1,7 +1,7 @@
 {
     "appid": "c46c00cd-7231-4dd3-8d8e-02b9fa0e14a2",
     "name": "urlscan.io",
-    "description": "This app supports <b>investigative</b> actions on urlscan.io",
+    "description": "This app supports investigative actions on urlscan.io",
     "type": "sandbox",
     "product_vendor": "urlscan.io",
     "logo": "urlscan.png",
@@ -13,15 +13,13 @@
     "utctime_updated": "2017-09-07T20:57:46.000000Z",
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.pyc",
-    "min_phantom_version": "3.0.247",
+    "min_phantom_version": "3.0.251",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_key": {
             "description": "API key for urlscan.io",
             "data_type": "password",
             "required": false,
-            "value_list": [],
-            "default": "",
             "order": 0
         }
     },
