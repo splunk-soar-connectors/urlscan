@@ -13,7 +13,7 @@
     "utctime_updated": "2017-09-07T20:57:46.000000Z",
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.pyc",
-    "min_phantom_version": "3.0.251",
+    "min_phantom_version": "3.0.247",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_key": {
