@@ -1,16 +1,8 @@
-# --
 # File: urlscan_connector.py
+# Copyright (c) 2017-2021 Splunk Inc.
 #
-# Copyright (c) Phantom Cyber Corporation, 2017-2018
-#
-# This unpublished material is proprietary to Phantom Cyber.
-# All rights reserved. The methods and
-# techniques described herein are considered trade secrets
-# and/or confidential. Reproduction or distribution, in whole
-# or in part, is forbidden except by express written permission
-# of Phantom Cyber.
-#
-# --
+# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
+# without a valid written license from Splunk Inc. is PROHIBITED.
 
 # Phantom App imports
 import phantom.app as phantom
@@ -23,6 +15,8 @@ import time
 import requests
 import json
 from bs4 import BeautifulSoup
+from urlscan_consts import *
+import ipaddress
 
 
 class RetVal(tuple):
@@ -42,14 +36,35 @@ class UrlscanConnector(BaseConnector):
         # Variable to hold a base_url in case the app makes REST calls
         # Do note that the app json defines the asset config, so please
         # modify this as you deem fit.
-        self._base_url = "https://urlscan.io/api/v1/"
+        self._base_url = URLSCAN_BASE_URL
 
-    def _process_empty_reponse(self, response, action_result):
+    def _get_error_message_from_exception(self, e):
+        """ This method is used to get appropriate error message from the exception.
+        :param e: Exception object
+        :return: error message
+        """
+
+        error_code = URLSCAN_ERR_CODE_UNAVAILABLE
+        error_msg = URLSCAN_ERR_MSG_UNAVAILABLE
+
+        try:
+            if e.args:
+                if len(e.args) > 1:
+                    error_code = e.args[0]
+                    error_msg = e.args[1]
+                elif len(e.args) == 1:
+                    error_msg = e.args[0]
+        except:
+            pass
+
+        return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
+
+    def _process_empty_response(self, response, action_result):
 
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_EMPTY_RESPONSE_ERR.format(response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
 
@@ -65,8 +80,7 @@ class UrlscanConnector(BaseConnector):
         except:
             error_text = "Cannot parse error details"
 
-        message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
-                error_text)
+        message = URLSCAN_HTML_RESPOSE_ERR.format(status_code, error_text)
 
         message = message.replace('{', '{{').replace('}', '}}')
 
@@ -78,7 +92,8 @@ class UrlscanConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))), None)
+            error_msg = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_msg)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -97,8 +112,7 @@ class UrlscanConnector(BaseConnector):
             pass
 
         # You should process the error returned in the json
-        message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -116,7 +130,7 @@ class UrlscanConnector(BaseConnector):
         if 'json' in r.headers.get('Content-Type', ''):
             return self._process_json_response(r, action_result)
 
-        # Process an HTML resonse, Do this no matter what the api talks.
+        # Process an HTML response, Do this no matter what the api talks.
         # There is a high chance of a PROXY in between phantom and the rest of
         # world, in case of errors, PROXY's return HTML, this function parses
         # the error and adds it to the action_result.
@@ -125,11 +139,10 @@ class UrlscanConnector(BaseConnector):
 
         # it's not content-type that is to be parsed, handle an empty response
         if not r.text:
-            return self._process_empty_reponse(r, action_result)
+            return self._process_empty_response(r, action_result)
 
         # everything else is actually an error at this point
-        message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = URLSCAN_PROCESS_RESPONSE_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -140,11 +153,11 @@ class UrlscanConnector(BaseConnector):
         resp_json = None
         request_func = getattr(requests, method)
 
-        if (not request_func):
-            action_result.set_status( phantom.APP_ERROR, "Invalid method: {0}".format(method))
+        if not request_func:
+            action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method))
 
         # Create a URL to connect to
-        url = self._base_url + endpoint
+        url = "{}{}".format(self._base_url, endpoint)
 
         try:
             r = request_func(
@@ -154,7 +167,8 @@ class UrlscanConnector(BaseConnector):
                             verify=config.get('verify_server_cert', False),
                             params=params)
         except Exception as e:
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            error_msg = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERR.format(error_msg)), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -167,19 +181,20 @@ class UrlscanConnector(BaseConnector):
             self.save_progress("Validating API Key")
             headers = {'API-Key': self._api_key}
             data = {'url': 'aaaa', 'public': 'off'}
-            ret_val, response = self._make_rest_call('scan/', action_result, headers=headers, data=data, method="post")
+            ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
         else:
             self.save_progress("No API key found, checking connectivity to urlscan.io")
-            ret_val, response = self._make_rest_call('search/?q=domain:urlscan.io', action_result)
+            ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format('urlscan.io'), action_result)
 
-        # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
-        # If the API Key was invalid, it would return a 401
-        if (phantom.is_fail(ret_val)) and (self._api_key and response.get('status', 0) != 400):
-            self.save_progress("Test Connectivity Failed. Error: {0}".format(action_result.get_message()))
-            return action_result.get_status()
+        if phantom.is_fail(ret_val):
+            # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
+            # If the API Key was invalid, it would return a 401
+            if not response or (self._api_key and response.get('status', 0) != 400):
+                self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
+                return action_result.get_status()
 
         # Return success
-        self.save_progress("Test Connectivity Passed")
+        self.save_progress(URLSCAN_TEST_CONNECTIVITY_SUCC)
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_report(self, param):
@@ -196,14 +211,20 @@ class UrlscanConnector(BaseConnector):
 
         domain = param['domain']
 
-        ret_val, response = self._make_rest_call('search/?q=domain:{0}'.format(domain), action_result, params=None, headers=None)
+        ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format(domain), action_result, params=None, headers=None)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
+            if not action_result.get_message():
+                error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
         action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS)
+        if response.get('results'):
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
+        else:
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
     def _handle_hunt_ip(self, param):
 
@@ -211,43 +232,50 @@ class UrlscanConnector(BaseConnector):
 
         ip = param['ip']
 
-        ret_val, response = self._make_rest_call('search/?q=ip:{0}'.format(ip), action_result, params=None, headers=None)
+        ret_val, response = self._make_rest_call(URLSCAN_HUNT_IP_ENDPOINT.format(ip), action_result, params=None, headers=None)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
+            if not action_result.get_message():
+                error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
         action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS)
+        if response.get('results'):
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
+        else:
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
     def _poll_submission(self, report_uuid, action_result):
 
         polling_attempt = 0
-        max_polling_attempts = 10
         resp_json = None
+        headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
 
-        while polling_attempt < max_polling_attempts:
+        while polling_attempt < URLSCAN_MAX_POLLING_ATTEMPTS:
 
             polling_attempt += 1
 
-            self.send_progress("Polling attempt {0} of {1}".format(polling_attempt, max_polling_attempts))
+            self.send_progress("Polling attempt {0} of {1}".format(polling_attempt, URLSCAN_MAX_POLLING_ATTEMPTS))
+            self.debug_print("Polling attempt {0} of {1}".format(polling_attempt, URLSCAN_MAX_POLLING_ATTEMPTS))
 
-            ret_val, resp_json = self._make_rest_call('result/' + report_uuid, action_result)
+            ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
-            if (phantom.is_fail(ret_val)):
+            if phantom.is_fail(ret_val):
                 return ret_val
 
             # Scan isn't finished yet
-            if resp_json.get('status', 0) == 404:
-                time.sleep(15)
+            if resp_json.get('status', 0) == 404 or resp_json.get('message') == 'notdone':
+                time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
 
             action_result.add_data(resp_json)
-            return action_result.set_status(phantom.APP_SUCCESS)
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
 
         summary = action_result.update_summary({})
         summary['report_uuid'] = report_uuid
-        return action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERR.format(report_uuid))
 
     def _handle_detonate_url(self, param):
 
@@ -255,25 +283,36 @@ class UrlscanConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         if not self._api_key:
-            return action_result.set_status(phantom.APP_ERROR, "API Key is required to run detonate url")
+            return action_result.set_status(phantom.APP_ERROR, URLSCAN_API_KEY_MISSING_ERR)
 
         url_to_scan = param['url']
         private = param.get('private', False)
+        get_result = param.get('get_result', True)
 
         headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
         data = {"url": url_to_scan, "public": "off" if private else "on"}
 
         # make rest call
-        ret_val, response = self._make_rest_call('scan/', action_result, headers=headers, data=data, method="post")
+        ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
+            if response and response.get('status', 0) == 400:
+                action_result.add_data(response)
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(response.get('message', 'None'), response.get('description', 'None')))
+
             return action_result.get_status()
 
         report_uuid = response.get('uuid')
-        if (not report_uuid):
-            return action_result.set_status(phantom.APP_ERROR, "Unable to get report UUID from scan")
+        if not report_uuid:
+            return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERR)
 
-        return self._poll_submission(report_uuid, action_result)
+        if get_result:
+            return self._poll_submission(report_uuid, action_result)
+
+        action_result.add_data(response)
+        summary = action_result.update_summary({})
+        summary['report_uuid'] = report_uuid
+        return action_result.set_status(phantom.APP_SUCCESS)
 
     def handle_action(self, param):
 
@@ -284,22 +323,36 @@ class UrlscanConnector(BaseConnector):
 
         self.debug_print("action_id", self.get_action_identifier())
 
-        if action_id == 'test_connectivity':
+        if action_id == URLSCAN_TEST_CONNECTIVITY_ACTION:
             ret_val = self._handle_test_connectivity(param)
 
-        elif action_id == 'get_report':
+        elif action_id == URLSCAN_GET_REPORT_ACTION:
             ret_val = self._handle_get_report(param)
 
-        elif action_id == 'hunt_domain':
+        elif action_id == URLSCAN_HUNT_DOMAIN_ACTION:
             ret_val = self._handle_hunt_domain(param)
 
-        elif action_id == 'hunt_ip':
+        elif action_id == URLSCAN_HUNT_IP_ACTION:
             ret_val = self._handle_hunt_ip(param)
 
-        elif action_id == 'detonate_url':
+        elif action_id == URLSCAN_DETONATE_URL_ACTION:
             ret_val = self._handle_detonate_url(param)
 
         return ret_val
+
+    def _is_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        ip_address_input = input_ip_address
+        try:
+            ipaddress.ip_address(str(ip_address_input))
+        except:
+            return False
+        return True
 
     def initialize(self):
 
@@ -308,6 +361,7 @@ class UrlscanConnector(BaseConnector):
         self._state = self.load_state()
         config = self.get_config()
         self._api_key = config.get('api_key')
+        self.set_validator('ipv6', self._is_ip)
 
         return phantom.APP_SUCCESS
 
@@ -324,8 +378,8 @@ if __name__ == '__main__':
     import pudb
     pudb.set_trace()
 
-    if (len(sys.argv) < 2):
-        print "No test json specified as input"
+    if len(sys.argv) < 2:
+        print("No test json specified as input")
         exit(0)
 
     with open(sys.argv[1]) as f:
@@ -336,7 +390,6 @@ if __name__ == '__main__':
         connector = UrlscanConnector()
         connector.print_progress_message = True
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print (json.dumps(json.loads(ret_val), indent=4))
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
-
