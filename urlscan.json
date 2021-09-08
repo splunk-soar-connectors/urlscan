@@ -10,8 +10,8 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2021 Splunk Inc.",
-    "app_version": "2.0.3",
-    "utctime_updated": "2021-06-04T05:22:43.000000Z",
+    "app_version": "2.1.1",
+    "utctime_updated": "2021-08-31T23:00:54.000000Z",
     "python_version": "3",
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
@@ -25,6 +25,13 @@
             "description": "API key for urlscan.io",
             "data_type": "password",
             "order": 0
+        },
+        "timeout": {
+            "description": "Timeout period for action (seconds)",
+            "data_type": "numeric",
+            "order": 1,
+            "required": false,
+            "default": 120
         }
     },
     "actions": [
