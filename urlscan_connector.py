@@ -37,6 +37,8 @@ class UrlscanConnector(BaseConnector):
         # Do note that the app json defines the asset config, so please
         # modify this as you deem fit.
         self._base_url = URLSCAN_BASE_URL
+        self._api_key = None
+        self.timeout = None
 
     def _get_error_message_from_exception(self, e):
         """ This method is used to get appropriate error message from the exception.
@@ -165,7 +167,8 @@ class UrlscanConnector(BaseConnector):
                             json=data,
                             headers=headers,
                             verify=config.get('verify_server_cert', False),
-                            params=params)
+                            params=params,
+                            timeout=self.timeout)
         except Exception as e:
             error_msg = self._get_error_message_from_exception(e)
             return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERR.format(error_msg)), resp_json)
@@ -361,6 +364,7 @@ class UrlscanConnector(BaseConnector):
         self._state = self.load_state()
         config = self.get_config()
         self._api_key = config.get('api_key')
+        self.timeout = config.get('timeout', 120)
         self.set_validator('ipv6', self._is_ip)
 
         return phantom.APP_SUCCESS
