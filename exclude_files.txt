@@ -2,6 +2,5 @@ docker-compose.yml
 Makefile
 .git*
 .gitlab-ci.yml
-whitesource*
-gl-*.csv
+whitesource-results
 *.postman_collection.json
