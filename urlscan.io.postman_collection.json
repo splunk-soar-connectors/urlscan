@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "e232cb0e-e551-4b88-ad4c-de54ba1b6772",
+		"name": "urlscan.io",
+		"description": "<h3>Collection of endpoints contacted by <b>urlscan.io</b> Splunk SOAR App</h3>\n<br>\n<p>\n  The <b>api_key</b> field is not required to use this app, as <b>urlscan.io</b> does not require an API key for querying its database.\n  However, if you wish to start a scan with <b>detonate url</b>, then you will need an API key configured.<br>\n</p>",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Detonate URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code == 200) {",
+							"    let response = pm.response.json();",
+							"    var uuid = response['uuid']",
+							"    pm.collectionVariables.set(\"detonate_url_uuid\", uuid);",
+							"    setTimeout(function(){}, 5000); //waiting 5 seconds for urlscan to process url",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"{{scan_url}}\",\n    \"visibility\": \"public\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/scan/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"scan",
+						""
+					]
+				},
+				"description": "<p>Used by `detonate url` action. Starts a scan at urlscan.io for the url passed.</p>\n<p>Returns a uuid which will later be used to fetch scan results (get report) when they are produced</p>\n<br/>\n<p>Takes a json in request body with `url` and `visibility` as keys.<p>\n<ul>\n<li>url: url to be scanned</li>\n<li>visibility: Visibility of scan on urlscan's website. It can take values either public, unlisted or private</li>\n</ul>"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Report",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.collectionVariables.has(\"detonate_url_uuid\")){",
+							"    var base_url = pm.variables.get(\"base_url\")",
+							"    const request = {",
+							"        url: base_url+\"/scan/\",",
+							"        method: \"post\",",
+							"        body: JSON.stringify({",
+							"            \"url\": pm.variables.get(\"scan_url\"),",
+							"            \"visibility\": \"public\"",
+							"        }),",
+							"        header: {",
+							"            'Content-Type': 'application/json',",
+							"            \"API-Key\": pm.variables.get(\"api_key\")",
+							"        }",
+							"    }",
+							"    pm.sendRequest(request, function (err, response) {",
+							"        var response = response.json()",
+							"        var uuid = response['uuid']",
+							"        pm.collectionVariables.set(\"detonate_url_uuid\", uuid);",
+							"        setTimeout(function(){}, 5000);  //waiting 5 seconds for urlscan to process url",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/result/{{detonate_url_uuid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"result",
+						"{{detonate_url_uuid}}"
+					]
+				},
+				"description": "<p>Query for results of an already completed detonation</p>\n<p><i>Note: Run 'Detonate URL' before running this to set `detonate_url_uuid` variable</i><p>"
+			},
+			"response": []
+		},
+		{
+			"name": "Hunt Domain",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/search/?q=domain:{{domain}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "domain:{{domain}}"
+						}
+					]
+				},
+				"description": "<p>Find information about a domain at urlscan.io</p>"
+			},
+			"response": []
+		},
+		{
+			"name": "Hunt IP",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/search/?q=ip:{{ip}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "ip:{{ip}}"
+						}
+					]
+				},
+				"description": "<p>Find information about an IP address at urlscan.io</p>"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{api_key}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "API-Key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_key",
+			"value": ""
+		},
+		{
+			"key": "base_url",
+			"value": "https://urlscan.io/api/v1"
+		},
+		{
+			"key": "domain",
+			"value": "www.phantom.us"
+		},
+		{
+			"key": "ip",
+			"value": "2.16.187.19"
+		},
+		{
+			"key": "scan_url",
+			"value": "https://urlscan.io/docs/api"
+		}
+	]
+}
