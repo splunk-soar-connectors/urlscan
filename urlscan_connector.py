@@ -14,19 +14,18 @@
 # and limitations under the License.
 #
 #
-# Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
-# Usage of the consts file is recommended
-# from urlscan_consts import *
-import time
-import requests
-import json
-from bs4 import BeautifulSoup
-from urlscan_consts import *
 import ipaddress
+import json
+import time
+from sys import exit
+
+import phantom.app as phantom
+import requests
+from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
+from urlscan_consts import *
 
 
 class RetVal(tuple):
@@ -311,7 +310,8 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if response and response.get('status', 0) == 400:
                 action_result.add_data(response)
-                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(response.get('message', 'None'), response.get('description', 'None')))
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(
+                    response.get('message', 'None'), response.get('description', 'None')))
 
             return action_result.get_status()
 
@@ -389,6 +389,7 @@ class UrlscanConnector(BaseConnector):
 if __name__ == '__main__':
 
     import sys
+
     import pudb
     pudb.set_trace()
 

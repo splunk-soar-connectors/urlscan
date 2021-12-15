@@ -13,6 +13,7 @@
     "app_version": "2.1.8",
     "utctime_updated": "2021-10-14T22:01:48.000000Z",
     "python_version": "3",
+    "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
     "min_phantom_version": "4.9.39220",
