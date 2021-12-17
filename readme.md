@@ -14,4 +14,4 @@
 [comment]: # ""
 The **api_key** field is not required to use this app, as **urlscan.io** does not require an API key
 for querying its database. However, if you wish to start a scan with **detonate url** , then you
-will need an API key configured.  
+will need an API key configured.
