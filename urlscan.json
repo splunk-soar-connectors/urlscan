@@ -9,7 +9,7 @@
     "product_name": "urlscan.io",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2017-2021 Splunk Inc.",
+    "license": "Copyright (c) 2017-2022 Splunk Inc.",
     "app_version": "2.1.11",
     "utctime_updated": "2022-01-07T21:52:55.000000Z",
     "python_version": "3",
@@ -10553,7 +10553,7 @@
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/urllib3-1.26.7-py2.py3-none-any.whl"
+                "input_file": "wheels/urllib3-1.26.8-py2.py3-none-any.whl"
             }
         ]
     }
