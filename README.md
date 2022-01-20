@@ -2,7 +2,7 @@
 # urlscan\.io
 
 Publisher: Splunk  
-Connector Version: 2\.1\.10  
+Connector Version: 2\.1\.12  
 Product Vendor: urlscan\.io  
 Product Name: urlscan\.io  
 Product Version Supported (regex): "\.\*"  
@@ -10,8 +10,8 @@ Minimum Product Version: 4\.9\.39220
 
 This app supports investigative actions on urlscan\.io
 
-[comment]: # " File: readme.md"
-[comment]: # "  Copyright (c) 2017-2021 Splunk Inc."
+[comment]: # " File: README.md"
+[comment]: # "  Copyright (c) 2017-2022 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
