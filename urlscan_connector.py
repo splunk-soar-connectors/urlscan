@@ -1,22 +1,31 @@
 # File: urlscan_connector.py
-# Copyright (c) 2017-2021 Splunk Inc.
 #
-# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
-# without a valid written license from Splunk Inc. is PROHIBITED.
-
-# Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
-# Usage of the consts file is recommended
-# from urlscan_consts import *
-import time
-import requests
-import json
-from bs4 import BeautifulSoup
-from urlscan_consts import *
+# Copyright (c) 2017-2022 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+#
+#
 import ipaddress
+import json
+import time
+from sys import exit
+
+import phantom.app as phantom
+import requests
+from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
+from urlscan_consts import *
 
 
 class RetVal(tuple):
@@ -301,7 +310,8 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if response and response.get('status', 0) == 400:
                 action_result.add_data(response)
-                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(response.get('message', 'None'), response.get('description', 'None')))
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(
+                    response.get('message', 'None'), response.get('description', 'None')))
 
             return action_result.get_status()
 
@@ -379,6 +389,7 @@ class UrlscanConnector(BaseConnector):
 if __name__ == '__main__':
 
     import sys
+
     import pudb
     pudb.set_trace()
 
