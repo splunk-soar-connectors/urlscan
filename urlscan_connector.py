@@ -211,13 +211,19 @@ class UrlscanConnector(BaseConnector):
 
     def _handle_get_report(self, param):
 
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         result_id = param['id']
 
+        self.debug_print("Calling the _poll_submission to fetch the results")
+
         return self._poll_submission(result_id, action_result)
 
     def _handle_hunt_domain(self, param):
+
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -228,6 +234,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
                 error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
@@ -240,6 +247,8 @@ class UrlscanConnector(BaseConnector):
 
     def _handle_hunt_ip(self, param):
 
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         ip = param['ip']
@@ -249,6 +258,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
                 error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
@@ -294,6 +304,8 @@ class UrlscanConnector(BaseConnector):
 
     def _handle_detonate_url(self, param):
 
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -323,6 +335,7 @@ class UrlscanConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERR)
 
         if get_result:
+            self.debug_print("Fetch the results in the same call")
             return self._poll_submission(report_uuid, action_result)
 
         action_result.add_data(response)
