@@ -91,7 +91,7 @@ class UrlscanConnector(BaseConnector):
         except:
             error_text = "Cannot parse error details"
 
-        message = URLSCAN_HTML_RESPOSE_ERR.format(status_code, error_text)
+        message = URLSCAN_RESPONSE_ERR.format(status_code, error_text)
 
         message = message.replace('{', '{{').replace('}', '}}')
 
@@ -275,7 +275,10 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
             if phantom.is_fail(ret_val):
-                return ret_val
+                error_msg = "Failed to fetch the results from from server"
+                if 'code' in resp_json and 'message' in resp_json:
+                    error_msg = URLSCAN_RESPONSE_ERR.format(resp_json['code'], resp_json['message'])
+                return action_result.set_status(phantom.APP_ERROR, error_msg)
 
             # Scan isn't finished yet
             if resp_json.get('status', 0) == 404 or resp_json.get('message') == 'notdone':
