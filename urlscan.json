@@ -18,7 +18,7 @@
     "main_module": "urlscan_connector.py",
     "min_phantom_version": "5.1.0",
     "latest_tested_versions": [
-        "Cloud, 05-28-2021"
+        "Cloud March 16, 2022"
     ],
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -31,7 +31,6 @@
             "description": "Timeout period for action (seconds)",
             "data_type": "numeric",
             "order": 1,
-            "required": false,
             "default": 120
         }
     },

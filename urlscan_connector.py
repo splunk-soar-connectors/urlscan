@@ -65,8 +65,8 @@ class UrlscanConnector(BaseConnector):
                     error_msg = e.args[1]
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
-        except:
-            pass
+        except Exception:
+            self.debug_print("Error occurred while retrieving exception information")
 
         return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
 
@@ -88,7 +88,7 @@ class UrlscanConnector(BaseConnector):
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
             error_text = '\n'.join(split_lines)
-        except:
+        except Exception:
             error_text = "Cannot parse error details"
 
         message = URLSCAN_RESPONSE_ERR.format(status_code, error_text)
@@ -120,7 +120,7 @@ class UrlscanConnector(BaseConnector):
             if resp_json["status"] == 404:
                 return RetVal(phantom.APP_SUCCESS, resp_json)
         except KeyError:
-            pass
+            self.debug_print("Error occurred while retrieving status_code")
 
         # You should process the error returned in the json
         message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
@@ -379,7 +379,7 @@ class UrlscanConnector(BaseConnector):
         ip_address_input = input_ip_address
         try:
             ipaddress.ip_address(str(ip_address_input))
-        except:
+        except Exception:
             return False
         return True
 
@@ -388,6 +388,11 @@ class UrlscanConnector(BaseConnector):
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
+        if not isinstance(self._state, dict):
+            # There's no need to return the error because the app doesn't save any data in the state file.
+            self.debug_print("Resetting the state file with the default format")
+            self._state = {"app_version": self.get_app_json().get("app_version")}
+
         config = self.get_config()
         self._api_key = config.get('api_key')
         self.timeout = config.get('timeout', 120)
