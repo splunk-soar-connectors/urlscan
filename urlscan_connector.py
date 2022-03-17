@@ -113,7 +113,7 @@ class UrlscanConnector(BaseConnector):
         try:
             # This is for test connectivity, so we can test the API key
             #  without needing to create a token
-            if resp_json["status"] == 400 and self.get_action_identifier() == URLSCAN_TEST_CONNECTIVITY_ACTION:
+            if resp_json["status"] == 400:
                 return RetVal(phantom.APP_ERROR, resp_json)
 
             # The server should return a 404 if a scan isn't finished yet
@@ -285,6 +285,11 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
             if phantom.is_fail(ret_val):
+                if resp_json and resp_json.get('status', 0) == 400:
+                    message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(
+                        resp_json['status'], json.dumps(resp_json).replace('{', '{{').replace('}', '}}'))
+                    return action_result.set_status(phantom.APP_ERROR, message)
+
                 return action_result.get_status()
 
             # Scan isn't finished yet
