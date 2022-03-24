@@ -2,11 +2,11 @@
 # urlscan\.io
 
 Publisher: Splunk  
-Connector Version: 2\.1\.12  
+Connector Version: 2\.2\.0  
 Product Vendor: urlscan\.io  
 Product Name: urlscan\.io  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 4\.9\.39220  
+Minimum Product Version: 5\.1\.0  
 
 This app supports investigative actions on urlscan\.io
 
@@ -27,6 +27,16 @@ This app supports investigative actions on urlscan\.io
 The **api_key** field is not required to use this app, as **urlscan.io** does not require an API key
 for querying its database. However, if you wish to start a scan with **detonate url** , then you
 will need an API key configured.  
+
+## Port Information
+
+The app uses HTTP/ HTTPS protocol for communicating with the Urlscan server. Below are the default
+ports used by Splunk SOAR.
+
+|         Service Name | Transport Protocol | Port |
+|----------------------|--------------------|------|
+|         http         | tcp                | 80   |
+|         https        | tcp                | 443  |
 
 
 ### Configuration Variables
