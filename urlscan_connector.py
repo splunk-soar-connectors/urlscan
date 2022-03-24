@@ -65,8 +65,8 @@ class UrlscanConnector(BaseConnector):
                     error_msg = e.args[1]
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
-        except:
-            pass
+        except Exception:
+            self.debug_print("Error occurred while retrieving exception information")
 
         return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
 
@@ -88,7 +88,7 @@ class UrlscanConnector(BaseConnector):
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
             error_text = '\n'.join(split_lines)
-        except:
+        except Exception:
             error_text = "Cannot parse error details"
 
         message = URLSCAN_HTML_RESPOSE_ERR.format(status_code, error_text)
@@ -120,7 +120,7 @@ class UrlscanConnector(BaseConnector):
             if resp_json["status"] == 404:
                 return RetVal(phantom.APP_SUCCESS, resp_json)
         except KeyError:
-            pass
+            self.debug_print("Error occurred while retrieving status_code")
 
         # You should process the error returned in the json
         message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
@@ -211,13 +211,19 @@ class UrlscanConnector(BaseConnector):
 
     def _handle_get_report(self, param):
 
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         result_id = param['id']
 
+        self.debug_print("Calling the _poll_submission to fetch the results")
+
         return self._poll_submission(result_id, action_result)
 
     def _handle_hunt_domain(self, param):
+
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -228,6 +234,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
                 error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
@@ -240,6 +247,8 @@ class UrlscanConnector(BaseConnector):
 
     def _handle_hunt_ip(self, param):
 
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         ip = param['ip']
@@ -249,6 +258,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
                 error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
@@ -275,7 +285,12 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
             if phantom.is_fail(ret_val):
-                return ret_val
+                if resp_json and resp_json.get('status', 0) == 400:
+                    message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(
+                        resp_json['status'], json.dumps(resp_json).replace('{', '{{').replace('}', '}}'))
+                    return action_result.set_status(phantom.APP_ERROR, message)
+
+                return action_result.get_status()
 
             # Scan isn't finished yet
             if resp_json.get('status', 0) == 404 or resp_json.get('message') == 'notdone':
@@ -290,6 +305,8 @@ class UrlscanConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERR.format(report_uuid))
 
     def _handle_detonate_url(self, param):
+
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -320,6 +337,7 @@ class UrlscanConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERR)
 
         if get_result:
+            self.debug_print("Fetch the results in the same call")
             return self._poll_submission(report_uuid, action_result)
 
         action_result.add_data(response)
@@ -363,7 +381,7 @@ class UrlscanConnector(BaseConnector):
         ip_address_input = input_ip_address
         try:
             ipaddress.ip_address(str(ip_address_input))
-        except:
+        except Exception:
             return False
         return True
 
@@ -372,6 +390,11 @@ class UrlscanConnector(BaseConnector):
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
+        if not isinstance(self._state, dict):
+            # There's no need to return the error because the app doesn't save any data in the state file.
+            self.debug_print("Resetting the state file with the default format")
+            self._state = {"app_version": self.get_app_json().get("app_version")}
+
         config = self.get_config()
         self._api_key = config.get('api_key')
         self.timeout = config.get('timeout', 120)
