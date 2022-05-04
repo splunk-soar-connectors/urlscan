@@ -320,7 +320,7 @@ class UrlscanConnector(BaseConnector):
         # Parse tags
         tags = param.get("tags", "")
         tags = [tags.strip() for tags in tags.split(',')]
-        tags = list(filter(None, tags))
+        tags = list(set(filter(None, tags)))  # non-duplicate tags
 
         if len(tags) > URLSCAN_MAX_TAGS_NUM:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_TAGS_EXCEED_MAX_ERR.format(URLSCAN_MAX_TAGS_NUM))
