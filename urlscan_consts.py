@@ -18,6 +18,7 @@
 URLSCAN_BASE_URL = "https://urlscan.io/api/v1/"
 URLSCAN_MAX_POLLING_ATTEMPTS = 10
 URLSCAN_POLLING_INTERVAL = 15
+URLSCAN_MAX_TAGS_NUM = 10
 
 # Endpoints
 URLSCAN_HUNT_DOMAIN_ENDPOINT = 'search/?q=domain:{}'
@@ -41,6 +42,7 @@ URLSCAN_REPORT_UUID_MISSING_ERR = "Unable to get report UUID from scan"
 URLSCAN_BAD_REQUEST_ERR = "Error: {0}. Description: {1}"
 URLSCAN_NO_DATA_ERR = "No data found"
 URLSCAN_REPORT_NOT_FOUND_ERR = "Report not found, report uuid: {}"
+URLSCAN_TAGS_EXCEED_MAX_ERR = "The number of tags attached to the scan has exceeded the max limit {}"
 URLSCAN_ACTION_SUCC = "Successfully retrieved information"
 
 # Action names
