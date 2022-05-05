@@ -2,11 +2,11 @@
 # urlscan\.io
 
 Publisher: Splunk  
-Connector Version: 2\.2\.0  
+Connector Version: 2\.2\.1  
 Product Vendor: urlscan\.io  
 Product Name: urlscan\.io  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Minimum Product Version: 5\.2\.0  
 
 This app supports investigative actions on urlscan\.io
 
@@ -699,6 +699,7 @@ action\_result\.data\.\*\.verdicts\.overall\.score | numeric |
 action\_result\.data\.\*\.verdicts\.urlscan\.malicious | boolean | 
 action\_result\.data\.\*\.verdicts\.urlscan\.score | numeric | 
 action\_result\.summary\.report\_uuid | string |  `urlscan submission id` 
+action\_result\.summary\.added\_tags\_num | numeric | 
 action\_result\.message | string | 
 summary\.total\_objects | numeric | 
 summary\.total\_objects\_successful | numeric |   
@@ -821,6 +822,7 @@ If the get\_result parameter is set to true, then the action may take up to 2\-3
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **url** |  required  | URL to detonate | string |  `url`  `domain` 
+**tags** |  optional  | User\-defined tags to annotate this scan\. Limited to 10 tags\. | string | 
 **private** |  optional  | Run a private scan | boolean | 
 **get\_result** |  optional  | Get scan result in same call | boolean | 
 
@@ -830,6 +832,7 @@ DATA PATH | TYPE | CONTAINS
 action\_result\.status | string | 
 action\_result\.parameter\.get\_result | boolean | 
 action\_result\.parameter\.private | boolean | 
+action\_result\.parameter\.tags | string | 
 action\_result\.parameter\.url | string |  `url`  `domain` 
 action\_result\.data\.\*\.api | string |  `url` 
 action\_result\.data\.\*\.data\.console\.\*\.message\.column | numeric | 
@@ -1558,7 +1561,6 @@ action\_result\.data\.\*\.verdicts\.overall\.score | numeric |
 action\_result\.data\.\*\.verdicts\.urlscan\.malicious | boolean | 
 action\_result\.data\.\*\.verdicts\.urlscan\.score | numeric | 
 action\_result\.data\.\*\.visibility | string | 
-action\_result\.summary\.report\_uuid | string |  `urlscan submission id` 
 action\_result\.message | string | 
 summary\.total\_objects | numeric | 
 summary\.total\_objects\_successful | numeric | 
