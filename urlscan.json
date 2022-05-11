@@ -5179,7 +5179,7 @@
                     "order": 0
                 },
                 "tags": {
-                    "description": "Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tag with length longer than 29 will be omitted.",
+                    "description": "Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted.",
                     "verbose": "If tag length is longer than 29, the tag will be omitted.",
                     "data_type": "string",
                     "order": 1
