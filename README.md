@@ -822,7 +822,7 @@ If the get\_result parameter is set to true, then the action may take up to 2\-3
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **url** |  required  | URL to detonate | string |  `url`  `domain` 
-**tags** |  optional  | User\-defined tags to annotate this scan\. Limited to 10 tags\. | string | 
+**tags** |  optional  | Comma\-separated list of tags to annotate this scan\. Limited to 10 tags\. Tags with lengths longer than 29 will be omitted\. | string | 
 **private** |  optional  | Run a private scan | boolean | 
 **get\_result** |  optional  | Get scan result in same call | boolean | 
 
