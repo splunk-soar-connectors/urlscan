@@ -10,13 +10,13 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2022 Splunk Inc.",
-    "app_version": "2.2.0",
-    "utctime_updated": "2022-01-14T21:45:44.000000Z",
+    "app_version": "2.2.1",
+    "utctime_updated": "2022-05-05T20:46:41.000000Z",
     "python_version": "3",
     "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
-    "min_phantom_version": "5.1.0",
+    "min_phantom_version": "5.2.0",
     "latest_tested_versions": [
         "Cloud March 16, 2022"
     ],
@@ -4507,6 +4507,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary.added_tags_num",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
@@ -5171,16 +5178,22 @@
                     ],
                     "order": 0
                 },
+                "tags": {
+                    "description": "Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted.",
+                    "verbose": "If tag length is longer than 29, the tag will be omitted.",
+                    "data_type": "string",
+                    "order": 1
+                },
                 "private": {
                     "description": "Run a private scan",
                     "data_type": "boolean",
-                    "order": 1
+                    "order": 2
                 },
                 "get_result": {
                     "description": "Get scan result in same call",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 2
+                    "order": 3
                 }
             },
             "output": [
@@ -5206,6 +5219,13 @@
                     "example_values": [
                         true,
                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.tags",
+                    "data_type": "string",
+                    "example_values": [
+                        "demotag1,demotag2"
                     ]
                 },
                 {
@@ -10483,16 +10503,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.report_uuid",
-                    "data_type": "string",
-                    "contains": [
-                        "urlscan submission id"
-                    ],
-                    "example_values": [
-                        "f04f2a29-d455-4830-874a-88191fb79352"
-                    ]
-                },
-                {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
@@ -10548,11 +10558,11 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.3.1-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/shared/urllib3-1.26.8-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.9-py2.py3-none-any.whl"
             }
         ]
     }

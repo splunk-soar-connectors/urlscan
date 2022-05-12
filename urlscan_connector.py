@@ -291,17 +291,16 @@ class UrlscanConnector(BaseConnector):
                     return action_result.set_status(phantom.APP_ERROR, message)
 
                 return action_result.get_status()
-
             # Scan isn't finished yet
             if resp_json.get('status', 0) == 404 or resp_json.get('message') == 'notdone':
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
 
+            resp_json_task = resp_json.get('task', {})
+            action_result.update_summary({"added_tags_num": len(resp_json_task.get('tags', []))})
             action_result.add_data(resp_json)
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
 
-        summary = action_result.update_summary({})
-        summary['report_uuid'] = report_uuid
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERR.format(report_uuid))
 
     def _handle_detonate_url(self, param):
@@ -318,8 +317,16 @@ class UrlscanConnector(BaseConnector):
         private = param.get('private', False)
         get_result = param.get('get_result', True)
 
+        # Parse tags
+        tags = param.get("tags", "")
+        tags = [tags.strip() for tags in tags.split(',')]
+        tags = list(set(filter(None, tags)))  # non-duplicate tags
+
+        if len(tags) > URLSCAN_MAX_TAGS_NUM:
+            return action_result.set_status(phantom.APP_ERROR, URLSCAN_TAGS_EXCEED_MAX_ERR.format(URLSCAN_MAX_TAGS_NUM))
+
         headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
-        data = {"url": url_to_scan, "public": "off" if private else "on"}
+        data = {"url": url_to_scan, "public": "off" if private else "on", "tags": tags}
 
         # make rest call
         ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
@@ -341,8 +348,7 @@ class UrlscanConnector(BaseConnector):
             return self._poll_submission(report_uuid, action_result)
 
         action_result.add_data(response)
-        summary = action_result.update_summary({})
-        summary['report_uuid'] = report_uuid
+        action_result.update_summary({})
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def handle_action(self, param):
