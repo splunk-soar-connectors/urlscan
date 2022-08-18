@@ -5189,11 +5189,16 @@
                     "data_type": "boolean",
                     "order": 2
                 },
+                "custom_agent": {
+                    "description": "Override User-Agent for this scan",
+                    "data_type": "string",
+                    "order": 3
+                },
                 "get_result": {
                     "description": "Get scan result in same call",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 3
+                    "order": 4
                 }
             },
             "output": [

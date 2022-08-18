@@ -315,6 +315,7 @@ class UrlscanConnector(BaseConnector):
 
         url_to_scan = param['url']
         private = param.get('private', False)
+        custom_agent = param.get('custom_agent')
         get_result = param.get('get_result', True)
 
         # Parse tags
@@ -327,6 +328,9 @@ class UrlscanConnector(BaseConnector):
 
         headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
         data = {"url": url_to_scan, "public": "off" if private else "on", "tags": tags}
+
+        if custom_agent:
+            data["customagent"] = custom_agent
 
         # make rest call
         ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
