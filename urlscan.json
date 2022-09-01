@@ -10,7 +10,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2022 Splunk Inc.",
-    "app_version": "2.2.1",
+    "app_version": "2.3.0",
     "utctime_updated": "2022-05-05T20:46:41.000000Z",
     "python_version": "3",
     "fips_compliant": true,
@@ -18,7 +18,7 @@
     "main_module": "urlscan_connector.py",
     "min_phantom_version": "5.3.0",
     "latest_tested_versions": [
-        "Cloud March 16, 2022"
+        "Cloud August 31, 2022"
     ],
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -4497,6 +4497,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary.added_tags_num",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
                     "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
                     "contains": [
@@ -4504,13 +4511,6 @@
                     ],
                     "example_values": [
                         "value"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.added_tags_num",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
                     ]
                 },
                 {
@@ -5208,6 +5208,13 @@
                     "example_values": [
                         "success",
                         "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.custom_agent",
+                    "data_type": "string",
+                    "example_values": [
+                        "TestBrowser/7.0"
                     ]
                 },
                 {
@@ -10506,6 +10513,10 @@
                     "example_values": [
                         "public"
                     ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
