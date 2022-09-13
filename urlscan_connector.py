@@ -17,6 +17,7 @@
 import ipaddress
 import json
 import time
+import traceback
 from sys import exit
 
 import phantom.app as phantom
@@ -49,6 +50,9 @@ class UrlscanConnector(BaseConnector):
         self._api_key = None
         self.timeout = None
 
+    def _dump_error_log(self, error, message="Exception occurred."):
+        self.error_print(message, dump_object=error)
+
     def _get_error_message_from_exception(self, e):
         """ This method is used to get appropriate error message from the exception.
         :param e: Exception object
@@ -57,7 +61,7 @@ class UrlscanConnector(BaseConnector):
 
         error_code = URLSCAN_ERR_CODE_UNAVAILABLE
         error_msg = URLSCAN_ERR_MSG_UNAVAILABLE
-
+        self.error_print("Traceback: {}".format(traceback.format_stack()))
         try:
             if e.args:
                 if len(e.args) > 1:
@@ -65,8 +69,8 @@ class UrlscanConnector(BaseConnector):
                     error_msg = e.args[1]
                 elif len(e.args) == 1:
                     error_msg = e.args[0]
-        except Exception:
-            self.debug_print("Error occurred while retrieving exception information")
+        except Exception as ex:
+            self._dump_error_log(ex, "Error occurred while fetching exception information")
 
         return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
 
@@ -84,6 +88,9 @@ class UrlscanConnector(BaseConnector):
 
         try:
             soup = BeautifulSoup(response.text, "html.parser")
+            # Remove the script, style, footer and navigation part from the HTML message
+            for element in soup(["script", "style", "footer", "nav"]):
+                element.extract()
             error_text = soup.text
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
