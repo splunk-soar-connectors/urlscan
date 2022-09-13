@@ -120,11 +120,11 @@ class UrlscanConnector(BaseConnector):
         try:
             # This is for test connectivity, so we can test the API key
             #  without needing to create a token
-            if resp_json["status"] == 400:
+            if resp_json["status"] == URLSCAN_BAD_REQUEST_CODE:
                 return RetVal(phantom.APP_ERROR, resp_json)
 
             # The server should return a 404 if a scan isn't finished yet
-            if resp_json["status"] == 404:
+            if resp_json["status"] == URLSCAN_NOT_FOUND_CODE:
                 return RetVal(phantom.APP_SUCCESS, resp_json)
         except KeyError:
             self.debug_print("Error occurred while retrieving status_code")
@@ -208,7 +208,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
             # If the API Key was invalid, it would return a 401
-            if not response or (self._api_key and response.get('status', 0) != 400):
+            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE):
                 self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
                 return action_result.get_status()
 
@@ -292,14 +292,14 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
             if phantom.is_fail(ret_val):
-                if resp_json and resp_json.get('status', 0) == 400:
+                if resp_json and resp_json.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
                     message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(
                         resp_json['status'], json.dumps(resp_json).replace('{', '{{').replace('}', '}}'))
                     return action_result.set_status(phantom.APP_ERROR, message)
 
                 return action_result.get_status()
             # Scan isn't finished yet
-            if resp_json.get('status', 0) == 404 or resp_json.get('message') == 'notdone':
+            if resp_json.get('status', 0) == URLSCAN_NOT_FOUND_CODE or resp_json.get('message') == 'notdone':
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
 
@@ -343,7 +343,7 @@ class UrlscanConnector(BaseConnector):
         ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
 
         if phantom.is_fail(ret_val):
-            if response and response.get('status', 0) == 400:
+            if response and response.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
                 action_result.add_data(response)
                 return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(
                     response.get('message', 'None'), response.get('description', 'None')))

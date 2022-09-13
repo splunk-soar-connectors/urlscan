@@ -16,7 +16,7 @@
     "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
-    "min_phantom_version": "5.3.0",
+    "min_phantom_version": "5.3.3",
     "latest_tested_versions": [
         "Cloud August 31, 2022"
     ],
