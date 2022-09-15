@@ -276,6 +276,9 @@ class UrlscanConnector(BaseConnector):
         else:
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
+    def replace_null_values(self, data):
+        return json.loads(json.dumps(data).replace('\\u0000', '\\\\u0000'))
+
     def _poll_submission(self, report_uuid, action_result):
 
         polling_attempt = 0
@@ -306,6 +309,7 @@ class UrlscanConnector(BaseConnector):
             resp_json_task = resp_json.get('task', {})
             action_result.update_summary({"added_tags_num": len(resp_json_task.get('tags', []))})
             action_result.add_data(resp_json)
+            action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
 
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERR.format(report_uuid))
@@ -359,6 +363,7 @@ class UrlscanConnector(BaseConnector):
             return self._poll_submission(report_uuid, action_result)
 
         action_result.add_data(response)
+        action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
         action_result.update_summary({})
         return action_result.set_status(phantom.APP_SUCCESS)
 
