@@ -10,15 +10,15 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2022 Splunk Inc.",
-    "app_version": "2.2.1",
+    "app_version": "2.3.0",
     "utctime_updated": "2022-05-05T20:46:41.000000Z",
     "python_version": "3",
     "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
-    "min_phantom_version": "5.2.0",
+    "min_phantom_version": "5.3.3",
     "latest_tested_versions": [
-        "Cloud March 16, 2022"
+        "Cloud August 31, 2022"
     ],
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -4497,6 +4497,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary.added_tags_num",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
                     "data_path": "action_result.summary.report_uuid",
                     "data_type": "string",
                     "contains": [
@@ -4504,13 +4511,6 @@
                     ],
                     "example_values": [
                         "value"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.added_tags_num",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
                     ]
                 },
                 {
@@ -5189,11 +5189,16 @@
                     "data_type": "boolean",
                     "order": 2
                 },
+                "custom_agent": {
+                    "description": "Override User-Agent for this scan",
+                    "data_type": "string",
+                    "order": 3
+                },
                 "get_result": {
                     "description": "Get scan result in same call",
                     "data_type": "boolean",
                     "default": true,
-                    "order": 3
+                    "order": 4
                 }
             },
             "output": [
@@ -5203,6 +5208,13 @@
                     "example_values": [
                         "success",
                         "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.custom_agent",
+                    "data_type": "string",
+                    "example_values": [
+                        "TestBrowser/7.0"
                     ]
                 },
                 {
@@ -10503,6 +10515,10 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
@@ -10542,7 +10558,7 @@
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/shared/certifi-2021.10.8-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.6.15-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -10562,7 +10578,7 @@
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/shared/urllib3-1.26.9-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.12-py2.py3-none-any.whl"
             }
         ]
     }
