@@ -18,7 +18,6 @@ import ipaddress
 import json
 import time
 import traceback
-from sys import exit
 
 import phantom.app as phantom
 import requests
@@ -35,7 +34,6 @@ class RetVal(tuple):
 
 
 class UrlscanConnector(BaseConnector):
-
     def __init__(self):
 
         # Call the BaseConnectors init first
@@ -54,7 +52,7 @@ class UrlscanConnector(BaseConnector):
         self.error_print(message, dump_object=error)
 
     def _get_error_message_from_exception(self, e):
-        """ This method is used to get appropriate error message from the exception.
+        """This method is used to get appropriate error message from the exception.
         :param e: Exception object
         :return: error message
         """
@@ -83,7 +81,7 @@ class UrlscanConnector(BaseConnector):
 
     def _process_html_response(self, response, action_result):
 
-        # An html response, treat it like an error
+        # A html response, treat it like an error
         status_code = response.status_code
 
         try:
@@ -92,15 +90,15 @@ class UrlscanConnector(BaseConnector):
             for element in soup(["script", "style", "footer", "nav"]):
                 element.extract()
             error_text = soup.text
-            split_lines = error_text.split('\n')
+            split_lines = error_text.split("\n")
             split_lines = [x.strip() for x in split_lines if x.strip()]
-            error_text = '\n'.join(split_lines)
+            error_text = "\n".join(split_lines)
         except Exception:
             error_text = "Cannot parse error details"
 
         message = URLSCAN_HTML_RESPOSE_ERR.format(status_code, error_text)
 
-        message = message.replace('{', '{{').replace('}', '}}')
+        message = message.replace("{", "{{").replace("}", "}}")
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -121,7 +119,8 @@ class UrlscanConnector(BaseConnector):
             # This is for test connectivity, so we can test the API key
             #  without needing to create a token
             if resp_json["status"] == URLSCAN_BAD_REQUEST_CODE:
-                return RetVal(phantom.APP_ERROR, resp_json)
+                # return RetVal(phantom.APP_ERROR, resp_json)
+                return RetVal(action_result.set_status(phantom.APP_ERROR, resp_json["message"]), resp_json)
 
             # The server should return a 404 if a scan isn't finished yet
             if resp_json["status"] == URLSCAN_NOT_FOUND_CODE:
@@ -130,29 +129,29 @@ class UrlscanConnector(BaseConnector):
             self.debug_print("Error occurred while retrieving status_code")
 
         # You should process the error returned in the json
-        message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_response(self, r, action_result):
 
         # store the r_text in debug data, it will get dumped in the logs if the action fails
-        if hasattr(action_result, 'add_debug_data'):
-            action_result.add_debug_data({'r_status_code': r.status_code})
-            action_result.add_debug_data({'r_text': r.text})
-            action_result.add_debug_data({'r_headers': r.headers})
+        if hasattr(action_result, "add_debug_data"):
+            action_result.add_debug_data({"r_status_code": r.status_code})
+            action_result.add_debug_data({"r_text": r.text})
+            action_result.add_debug_data({"r_headers": r.headers})
 
         # Process each 'Content-Type' of response separately
 
         # Process a json response
-        if 'json' in r.headers.get('Content-Type', ''):
+        if "json" in r.headers.get("Content-Type", ""):
             return self._process_json_response(r, action_result)
 
         # Process an HTML response, Do this no matter what the api talks.
         # There is a high chance of a PROXY in between phantom and the rest of
         # world, in case of errors, PROXY's return HTML, this function parses
         # the error and adds it to the action_result.
-        if 'html' in r.headers.get('Content-Type', ''):
+        if "html" in r.headers.get("Content-Type", ""):
             return self._process_html_response(r, action_result)
 
         # it's not content-type that is to be parsed, handle an empty response
@@ -160,7 +159,7 @@ class UrlscanConnector(BaseConnector):
             return self._process_empty_response(r, action_result)
 
         # everything else is actually an error at this point
-        message = URLSCAN_PROCESS_RESPONSE_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = URLSCAN_PROCESS_RESPONSE_ERR.format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -179,12 +178,8 @@ class UrlscanConnector(BaseConnector):
 
         try:
             r = request_func(
-                            url,
-                            json=data,
-                            headers=headers,
-                            verify=config.get('verify_server_cert', False),
-                            params=params,
-                            timeout=self.timeout)
+                url, json=data, headers=headers, verify=config.get("verify_server_cert", False), params=params, timeout=self.timeout
+            )
         except Exception as e:
             error_msg = self._get_error_message_from_exception(e)
             return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERR.format(error_msg)), resp_json)
@@ -198,17 +193,21 @@ class UrlscanConnector(BaseConnector):
 
         if self._api_key:
             self.save_progress("Validating API Key")
-            headers = {'API-Key': self._api_key}
-            data = {'url': 'aaaa', 'public': 'off'}
+            headers = {"API-Key": self._api_key}
+            data = {"url": "aaaa", "public": "off"}
             ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
         else:
             self.save_progress("No API key found, checking connectivity to urlscan.io")
-            ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format('urlscan.io'), action_result)
+            ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format("urlscan.io"), action_result)
 
         if phantom.is_fail(ret_val):
             # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
             # If the API Key was invalid, it would return a 401
-            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE):
+            if (
+                not response
+                or (self._api_key and response.get("status", 0) != URLSCAN_BAD_REQUEST_CODE)
+                or response["message"] == "Invalid API key format"
+            ):
                 self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
                 return action_result.get_status()
 
@@ -222,7 +221,7 @@ class UrlscanConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        result_id = param['id']
+        result_id = param["id"]
 
         self.debug_print("Calling the _poll_submission to fetch the results")
 
@@ -234,20 +233,20 @@ class UrlscanConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        domain = param['domain']
+        domain = param["domain"]
 
         ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format(domain), action_result, params=None, headers=None)
 
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
-                error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                error_msg = response.get("message") or URLSCAN_NO_DATA_ERR
                 self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
         action_result.add_data(response)
 
-        if response.get('results'):
+        if response.get("results"):
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
         else:
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
@@ -258,32 +257,32 @@ class UrlscanConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ip = param['ip']
+        ip = param["ip"]
 
         ret_val, response = self._make_rest_call(URLSCAN_HUNT_IP_ENDPOINT.format(ip), action_result, params=None, headers=None)
 
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
-                error_msg = response.get('message') or URLSCAN_NO_DATA_ERR
+                error_msg = response.get("message") or URLSCAN_NO_DATA_ERR
                 self.debug_print(error_msg)
                 return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
         action_result.add_data(response)
 
-        if response.get('results'):
+        if response.get("results"):
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
         else:
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
     def replace_null_values(self, data):
-        return json.loads(json.dumps(data).replace('\\u0000', '\\\\u0000'))
+        return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
     def _poll_submission(self, report_uuid, action_result):
 
         polling_attempt = 0
         resp_json = None
-        headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
+        headers = {"Content-Type": "application/json", "API-Key": self._api_key}
 
         while polling_attempt < URLSCAN_MAX_POLLING_ATTEMPTS:
 
@@ -295,19 +294,20 @@ class UrlscanConnector(BaseConnector):
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
             if phantom.is_fail(ret_val):
-                if resp_json and resp_json.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
+                if resp_json and resp_json.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
                     message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(
-                        resp_json['status'], json.dumps(resp_json).replace('{', '{{').replace('}', '}}'))
+                        resp_json["status"], json.dumps(resp_json).replace("{", "{{").replace("}", "}}")
+                    )
                     return action_result.set_status(phantom.APP_ERROR, message)
 
                 return action_result.get_status()
             # Scan isn't finished yet
-            if resp_json.get('status', 0) == URLSCAN_NOT_FOUND_CODE or resp_json.get('message') == 'notdone':
+            if resp_json.get("status", 0) == URLSCAN_NOT_FOUND_CODE or resp_json.get("message") == "notdone":
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
 
-            resp_json_task = resp_json.get('task', {})
-            action_result.update_summary({"added_tags_num": len(resp_json_task.get('tags', []))})
+            resp_json_task = resp_json.get("task", {})
+            action_result.update_summary({"added_tags_num": len(resp_json_task.get("tags", []))})
             action_result.add_data(resp_json)
             action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
@@ -324,20 +324,20 @@ class UrlscanConnector(BaseConnector):
         if not self._api_key:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_API_KEY_MISSING_ERR)
 
-        url_to_scan = param['url']
-        private = param.get('private', False)
-        custom_agent = param.get('custom_agent')
-        get_result = param.get('get_result', True)
+        url_to_scan = param["url"]
+        private = param.get("private", False)
+        custom_agent = param.get("custom_agent")
+        get_result = param.get("get_result", True)
 
         # Parse tags
         tags = param.get("tags", "")
-        tags = [tags.strip() for tags in tags.split(',')]
+        tags = [tags.strip() for tags in tags.split(",")]
         tags = list(set(filter(None, tags)))  # non-duplicate tags
 
         if len(tags) > URLSCAN_MAX_TAGS_NUM:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_TAGS_EXCEED_MAX_ERR.format(URLSCAN_MAX_TAGS_NUM))
 
-        headers = {'Content-Type': 'application/json', 'API-Key': self._api_key}
+        headers = {"Content-Type": "application/json", "API-Key": self._api_key}
         data = {"url": url_to_scan, "public": "off" if private else "on", "tags": tags}
 
         if custom_agent:
@@ -347,14 +347,15 @@ class UrlscanConnector(BaseConnector):
         ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
 
         if phantom.is_fail(ret_val):
-            if response and response.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
+            if response and response.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
                 action_result.add_data(response)
-                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(
-                    response.get('message', 'None'), response.get('description', 'None')))
+                return action_result.set_status(
+                    phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(response.get("message", "None"), response.get("description", "None"))
+                )
 
             return action_result.get_status()
 
-        report_uuid = response.get('uuid')
+        report_uuid = response.get("uuid")
         if not report_uuid:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERR)
 
@@ -394,7 +395,7 @@ class UrlscanConnector(BaseConnector):
         return ret_val
 
     def _is_ip(self, input_ip_address):
-        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+        """Function that checks given address and return True if address is valid IPv4 or IPV6 address.
 
         :param input_ip_address: IP address
         :return: status (success/failure)
@@ -418,31 +419,32 @@ class UrlscanConnector(BaseConnector):
             self._state = {"app_version": self.get_app_json().get("app_version")}
 
         config = self.get_config()
-        self._api_key = config.get('api_key')
-        self.timeout = config.get('timeout', 120)
-        self.set_validator('ipv6', self._is_ip)
+        self._api_key = config.get("api_key")
+        self.timeout = config.get("timeout", 120)
+        self.set_validator("ipv6", self._is_ip)
 
         return phantom.APP_SUCCESS
 
     def finalize(self):
 
-        # Save the state, this data is saved accross actions and app upgrades
+        # Save the state, this data is saved across actions and app upgrades
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    import sys
+    from sys import argv, exit
 
     import pudb
+
     pudb.set_trace()
 
-    if len(sys.argv) < 2:
+    if len(argv) < 2:
         print("No test json specified as input")
         exit(0)
 
-    with open(sys.argv[1]) as f:
+    with open(argv[1]) as f:
         in_json = f.read()
         in_json = json.loads(in_json)
         print(json.dumps(in_json, indent=4))
