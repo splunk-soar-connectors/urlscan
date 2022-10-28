@@ -10,13 +10,13 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2022 Splunk Inc.",
-    "app_version": "2.3.0",
+    "app_version": "2.3.1",
     "utctime_updated": "2022-05-05T20:46:41.000000Z",
     "python_version": "3",
     "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
-    "min_phantom_version": "5.3.3",
+    "min_phantom_version": "5.3.4",
     "latest_tested_versions": [
         "Cloud August 31, 2022"
     ],
