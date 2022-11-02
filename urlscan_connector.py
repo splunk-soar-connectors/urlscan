@@ -206,7 +206,7 @@ class UrlscanConnector(BaseConnector):
             if (
                 not response or (
                     self._api_key and response.get("status", 0) != URLSCAN_BAD_REQUEST_CODE) or (
-                        response["message"] == "Invalid API key format")
+                        response["message"] == URLSCAN_API_KEY_ERR)
             ):
                 self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
                 return action_result.get_status()

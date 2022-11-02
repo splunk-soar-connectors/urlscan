@@ -39,6 +39,7 @@ URLSCAN_PROCESS_RESPONSE_ERR = "Can't process response from server. Status Code:
 URLSCAN_SERVER_CONNECTION_ERR = "Error Connecting to server. Details: {}"
 URLSCAN_TEST_CONNECTIVITY_ERR = "Test Connectivity Failed"
 URLSCAN_TEST_CONNECTIVITY_SUCC = "Test Connectivity Passed"
+URLSCAN_API_KEY_ERR = "Invalid API key format"  # pragma: allowlist secret
 URLSCAN_API_KEY_MISSING_ERR = "API Key is required to run detonate url"  # pragma: allowlist secret
 URLSCAN_REPORT_UUID_MISSING_ERR = "Unable to get report UUID from scan"
 URLSCAN_BAD_REQUEST_ERR = "Error: {0}. Description: {1}"
