@@ -108,8 +108,8 @@ class UrlscanConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            error_msg = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_msg)), None)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_message)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -181,8 +181,8 @@ class UrlscanConnector(BaseConnector):
                 url, json=data, headers=headers, verify=config.get("verify_server_cert", False), params=params, timeout=self.timeout
             )
         except Exception as e:
-            error_msg = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERR.format(error_msg)), resp_json)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTIVITY_ERR.format(error_message)), resp_json)
 
         return self._process_response(r, action_result)
 
