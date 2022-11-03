@@ -5187,6 +5187,7 @@
                 "private": {
                     "description": "Run a private scan",
                     "data_type": "boolean",
+                    "default": true,
                     "order": 2
                 },
                 "custom_agent": {
