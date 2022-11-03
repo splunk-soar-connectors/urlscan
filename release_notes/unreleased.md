@@ -1,2 +1,2 @@
 **Unreleased**
-* Minor bug fixes [PAPP-27986]
+* Updated test-connectivity endpoint [PAPP-27986]

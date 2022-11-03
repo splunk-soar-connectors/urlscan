@@ -116,12 +116,6 @@ class UrlscanConnector(BaseConnector):
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
         try:
-            # This is for test connectivity, so we can test the API key
-            #  without needing to create a token
-            if resp_json["status"] == URLSCAN_BAD_REQUEST_CODE:
-                # return RetVal(phantom.APP_ERROR, resp_json)
-                return RetVal(action_result.set_status(phantom.APP_ERROR, resp_json["message"]), resp_json)
-
             # The server should return a 404 if a scan isn't finished yet
             if resp_json["status"] == URLSCAN_NOT_FOUND_CODE:
                 return RetVal(phantom.APP_SUCCESS, resp_json)
@@ -131,7 +125,7 @@ class UrlscanConnector(BaseConnector):
         # You should process the error returned in the json
         message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace("{", "{{").replace("}", "}}"))
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, message), resp_json)
 
     def _process_response(self, r, action_result):
 
@@ -194,22 +188,14 @@ class UrlscanConnector(BaseConnector):
         if self._api_key:
             self.save_progress("Validating API Key")
             headers = {"API-Key": self._api_key}
-            data = {"url": "aaaaa", "public": "off"}
-            ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
+            ret_val, response = self._make_rest_call(URLSCAN_TEST_CONNECTIVITY_ENDPOINT, action_result, headers=headers)
         else:
             self.save_progress("No API key found, checking connectivity to urlscan.io")
-            ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format("urlscan.io"), action_result)
+            ret_val, response = self._make_rest_call(URLSCAN_TEST_CONNECTIVITY_ENDPOINT, action_result)
 
         if phantom.is_fail(ret_val):
-            # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
-            # If the API Key was invalid, it would return a 401
-            if (
-                not response or (
-                    self._api_key and response.get("status", 0) != URLSCAN_BAD_REQUEST_CODE) or (
-                        response["message"] == URLSCAN_API_KEY_ERR)
-            ):
-                self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
-                return action_result.get_status()
+            self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
+            return action_result.get_status()
 
         # Return success
         self.save_progress(URLSCAN_TEST_CONNECTIVITY_SUCC)
