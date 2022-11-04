@@ -2,11 +2,11 @@
 # urlscan\.io
 
 Publisher: Splunk  
-Connector Version: 2\.3\.0  
+Connector Version: 2\.3\.1  
 Product Vendor: urlscan\.io  
 Product Name: urlscan\.io  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.3\.3  
+Minimum Product Version: 5\.3\.5  
 
 This app supports investigative actions on urlscan\.io
 
