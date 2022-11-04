@@ -208,7 +208,8 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
             # If the API Key was invalid, it would return a 401
-            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE) or response["message"] == "Invalid API key format":
+            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE) or \
+                    (response["message"] == URLSCAN_INVALID_API):
                 self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERROR)
                 return action_result.get_status()
 
