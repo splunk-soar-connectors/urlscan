@@ -199,7 +199,7 @@ class UrlscanConnector(BaseConnector):
         if self._api_key:
             self.save_progress("Validating API Key")
             headers = {'API-Key': self._api_key}
-            data = {'url': 'aaaa', 'public': 'off'}
+            data = {'url': 'aaaaa', 'public': 'off'}
             ret_val, response = self._make_rest_call(URLSCAN_DETONATE_URL_ENDPOINT, action_result, headers=headers, data=data, method="post")
         else:
             self.save_progress("No API key found, checking connectivity to urlscan.io")
