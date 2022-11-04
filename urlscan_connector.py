@@ -98,7 +98,7 @@ class UrlscanConnector(BaseConnector):
         except Exception:
             error_text = "Cannot parse error details"
 
-        message = URLSCAN_HTML_RESPOSE_ERROR.format(status_code, error_text)
+        message = URLSCAN_HTML_RESPONSE_ERROR.format(status_code, error_text)
 
         message = message.replace('{', '{{').replace('}', '}}')
 
