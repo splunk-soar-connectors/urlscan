@@ -59,8 +59,8 @@ class UrlscanConnector(BaseConnector):
         :return: error message
         """
 
-        error_code = URLSCAN_ERR_CODE_UNAVAILABLE
-        error_message = URLSCAN_ERR_MESSAGE_UNAVAILABLE
+        error_code = URLSCAN_ERROR_CODE_UNAVAILABLE
+        error_message = URLSCAN_ERROR_MESSAGE_UNAVAILABLE
         self.error_print("Traceback: {}".format(traceback.format_stack()))
         try:
             if e.args:
@@ -111,7 +111,7 @@ class UrlscanConnector(BaseConnector):
             resp_json = r.json()
         except Exception as e:
             error_message = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_message)), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERROR.format(error_message)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -130,7 +130,7 @@ class UrlscanConnector(BaseConnector):
             self.debug_print("Error occurred while retrieving status_code")
 
         # You should process the error returned in the json
-        message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+        message = URLSCAN_JSON_RESPONSE_SERVER_ERROR.format(r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -248,7 +248,7 @@ class UrlscanConnector(BaseConnector):
         action_result.add_data(response)
 
         if response.get('results'):
-            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
         else:
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
@@ -272,7 +272,7 @@ class UrlscanConnector(BaseConnector):
         action_result.add_data(response)
 
         if response.get('results'):
-            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
         else:
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERR)
 
@@ -296,7 +296,7 @@ class UrlscanConnector(BaseConnector):
 
             if phantom.is_fail(ret_val):
                 if resp_json and resp_json.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
-                    message = URLSCAN_JSON_RESPONSE_SERVER_ERR.format(
+                    message = URLSCAN_JSON_RESPONSE_SERVER_ERROR.format(
                         resp_json['status'], json.dumps(resp_json).replace('{', '{{').replace('}', '}}'))
                     return action_result.set_status(phantom.APP_ERROR, message)
 
@@ -310,7 +310,7 @@ class UrlscanConnector(BaseConnector):
             action_result.update_summary({"added_tags_num": len(resp_json_task.get('tags', []))})
             action_result.add_data(resp_json)
             action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
-            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCC)
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERR.format(report_uuid))
 
@@ -349,7 +349,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             if response and response.get('status', 0) == URLSCAN_BAD_REQUEST_CODE:
                 action_result.add_data(response)
-                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERR.format(
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_BAD_REQUEST_ERROR.format(
                     response.get('message', 'None'), response.get('description', 'None')))
 
             return action_result.get_status()
