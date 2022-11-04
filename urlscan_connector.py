@@ -121,7 +121,7 @@ class UrlscanConnector(BaseConnector):
             # This is for test connectivity, so we can test the API key
             #  without needing to create a token
             if resp_json["status"] == URLSCAN_BAD_REQUEST_CODE:
-                return RetVal(phantom.APP_ERROR, resp_json)
+                return RetVal(action_result.set_status(phantom.APP_ERROR, resp_json["message"]), resp_json)
 
             # The server should return a 404 if a scan isn't finished yet
             if resp_json["status"] == URLSCAN_NOT_FOUND_CODE:
@@ -208,7 +208,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
             # If the API Key was invalid, it would return a 401
-            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE):
+            if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE) or response["message"] == "Invalid API key format":
                 self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERROR)
                 return action_result.get_status()
 
