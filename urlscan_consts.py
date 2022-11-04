@@ -30,6 +30,7 @@ URLSCAN_DETONATE_URL_ENDPOINT = "scan/"
 
 # Status messages
 URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"
+URLSCAN_INVALID_API = "Invalid API key format"
 URLSCAN_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or the action parameters."
 URLSCAN_EMPTY_RESPONSE_ERROR = "Status code: {}. Empty response and no information in the header"
 URLSCAN_HTML_RESPONSE_ERROR = "Status Code: {0}. Data from server: {1}"
