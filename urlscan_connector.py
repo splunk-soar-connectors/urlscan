@@ -60,19 +60,19 @@ class UrlscanConnector(BaseConnector):
         """
 
         error_code = URLSCAN_ERR_CODE_UNAVAILABLE
-        error_msg = URLSCAN_ERR_MSG_UNAVAILABLE
+        error_message = URLSCAN_ERR_MESSAGE_UNAVAILABLE
         self.error_print("Traceback: {}".format(traceback.format_stack()))
         try:
             if e.args:
                 if len(e.args) > 1:
                     error_code = e.args[0]
-                    error_msg = e.args[1]
+                    error_message = e.args[1]
                 elif len(e.args) == 1:
-                    error_msg = e.args[0]
+                    error_message = e.args[0]
         except Exception as ex:
             self._dump_error_log(ex, "Error occurred while fetching exception information")
 
-        return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
+        return "Error Code: {0}. Error Message: {1}".format(error_code, error_message)
 
     def _process_empty_response(self, response, action_result):
 
@@ -110,8 +110,8 @@ class UrlscanConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            error_msg = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_msg)), None)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_JSON_RESPONSE_PARSE_ERR.format(error_message)), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -186,8 +186,8 @@ class UrlscanConnector(BaseConnector):
                             params=params,
                             timeout=self.timeout)
         except Exception as e:
-            error_msg = self._get_error_message_from_exception(e)
-            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERR.format(error_msg)), resp_json)
+            error_message = self._get_error_message_from_exception(e)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTION_ERROR.format(error_message)), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -209,11 +209,11 @@ class UrlscanConnector(BaseConnector):
             # 400 is indicative of a malformed request, which we intentionally send to avoid starting a scan
             # If the API Key was invalid, it would return a 401
             if not response or (self._api_key and response.get('status', 0) != URLSCAN_BAD_REQUEST_CODE):
-                self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERR)
+                self.save_progress(URLSCAN_TEST_CONNECTIVITY_ERROR)
                 return action_result.get_status()
 
         # Return success
-        self.save_progress(URLSCAN_TEST_CONNECTIVITY_SUCC)
+        self.save_progress(URLSCAN_TEST_CONNECTIVITY_SUCCESS)
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_report(self, param):
