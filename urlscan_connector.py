@@ -352,7 +352,7 @@ class UrlscanConnector(BaseConnector):
         action_result.add_data(response)
         action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
         action_result.update_summary({})
-        return action_result.set_status(phantom.APP_SUCCESS)
+        return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
     def handle_action(self, param):
 
