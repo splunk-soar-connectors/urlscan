@@ -15,7 +15,7 @@
 #
 #
 # Constants
-URLSCAN_BASE_URL = "https://urlscan.io/api/v1/"
+URLSCAN_BASE_URL = "https://urlscan.io"
 URLSCAN_MAX_POLLING_ATTEMPTS = 10
 URLSCAN_POLLING_INTERVAL = 15
 URLSCAN_MAX_TAGS_NUM = 10
@@ -23,10 +23,11 @@ URLSCAN_BAD_REQUEST_CODE = 400
 URLSCAN_NOT_FOUND_CODE = 404
 
 # Endpoints
-URLSCAN_HUNT_DOMAIN_ENDPOINT = 'search/?q=domain:{}'
-URLSCAN_HUNT_IP_ENDPOINT = 'search/?q=ip:"{}"'
-URLSCAN_POLL_SUBMISSION_ENDPOINT = "result/{}"
-URLSCAN_DETONATE_URL_ENDPOINT = "scan/"
+URLSCAN_HUNT_DOMAIN_ENDPOINT = "/api/v1/search/?q=domain:{}"
+URLSCAN_HUNT_IP_ENDPOINT = '/api/v1/search/?q=ip:"{}"'
+URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
+URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
+URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
 
 # Status messages
 URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"

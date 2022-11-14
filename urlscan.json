@@ -18,7 +18,7 @@
     "main_module": "urlscan_connector.py",
     "min_phantom_version": "5.3.5",
     "latest_tested_versions": [
-        "Cloud August 31, 2022"
+        "Cloud November 10, 2022"
     ],
     "app_wizard_version": "1.0.0",
     "configuration": {
