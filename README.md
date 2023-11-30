@@ -1,14 +1,14 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# urlscan\.io
+# urlscan.io
 
 Publisher: Splunk  
-Connector Version: 2\.5\.0  
-Product Vendor: urlscan\.io  
-Product Name: urlscan\.io  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.3\.5  
+Connector Version: 2.5.1  
+Product Vendor: urlscan.io  
+Product Name: urlscan.io  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.3.5  
 
-This app supports investigative actions on urlscan\.io
+This app supports investigative actions on urlscan.io
 
 [comment]: # " File: README.md"
 [comment]: # "  Copyright (c) 2017-2022 Splunk Inc."
@@ -40,19 +40,19 @@ ports used by Splunk SOAR.
 
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a urlscan\.io asset in SOAR.
+The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a urlscan.io asset in SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**api\_key** |  optional  | password | API key for urlscan\.io
-**timeout** |  optional  | numeric | Timeout period for action \(seconds\)
+**api_key** |  optional  | password | API key for urlscan.io
+**timeout** |  optional  | numeric | Timeout period for action (seconds)
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
 [get report](#action-get-report) - Query for results of an already completed detonation  
-[lookup domain](#action-lookup-domain) - Find information about a domain at urlscan\.io  
-[lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan\.io  
-[detonate url](#action-detonate-url) - Detonate a URL at urlscan\.io  
+[lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io  
+[lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io  
+[detonate url](#action-detonate-url) - Detonate a URL at urlscan.io  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity using supplied configuration
@@ -60,7 +60,7 @@ Validate the asset configuration for connectivity using supplied configuration
 Type: **test**  
 Read only: **True**
 
-This will attempt to connect by running an action which would require usage of the API key\. If there is no API key set, it will still run a query to make sure the <b>urlscan\.io</b> API can be queried\.
+This will attempt to connect by running an action which would require usage of the API key. If there is no API key set, it will still run a query to make sure the <b>urlscan.io</b> API can be queried.
 
 #### Action Parameters
 No parameters are required for this action
@@ -80,632 +80,632 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **id** |  required  | Detonation ID for the desired report | string |  `urlscan submission id` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.id | string |  `urlscan submission id` 
-action\_result\.data\.\*\.data\.console\.\*\.message\.column | numeric | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.level | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.line | numeric | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.source | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.text | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.url | string |  `url` 
-action\_result\.data\.\*\.data\.cookies\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.data\.cookies\.\*\.expires | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.httpOnly | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.name | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.path | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.priority | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sameParty | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sameSite | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.secure | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.session | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.size | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sourcePort | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sourceScheme | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.value | string | 
-action\_result\.data\.\*\.data\.globals\.\*\.prop | string | 
-action\_result\.data\.\*\.data\.globals\.\*\.type | string | 
-action\_result\.data\.\*\.data\.links\.\*\.href | string |  `url` 
-action\_result\.data\.\*\.data\.links\.\*\.text | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.documentURL | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.frameId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.hasUserGesture | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.functionName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.scriptId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.loaderId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.primaryRequest | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.hasPostData | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Origin | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Referer | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.initialPriority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.mixedContentType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.postData | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.postDataEntries\.\*\.bytes | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.referrerPolicy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.wallTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.documentURL | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.frameId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.hasUserGesture | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.loaderId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.asn | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.description | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.registrar | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.route | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.area | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.city | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.eu | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.range | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.region | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.timezone | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Security\-Policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Set\-Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.X\-Frame\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.X\-XSS\-Protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-security\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.expect\-ct | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.referrer\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.set\-cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.strict\-transport\-security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-content\-type\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-frame\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-xss\-protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.rdns\.ptr | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:authority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:path | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:scheme | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-user | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.upgrade\-insecure\-requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.user\-agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.headers\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.headers\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.initialPriority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.mixedContentType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.referrerPolicy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.requestId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.wallTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.source | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.asn | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.description | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.registrar | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.route | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.dataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.blockedReason | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.canceled | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.errorText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.area | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.city | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.eu | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.range | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.region | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.timezone | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hash | string |  `sha256` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.file | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.project | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.project\_url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.source | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.rdns\.ptr | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Accept\-Ranges | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Credentials | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Methods | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Expose\-Headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Max\-Age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Alt\-Svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Security\-Policy\-Report\-Only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.ETag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Etag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Expect\-CT | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Keep\-Alive | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Last\-Modified | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Public\-Key\-Pins\-Report\-Only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Referrer\-Policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Timing\-Allow\-Origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Upgrade | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Via | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Amz\-Cf\-Id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Amz\-Cf\-Pop | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Cache | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Content\-Type\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Frame\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-LLID | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Powered\-By | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-XSS\-Protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.accept\-ranges | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-methods | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.alt\-svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.ats\-carp\-promotion | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-security\-policy\-report\-only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.etag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.expect\-ct | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.last\-modified | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.link | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.referrer\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.status | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.strict\-transport\-security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.timing\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.vary | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.via | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-cf\-id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-cf\-pop | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-id\-2 | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-request\-id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-server\-side\-encryption | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-cache | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-content\-type\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-frame\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-xss\-protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.hashAlgorithm | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.logDescription | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.logId | string |  `sha256` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.signatureAlgorithm | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.signatureData | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.status | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityHeaders\.\*\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityHeaders\.\*\.value | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.size | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.type | string | 
-action\_result\.data\.\*\.data\.timing\.beginNavigation | string | 
-action\_result\.data\.\*\.data\.timing\.domContentEventFired | string | 
-action\_result\.data\.\*\.data\.timing\.frameNavigated | string | 
-action\_result\.data\.\*\.data\.timing\.frameStartedLoading | string | 
-action\_result\.data\.\*\.data\.timing\.frameStoppedLoading | string | 
-action\_result\.data\.\*\.data\.timing\.loadEventFired | string | 
-action\_result\.data\.\*\.lists\.asns | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.issuer | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.sanList | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.subjectName | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.validFrom | numeric | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.validTo | numeric | 
-action\_result\.data\.\*\.lists\.countries | string | 
-action\_result\.data\.\*\.lists\.domains | string | 
-action\_result\.data\.\*\.lists\.hashes | string |  `sha256` 
-action\_result\.data\.\*\.lists\.ips | string | 
-action\_result\.data\.\*\.lists\.linkDomains | string | 
-action\_result\.data\.\*\.lists\.servers | string | 
-action\_result\.data\.\*\.lists\.urls | string |  `url` 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.source | string | 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.type | string | 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.meta\.processors\.abp\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.asn | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.country | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.date | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.description | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.name | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.registrar | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.route | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.data\.\*\.hash | string |  `sha256` 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.data\.\*\.matches | string | 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.done\.data\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.done\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.area | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.city | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.country | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.eu | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.range | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.region | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.timezone | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.geoip\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.data\.matches\.\*\.cacheDuration | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.data\.matches\.\*\.platformType | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.data\.matches\.\*\.threat\.url | string |  `url` 
-action\_result\.data\.\*\.meta\.processors\.gsb\.data\.matches\.\*\.threatEntryType | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.data\.matches\.\*\.threatType | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.rdns\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.rdns\.data\.\*\.ptr | string | 
-action\_result\.data\.\*\.meta\.processors\.rdns\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.wappa\.state | string | 
-action\_result\.data\.\*\.page\.asn | string | 
-action\_result\.data\.\*\.page\.asnname | string | 
-action\_result\.data\.\*\.page\.city | string | 
-action\_result\.data\.\*\.page\.country | string | 
-action\_result\.data\.\*\.page\.domain | string |  `domain` 
-action\_result\.data\.\*\.page\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.page\.ptr | string | 
-action\_result\.data\.\*\.page\.server | string | 
-action\_result\.data\.\*\.page\.url | string |  `url` 
-action\_result\.data\.\*\.stats\.IPv6Percentage | numeric | 
-action\_result\.data\.\*\.stats\.adBlocked | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.initiators | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.asn | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.country | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.date | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.description | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.ip | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.name | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.registrar | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.route | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.count | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.domains | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.area | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.city | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.country | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.eu | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.range | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.region | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.timezone | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.ipv6 | boolean | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.rdns\.ptr | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.requests | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.malicious | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.ips | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.protocol | string |  `url` 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.regDomain | string |  `domain` 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.country | string | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.failed | boolean | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.compression | string | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.ips | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.latency | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.percentage | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.type | string | 
-action\_result\.data\.\*\.stats\.securePercentage | numeric | 
-action\_result\.data\.\*\.stats\.secureRequests | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.server | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.ips | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.2 / ECDHE\_ECDSA / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.2 / ECDHE\_RSA / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.3 /  / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.3 /  / AES\_256\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.securityState | string | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.totalLinks | numeric | 
-action\_result\.data\.\*\.stats\.uniqCountries | numeric | 
-action\_result\.data\.\*\.submitter\.country | string | 
-action\_result\.data\.\*\.task\.domURL | string |  `url` 
-action\_result\.data\.\*\.task\.method | string | 
-action\_result\.data\.\*\.task\.options\.useragent | string | 
-action\_result\.data\.\*\.task\.reportURL | string |  `url` 
-action\_result\.data\.\*\.task\.screenshotURL | string |  `url` 
-action\_result\.data\.\*\.task\.source | string | 
-action\_result\.data\.\*\.task\.time | string | 
-action\_result\.data\.\*\.task\.url | string |  `url` 
-action\_result\.data\.\*\.task\.userAgent | string | 
-action\_result\.data\.\*\.task\.uuid | string |  `urlscan submission id` 
-action\_result\.data\.\*\.task\.visibility | string | 
-action\_result\.data\.\*\.verdicts\.community\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesBenign | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesMalicious | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.benignTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.enginesTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.maliciousTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.overall\.hasVerdicts | numeric | 
-action\_result\.data\.\*\.verdicts\.overall\.malicious | boolean | 
-action\_result\.data\.\*\.verdicts\.overall\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.urlscan\.malicious | boolean | 
-action\_result\.data\.\*\.verdicts\.urlscan\.score | numeric | 
-action\_result\.summary\.added\_tags\_num | numeric | 
-action\_result\.summary\.report\_uuid | string |  `urlscan submission id` 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.id | string |  `urlscan submission id`  |   86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.data.console.\*.message.column | numeric |  |   552 
+action_result.data.\*.data.console.\*.message.level | string |  |   log 
+action_result.data.\*.data.console.\*.message.line | numeric |  |   2 
+action_result.data.\*.data.console.\*.message.source | string |  |   console-api 
+action_result.data.\*.data.console.\*.message.text | string |  |   JQMIGRATE: Migrate is installed, version 1.4.1 
+action_result.data.\*.data.console.\*.message.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.cookies.\*.domain | string |  `domain`  |   .test.test 
+action_result.data.\*.data.cookies.\*.expires | numeric |  |   1620630019.555948 
+action_result.data.\*.data.cookies.\*.httpOnly | boolean |  |   False 
+action_result.data.\*.data.cookies.\*.name | string |  |   TestName 
+action_result.data.\*.data.cookies.\*.path | string |  |   / 
+action_result.data.\*.data.cookies.\*.priority | string |  |   Medium 
+action_result.data.\*.data.cookies.\*.sameParty | boolean |  |   False 
+action_result.data.\*.data.cookies.\*.sameSite | string |  |  
+action_result.data.\*.data.cookies.\*.secure | boolean |  |   True 
+action_result.data.\*.data.cookies.\*.session | boolean |  |   False 
+action_result.data.\*.data.cookies.\*.size | numeric |  |   12 
+action_result.data.\*.data.cookies.\*.sourcePort | numeric |  |   443 
+action_result.data.\*.data.cookies.\*.sourceScheme | string |  |   Secure 
+action_result.data.\*.data.cookies.\*.value | string |  |   ARxQvcfS 
+action_result.data.\*.data.globals.\*.prop | string |  |   onbeforexrselect 
+action_result.data.\*.data.globals.\*.type | string |  |   object 
+action_result.data.\*.data.links.\*.href | string |  `url`  |   https://test.test 
+action_result.data.\*.data.links.\*.text | string |  |   Feedback 
+action_result.data.\*.data.requests.\*.initiatorInfo.host | string |  |   test.test 
+action_result.data.\*.data.requests.\*.initiatorInfo.type | string |  |   parser 
+action_result.data.\*.data.requests.\*.initiatorInfo.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.documentURL | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.frameId | string |  |   8956.1 
+action_result.data.\*.data.requests.\*.request.hasUserGesture | boolean |  |   False 
+action_result.data.\*.data.requests.\*.request.initiator.columnNumber | numeric |  |   88 
+action_result.data.\*.data.requests.\*.request.initiator.lineNumber | numeric |  |   27 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.columnNumber | numeric |  |   16 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.functionName | string |  |  
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.lineNumber | numeric |  |   26 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.scriptId | string |  |   31 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.initiator.type | string |  |   other 
+action_result.data.\*.data.requests.\*.request.initiator.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.loaderId | string |  |   8956.1 
+action_result.data.\*.data.requests.\*.request.primaryRequest | boolean |  |   True 
+action_result.data.\*.data.requests.\*.request.redirectResponse.encodedDataLength | numeric |  |   295 
+action_result.data.\*.data.requests.\*.request.redirectResponse.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Content-Length | string |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Date | string |  |   Mon, 10 May 2021 06:30:19 GMT 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Location | string |  `url`  |   https://abc.test.test/v2/collectConsent?sessionId=123 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Server | string |  |   test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.request.redirectResponse.mimeType | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.remoteIPAddress | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.request.redirectResponse.remotePort | numeric |  |   443 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept-Encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Cookie | string |  |   B=5m9tgmtg9hknr&b=3&s=6v; TEST=ARxQvcfS 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-User | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.responseTime | numeric |  |   1620628219732.224 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.keyExchange | string |  |   ECDHE_RSA 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.keyExchangeGroup | string |  |   P-256 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.protocol | string |  |   TLS 1.2 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.sanList | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.subjectName | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.validFrom | numeric |  |   1615766400 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.validTo | numeric |  |   1631145599 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityState | string |  |   secure 
+action_result.data.\*.data.requests.\*.request.redirectResponse.status | numeric |  |   302 
+action_result.data.\*.data.requests.\*.request.redirectResponse.statusText | string |  |   Found 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.connectEnd | numeric |  |   125.951 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.connectStart | numeric |  |   7.534 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.dnsEnd | numeric |  |   7.534 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.dnsStart | numeric |  |   0.359 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.receiveHeadersEnd | numeric |  |   175.489 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.requestTime | numeric |  |   31842294.2485 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sendEnd | numeric |  |   126.079 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sendStart | numeric |  |   126.003 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sslEnd | numeric |  |   125.944 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sslStart | numeric |  |   21.529 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.url | string |  `url`  |   https://abc.test.test/consent?brandType=eu 
+action_result.data.\*.data.requests.\*.request.request.hasPostData | boolean |  |   True 
+action_result.data.\*.data.requests.\*.request.request.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.request.request.headers.Content-Type | string |  |   application/csp-report 
+action_result.data.\*.data.requests.\*.request.request.headers.Origin | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.request.headers.Referer | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.request.headers.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.request.request.headers.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.request.request.initialPriority | string |  |   VeryHigh 
+action_result.data.\*.data.requests.\*.request.request.method | string |  |   GET 
+action_result.data.\*.data.requests.\*.request.request.mixedContentType | string |  |  
+action_result.data.\*.data.requests.\*.request.request.postData | string |  |   {"csp-report":{"document-uri":"https://abc.test.test/v2?sessionId=123","referrer":"","violated-directive":"script-src-elem","effective-directive":"script-src-elem","original-policy":"default-src 'none'; block-all-mixed-content; connect-src https://abc.test.test 'self'; frame-ancestors 'none'; img-src 'self'; media-src 'none'; script-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; style-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; font-src 'self'; object-src 'none'; frame-src 'none'; report-uri https://abc.test.test/report","disposition":"report","blocked-uri":"https://xyz.test.test","status-code":0,"script-sample":""}} 
+action_result.data.\*.data.requests.\*.request.request.postDataEntries.\*.bytes | string |  |  
+action_result.data.\*.data.requests.\*.request.request.referrerPolicy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.request.request.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.requestId | string |  |   8956.1 
+action_result.data.\*.data.requests.\*.request.timestamp | numeric |  |   25133387.317983 
+action_result.data.\*.data.requests.\*.request.type | string |  |   Document 
+action_result.data.\*.data.requests.\*.request.wallTime | numeric |  |   1502204689.61988 
+action_result.data.\*.data.requests.\*.requests.\*.documentURL | string |  `url`  |   http://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.frameId | string |  `md5`  |   041DE214F7F9878051EDF0C5717E0443 
+action_result.data.\*.data.requests.\*.requests.\*.hasUserGesture | boolean |  |   False 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.type | string |  |   other 
+action_result.data.\*.data.requests.\*.requests.\*.loaderId | string |  `md5`  |   DADC99FFA74AE5BA5FD45D5A205F78FE 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.asn | string |  |   34010 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.country | string |  |   GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.date | string |  |   2004-09-29 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.description | string |  |   TEST, GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.ip | string |  `ip`  `ipv6`  |   2a00:1288:110:c305::1:8000 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.name | string |  |   TEST-IRD 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.registrar | string |  |   ripencc 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.route | string |  |   2a00:1288:110::/48 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.encodedDataLength | numeric |  |   1132 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.area | numeric |  |   100 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.city | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.country | string |  |   GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.country_name | string |  |   United Kingdom 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.eu | string |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.ll | numeric |  |   -6.2591 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.metro | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.range | numeric |  |   875823103 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.region | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.timezone | string |  |   Europe/London 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Cache-Control | string |  |   no-store, no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Language | string |  |   en 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Length | string |  |   8 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Security-Policy | string |  |   frame-ancestors 'self' https://\*.test.test https://\*.abc.test https://\*.test.abc; sandbox allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation; report-uri https://abc.test.test/beacon/csp?src=ats&region=US&lang=en-US; 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Type | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Date | string |  |   Mon, 10 May 2021 06:30:19 GMT 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Location | string |  `url`  |   https://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Server | string |  |   ATS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Set-Cookie | string |  |   B=5m9tgmtg9hknr&b=3&s=6v; expires=Tue, 10-May-2022 06:30:19 GMT; path=/; domain=.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.X-Frame-Options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.X-XSS-Protection | string |  |   1; report="https://abc.test.test" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.cache-control | string |  |   no-store 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-language | string |  |   en 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-length | string |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-security-policy | string |  |   frame-ancestors 'self' https://\*.abc.test https://\*.test.abc https://\*.test.test https://\*.abc.abc; sandbox allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation; report-uri https://abc.test.test/beacon/csp?src=ats&region=US&lang=en-US; 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-type | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.date | string |  |   Mon, 10 May 2021 06:30:19 GMT 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.expect-ct | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=t-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.location | string |  `url`  |   https://abc.test.test/?h=us 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.server | string |  |   ATS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.set-cookie | string |  |   RRC=st=1620628219&cnt=1; expires=Mon, 10-May-2021 06:30:49 GMT; path=/; domain=.abc.test.test; HttpOnly 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.strict-transport-security | string |  |   max-age=31536000 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-content-type-options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-frame-options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-xss-protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.mimeType | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.remoteIPAddress | string |  `ip`  `ipv6`  |   [2a00:1288:110:c305::1:8000] 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.remotePort | numeric |  |   80 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:authority | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:method | string |  |   GET 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:path | string |  |   / 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:scheme | string |  `url`  |   https 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept-Encoding | string |  |   gzip, deflate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Cookie | string |  |   B=5m9tgmtg9hknr&b=3&s=6v; TEST=ARxQvcfS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-User | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept-encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept-language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.cache-control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.cookie | string |  |   B=5m9tgmtg9hknr&b=3&s=6v 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-dest | string |  |   document 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-site | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-user | string |  |   ?1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.upgrade-insecure-requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.user-agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.responseTime | numeric |  |   1620628219395.843 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.keyExchange | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.keyExchangeGroup | string |  |   X25519 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.protocol | string |  |   TLS 1.3 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.sanList | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.subjectName | string |  |   \*.abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.validFrom | numeric |  |   1614556800 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.validTo | numeric |  |   1629849599 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityState | string |  |   insecure 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.status | numeric |  |   301 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.statusText | string |  |   Moved Permanently 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.connectEnd | numeric |  |   32.743 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.connectStart | numeric |  |   1.247 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.dnsEnd | numeric |  |   1.247 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.dnsStart | numeric |  |   0.357 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.receiveHeadersEnd | numeric |  |   68.337 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.requestTime | numeric |  |   31842294.019283 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sendEnd | numeric |  |   32.841 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sendStart | numeric |  |   32.8 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sslEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sslStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.url | string |  `url`  |   http://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.request.headers.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.request.headers.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.request.initialPriority | string |  |   VeryHigh 
+action_result.data.\*.data.requests.\*.requests.\*.request.method | string |  |   GET 
+action_result.data.\*.data.requests.\*.requests.\*.request.mixedContentType | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.request.referrerPolicy | string |  |   strict-origin-when-cross-origin 
+action_result.data.\*.data.requests.\*.requests.\*.request.url | string |  `url`  |   http://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.requestId | string |  `md5`  |   DADC99FFA74AE5BA5FD45D5A205F78FE 
+action_result.data.\*.data.requests.\*.requests.\*.timestamp | numeric |  |   31842294.018831 
+action_result.data.\*.data.requests.\*.requests.\*.type | string |  |   Document 
+action_result.data.\*.data.requests.\*.requests.\*.wallTime | numeric |  |   1620628219.327166 
+action_result.data.\*.data.requests.\*.response.abp.source | string |  |   Test Inc. 
+action_result.data.\*.data.requests.\*.response.abp.type | string |  |   annoyance 
+action_result.data.\*.data.requests.\*.response.abp.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.asn.asn | string |  |   15169 
+action_result.data.\*.data.requests.\*.response.asn.country | string |  |   US 
+action_result.data.\*.data.requests.\*.response.asn.date | string |  |   2000-03-30 
+action_result.data.\*.data.requests.\*.response.asn.description | string |  |   TEST - Test Inc., US 
+action_result.data.\*.data.requests.\*.response.asn.ip | string |  `ip`  `ipv6`  |   2a00:1450:4001:814::200a 
+action_result.data.\*.data.requests.\*.response.asn.name | string |  |   Test Inc. 
+action_result.data.\*.data.requests.\*.response.asn.registrar | string |  |   arin 
+action_result.data.\*.data.requests.\*.response.asn.route | string |  |   34.240.0.0/13 
+action_result.data.\*.data.requests.\*.response.dataLength | numeric |  |   29453 
+action_result.data.\*.data.requests.\*.response.encodedDataLength | numeric |  |   29660 
+action_result.data.\*.data.requests.\*.response.failed.blockedReason | string |  |   mixed-content 
+action_result.data.\*.data.requests.\*.response.failed.canceled | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.response.failed.errorText | string |  |  
+action_result.data.\*.data.requests.\*.response.failed.requestId | string |  |   8956.7 
+action_result.data.\*.data.requests.\*.response.failed.timestamp | numeric |  |   25133388.092608 
+action_result.data.\*.data.requests.\*.response.failed.type | string |  |   Stylesheet 
+action_result.data.\*.data.requests.\*.response.geoip.area | numeric |  |   1000 
+action_result.data.\*.data.requests.\*.response.geoip.city | string |  |  
+action_result.data.\*.data.requests.\*.response.geoip.country | string |  |   BG 
+action_result.data.\*.data.requests.\*.response.geoip.country_name | string |  |   Bulgaria 
+action_result.data.\*.data.requests.\*.response.geoip.eu | string |  |   1 
+action_result.data.\*.data.requests.\*.response.geoip.ll | numeric |  |   23.3333 
+action_result.data.\*.data.requests.\*.response.geoip.metro | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.geoip.range | numeric |  |   1275985919 
+action_result.data.\*.data.requests.\*.response.geoip.region | string |  |  
+action_result.data.\*.data.requests.\*.response.geoip.timezone | string |  |   Europe/Dublin 
+action_result.data.\*.data.requests.\*.response.geoip.zip | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.hash | string |  `sha256`  |   824c215e931c70313b86d89c6ddb4c4c3b0a29604dc3a4f3ef287364e8d80607 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.file | string |  |   jquery-migrate/1.4.1/jquery-migrate.min.js 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.project | string |  |   jquery-migrate 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.project_url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.source | string |  |   Test Inc. 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.response.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.response.requestId | string |  |   8956.1 
+action_result.data.\*.data.requests.\*.response.response.encodedDataLength | numeric |  |   83 
+action_result.data.\*.data.requests.\*.response.response.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.response.response.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.response.response.headers.Accept-Ranges | string |  |   bytes 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Credentials | string |  |   true 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Headers | string |  |   origin,range,hdntl,hdnts 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Methods | string |  |   GET,POST,OPTIONS 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Expose-Headers | string |  |   Content-Range, X-ATLAS-MARKERS 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Max-Age | string |  |   86400 
+action_result.data.\*.data.requests.\*.response.response.headers.Age | string |  |   0 
+action_result.data.\*.data.requests.\*.response.response.headers.Alt-Svc | string |  |   h3-29=":443"; ma=93600,h3-Q050=":443"; ma=93600,quic=":443"; ma=93600; v="46,43" 
+action_result.data.\*.data.requests.\*.response.response.headers.Cache-Control | string |  |   no-cache, no-store, must-revalidate 
+action_result.data.\*.data.requests.\*.response.response.headers.Connection | string |  |   Upgrade, Keep-Alive 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Encoding | string |  |   gzip 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Length | string |  |   25663 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Security-Policy-Report-Only | string |  |   default-src 'none'; block-all-mixed-content; connect-src https://\*.abc.test.test https://\*.abc.abc.test 'self'; frame-ancestors 'none'; img-src 'self' https://test.img https://\*.img.test; media-src 'none'; script-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; style-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Type | string |  |   image/png 
+action_result.data.\*.data.requests.\*.response.response.headers.Date | string |  |   Tue, 08 Aug 2017 15:04:49 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.ETag | string |  |   "52613b8-643f-5449ffc1d1aee" 
+action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "b4491705564909da7f9eaf749dbbfbb1" 
+action_result.data.\*.data.requests.\*.response.response.headers.Expect-CT | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=test-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.Expires | string |  |   0 
+action_result.data.\*.data.requests.\*.response.response.headers.Keep-Alive | string |  |   timeout=5, max=300 
+action_result.data.\*.data.requests.\*.response.response.headers.Last-Modified | string |  |   Tue, 27 Dec 2016 08:53:23 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |  
+action_result.data.\*.data.requests.\*.response.response.headers.Referrer-Policy | string |  |   strict-origin-when-cross-origin 
+action_result.data.\*.data.requests.\*.response.response.headers.Server | string |  |   TestServer/1.4 
+action_result.data.\*.data.requests.\*.response.response.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.response.response.headers.Timing-Allow-Origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.Upgrade | string |  |   h2,h2c 
+action_result.data.\*.data.requests.\*.response.response.headers.Via | string |  |   1.1 19e8b9893b635d62599a448aea7db.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Amz-Cf-Id | string |  |   W1YaaqDYWLSgU38zsXQ7Xt55F4FdEAEdd0YNqtTtvs3DkqA== 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Amz-Cf-Pop | string |  |   VIE50-C1 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Cache | string |  |   HIT 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Content-Type-Options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Frame-Options | string |  |   DENY 
+action_result.data.\*.data.requests.\*.response.response.headers.X-LLID | string |  `md5`  |   40b5a42c1598c14b83edff465cd62db1 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Powered-By | string |  |   Express 
+action_result.data.\*.data.requests.\*.response.response.headers.X-XSS-Protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.response.response.headers.accept-ranges | string |  |   bytes 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-methods | string |  |   GET 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.age | string |  |   520785 
+action_result.data.\*.data.requests.\*.response.response.headers.alt-svc | string |  |   quic=":443"; ma=2592000; v="39,38,37,36,35" 
+action_result.data.\*.data.requests.\*.response.response.headers.ats-carp-promotion | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.headers.cache-control | string |  |   no-cache, must-revalidate, max-age=0 
+action_result.data.\*.data.requests.\*.response.response.headers.content-encoding | string |  |   gzip 
+action_result.data.\*.data.requests.\*.response.response.headers.content-length | string |  |   29453 
+action_result.data.\*.data.requests.\*.response.response.headers.content-security-policy-report-only | string |  |   default-src 'self'; report-uri https://abc.test.test/beacon/csp?src=test 
+action_result.data.\*.data.requests.\*.response.response.headers.content-type | string |  |   text/html; charset=UTF-8 
+action_result.data.\*.data.requests.\*.response.response.headers.date | string |  |   Tue, 08 Aug 2017 15:04:47 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.etag | string |  |   "5267f53-62c-53514e7323a80" 
+action_result.data.\*.data.requests.\*.response.response.headers.expect-ct | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=test-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.expires | string |  |   Wed, 11 Jan 1984 05:00:00 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.last-modified | string |  |   Sun, 12 Jun 2016 13:39:38 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.link | string |  |   <https://test.test/>; rel="https://api.test.test/" 
+action_result.data.\*.data.requests.\*.response.response.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.response.response.headers.server | string |  |   TestServer/1.4 
+action_result.data.\*.data.requests.\*.response.response.headers.status | string |  |   200 
+action_result.data.\*.data.requests.\*.response.response.headers.strict-transport-security | string |  |   max-age=15552000 
+action_result.data.\*.data.requests.\*.response.response.headers.timing-allow-origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.vary | string |  |   Accept-Encoding 
+action_result.data.\*.data.requests.\*.response.response.headers.via | string |  |   1.1 e8b17f734954ee4d46d2f302323482.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-cf-id | string |  |   Ob7ZSkPXvNH-2XbYyQH7lZFv5GbTNPkCXbSwtcOodIA== 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-cf-pop | string |  |   FRA53-C1 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-id-2 | string |  |   ha+gqKNXBkV1gqr4AHswgx1OZSCdM7otKBZCL/JFLsojoWZn3JWVruarvQAhNV9ejI7FMh7PalI= 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-request-id | string |  |   2KMY2R40Y5WJNG70 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-server-side-encryption | string |  |   AES256 
+action_result.data.\*.data.requests.\*.response.response.headers.x-cache | string |  |   Hit from TestCloud 
+action_result.data.\*.data.requests.\*.response.response.headers.x-content-type-options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.response.response.headers.x-frame-options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.response.response.headers.x-xss-protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.response.response.mimeType | string |  |   text/html 
+action_result.data.\*.data.requests.\*.response.response.protocol | string |  `url`  |   spdy 
+action_result.data.\*.data.requests.\*.response.response.remoteIPAddress | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.response.response.remotePort | numeric |  |   443 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.\* | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept-Encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Cookie | string |  |   B=5m9tgmtg9hknr&b=3&s=6v; GUCS=ARxQvcfS 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-User | string |  |   ?1 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.response.response.responseTime | numeric |  |   1620628219933.255 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.keyExchange | string |  |   ECDHE_RSA 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.keyExchangeGroup | string |  |   P-256 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.protocol | string |  |   TLS 1.2 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.sanList | string |  |   www.test.test 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.hashAlgorithm | string |  |   SHA-256 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.logDescription | string |  |   Test 'test' log 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.logId | string |  `sha256`  |   EE4BBDB775CE60BAE142691FABE19E66A30F7E5FB072D88300C47B897AA8FDCB 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.origin | string |  |   TLS extension 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.signatureAlgorithm | string |  |   ECDSA 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.signatureData | string |  |   3045022100AB7CB0ADFD0A97125FCAFD75E16A0D7A963F97320318AFA76DFDDC760E67B0C602203C006DC6534D6C297F5B65897285E04AE6C303A5C3C6D7E7FAEF75A33E95CB23 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.status | string |  |   Verified 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.timestamp | numeric |  |   1500976717935 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.subjectName | string |  |   test.test 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.validFrom | numeric |  |   1498179660 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.validTo | numeric |  |   1505955660 
+action_result.data.\*.data.requests.\*.response.response.securityHeaders.\*.name | string |  |   X-Content-Type-Options 
+action_result.data.\*.data.requests.\*.response.response.securityHeaders.\*.value | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.response.response.securityState | string |  |   secure 
+action_result.data.\*.data.requests.\*.response.response.status | numeric |  |   200 
+action_result.data.\*.data.requests.\*.response.response.statusText | string |  |  
+action_result.data.\*.data.requests.\*.response.response.timing.connectEnd | numeric |  |   151.193000376225 
+action_result.data.\*.data.requests.\*.response.response.timing.connectStart | numeric |  |   69.2119970917702 
+action_result.data.\*.data.requests.\*.response.response.timing.dnsEnd | numeric |  |   69.2119970917702 
+action_result.data.\*.data.requests.\*.response.response.timing.dnsStart | numeric |  |   0.328999012708664 
+action_result.data.\*.data.requests.\*.response.response.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.timing.receiveHeadersEnd | numeric |  |   294.531997293234 
+action_result.data.\*.data.requests.\*.response.response.timing.requestTime | numeric |  |   25133387.319129 
+action_result.data.\*.data.requests.\*.response.response.timing.sendEnd | numeric |  |   151.373997330666 
+action_result.data.\*.data.requests.\*.response.response.timing.sendStart | numeric |  |   151.313997805119 
+action_result.data.\*.data.requests.\*.response.response.timing.sslEnd | numeric |  |   151.184998452663 
+action_result.data.\*.data.requests.\*.response.response.timing.sslStart | numeric |  |   107.120998203754 
+action_result.data.\*.data.requests.\*.response.response.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.size | numeric |  |   29453 
+action_result.data.\*.data.requests.\*.response.type | string |  |   Document 
+action_result.data.\*.data.timing.beginNavigation | string |  |   2017-08-08T15:04:49.619Z 
+action_result.data.\*.data.timing.domContentEventFired | string |  |   2017-08-08T15:04:50.903Z 
+action_result.data.\*.data.timing.frameNavigated | string |  |   2017-08-08T15:04:51.396Z 
+action_result.data.\*.data.timing.frameStartedLoading | string |  |   2017-08-08T15:04:50.903Z 
+action_result.data.\*.data.timing.frameStoppedLoading | string |  |   2017-08-08T15:04:52.370Z 
+action_result.data.\*.data.timing.loadEventFired | string |  |   2017-08-08T15:04:52.370Z 
+action_result.data.\*.lists.asns | string |  |   15169 
+action_result.data.\*.lists.certificates.\*.issuer | string |  |   Test Authority 
+action_result.data.\*.lists.certificates.\*.sanList | string |  |   test.test 
+action_result.data.\*.lists.certificates.\*.subjectName | string |  |   test.test 
+action_result.data.\*.lists.certificates.\*.validFrom | numeric |  |   1498179660 
+action_result.data.\*.lists.certificates.\*.validTo | numeric |  |   1505955660 
+action_result.data.\*.lists.countries | string |  |   IE 
+action_result.data.\*.lists.domains | string |  |   abc.test.test 
+action_result.data.\*.lists.hashes | string |  `sha256`  |   581812adb789400372e69ee2a4aa7d58cdd009718a3faa114dd30dcc196fdeb8 
+action_result.data.\*.lists.ips | string |  |   2a00:1450:4001:824::2003 
+action_result.data.\*.lists.linkDomains | string |  |   test.test 
+action_result.data.\*.lists.servers | string |  |   ESF 
+action_result.data.\*.lists.urls | string |  `url`  |   https://test.test 
+action_result.data.\*.meta.processors.abp.data.\*.source | string |  |   Test Inc. 
+action_result.data.\*.meta.processors.abp.data.\*.type | string |  |   annoyance 
+action_result.data.\*.meta.processors.abp.data.\*.url | string |  `url`  |   https://test.test 
+action_result.data.\*.meta.processors.abp.state | string |  |   done 
+action_result.data.\*.meta.processors.asn.data.\*.asn | string |  |   15169 
+action_result.data.\*.meta.processors.asn.data.\*.country | string |  |   US 
+action_result.data.\*.meta.processors.asn.data.\*.date | string |  |   2000-03-30 
+action_result.data.\*.meta.processors.asn.data.\*.description | string |  |   TEST - Test Inc., US 
+action_result.data.\*.meta.processors.asn.data.\*.ip | string |  `ip`  `ipv6`  |   2a00:1450:4001:814::200a 
+action_result.data.\*.meta.processors.asn.data.\*.name | string |  |   Test Inc. 
+action_result.data.\*.meta.processors.asn.data.\*.registrar | string |  |   arin 
+action_result.data.\*.meta.processors.asn.data.\*.route | string |  |   34.240.0.0/13 
+action_result.data.\*.meta.processors.asn.state | string |  |   done 
+action_result.data.\*.meta.processors.cdnjs.data.\*.hash | string |  `sha256`  |   48eb8b500ae6a38617b5738d2b3faec481922a7782246e31d2755c034a45cd5d 
+action_result.data.\*.meta.processors.cdnjs.data.\*.matches | string |  |   test-fonts/1.2.3/fonts/test-font.woff 
+action_result.data.\*.meta.processors.cdnjs.state | string |  |   done 
+action_result.data.\*.meta.processors.done.data.state | string |  |   done 
+action_result.data.\*.meta.processors.done.state | string |  |   done 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.area | numeric |  |   1000 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.city | string |  |  
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.country | string |  |   BG 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.country_name | string |  |   Bulgaria 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.eu | string |  |   1 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.ll | numeric |  |   -8 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.metro | numeric |  |   0 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.range | numeric |  |   875823103 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.region | string |  |  
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.timezone | string |  |   Europe/Dublin 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.zip | numeric |  |   0 
+action_result.data.\*.meta.processors.geoip.data.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.meta.processors.geoip.state | string |  |   done 
+action_result.data.\*.meta.processors.gsb.data.matches.\*.cacheDuration | string |  |   300s 
+action_result.data.\*.meta.processors.gsb.data.matches.\*.platformType | string |  |   ANY_PLATFORM 
+action_result.data.\*.meta.processors.gsb.data.matches.\*.threat.url | string |  `url`  |   https://test.test 
+action_result.data.\*.meta.processors.gsb.data.matches.\*.threatEntryType | string |  |   URL 
+action_result.data.\*.meta.processors.gsb.data.matches.\*.threatType | string |  |   SOCIAL_ENGINEERING 
+action_result.data.\*.meta.processors.gsb.state | string |  |   done 
+action_result.data.\*.meta.processors.rdns.data.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.meta.processors.rdns.data.\*.ptr | string |  |   abc.test.test 
+action_result.data.\*.meta.processors.rdns.state | string |  |   done 
+action_result.data.\*.meta.processors.wappa.state | string |  |   done 
+action_result.data.\*.page.asn | string |  |   AS 
+action_result.data.\*.page.asnname | string |  |  
+action_result.data.\*.page.city | string |  |  
+action_result.data.\*.page.country | string |  |   BG 
+action_result.data.\*.page.domain | string |  `domain`  |   test.test 
+action_result.data.\*.page.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.page.ptr | string |  |   abc.test.test 
+action_result.data.\*.page.server | string |  |   TestServer/1.4 
+action_result.data.\*.page.url | string |  `url`  |   https://test.test 
+action_result.data.\*.stats.IPv6Percentage | numeric |  |   75 
+action_result.data.\*.stats.adBlocked | numeric |  |   2 
+action_result.data.\*.stats.domainStats.\*.count | numeric |  |   54 
+action_result.data.\*.stats.domainStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.domainStats.\*.domain | string |  `domain`  |   test.test 
+action_result.data.\*.stats.domainStats.\*.encodedSize | numeric |  |   894416 
+action_result.data.\*.stats.domainStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.domainStats.\*.initiators | string |  |   test.test 
+action_result.data.\*.stats.domainStats.\*.ips | string |  |   [2a00:1450:4001:814::200a] 
+action_result.data.\*.stats.domainStats.\*.redirects | numeric |  |   0 
+action_result.data.\*.stats.domainStats.\*.size | numeric |  |   889425 
+action_result.data.\*.stats.ipStats.\*.asn.asn | string |  |   15169 
+action_result.data.\*.stats.ipStats.\*.asn.country | string |  |   US 
+action_result.data.\*.stats.ipStats.\*.asn.date | string |  |   2000-03-30 
+action_result.data.\*.stats.ipStats.\*.asn.description | string |  |   TEST - Test Inc., US 
+action_result.data.\*.stats.ipStats.\*.asn.ip | string |  |   2a00:1450:4001:814::200a 
+action_result.data.\*.stats.ipStats.\*.asn.name | string |  |   Test Inc. 
+action_result.data.\*.stats.ipStats.\*.asn.registrar | string |  |   arin 
+action_result.data.\*.stats.ipStats.\*.asn.route | string |  |   2a00:1288:110::/48 
+action_result.data.\*.stats.ipStats.\*.count | string |  |  
+action_result.data.\*.stats.ipStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.ipStats.\*.domains | string |  |   abc.test.test 
+action_result.data.\*.stats.ipStats.\*.encodedSize | numeric |  |   894416 
+action_result.data.\*.stats.ipStats.\*.geoip.area | numeric |  |   100 
+action_result.data.\*.stats.ipStats.\*.geoip.city | string |  |  
+action_result.data.\*.stats.ipStats.\*.geoip.country | string |  |   BG 
+action_result.data.\*.stats.ipStats.\*.geoip.country_name | string |  |   Bulgaria 
+action_result.data.\*.stats.ipStats.\*.geoip.eu | string |  |   0 
+action_result.data.\*.stats.ipStats.\*.geoip.ll | numeric |  |   -8 
+action_result.data.\*.stats.ipStats.\*.geoip.metro | numeric |  |   0 
+action_result.data.\*.stats.ipStats.\*.geoip.range | numeric |  |   1475903487 
+action_result.data.\*.stats.ipStats.\*.geoip.region | string |  |  
+action_result.data.\*.stats.ipStats.\*.geoip.timezone | string |  |   Europe/London 
+action_result.data.\*.stats.ipStats.\*.geoip.zip | numeric |  |   0 
+action_result.data.\*.stats.ipStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.ipStats.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.ipStats.\*.ipv6 | boolean |  |   True  False 
+action_result.data.\*.stats.ipStats.\*.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.ipStats.\*.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.stats.ipStats.\*.redirects | numeric |  |   3 
+action_result.data.\*.stats.ipStats.\*.requests | numeric |  |   54 
+action_result.data.\*.stats.ipStats.\*.size | numeric |  |   889425 
+action_result.data.\*.stats.malicious | numeric |  |   51 
+action_result.data.\*.stats.protocolStats.\*.count | numeric |  |   59 
+action_result.data.\*.stats.protocolStats.\*.countries | string |  |   BG 
+action_result.data.\*.stats.protocolStats.\*.encodedSize | numeric |  |   976819 
+action_result.data.\*.stats.protocolStats.\*.ips | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.protocolStats.\*.protocol | string |  `url`  |   spdy 
+action_result.data.\*.stats.protocolStats.\*.size | numeric |  |   1056847 
+action_result.data.\*.stats.regDomainStats.\*.count | numeric |  |   54 
+action_result.data.\*.stats.regDomainStats.\*.encodedSize | numeric |  |   894416 
+action_result.data.\*.stats.regDomainStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.regDomainStats.\*.ips | string |  |   [2a00:1450:4001:814::200a] 
+action_result.data.\*.stats.regDomainStats.\*.redirects | numeric |  |   4 
+action_result.data.\*.stats.regDomainStats.\*.regDomain | string |  `domain`  |   test.test 
+action_result.data.\*.stats.regDomainStats.\*.size | numeric |  |   889425 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.country | string |  |   GB 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.domain | string |  `domain`  |   maps 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.failed | boolean |  |   True  False 
+action_result.data.\*.stats.resourceStats.\*.compression | string |  |   1.0 
+action_result.data.\*.stats.resourceStats.\*.count | numeric |  |   21 
+action_result.data.\*.stats.resourceStats.\*.countries | string |  |   BG 
+action_result.data.\*.stats.resourceStats.\*.encodedSize | numeric |  |   361619 
+action_result.data.\*.stats.resourceStats.\*.ips | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.resourceStats.\*.latency | numeric |  |   0 
+action_result.data.\*.stats.resourceStats.\*.percentage | numeric |  |   30 
+action_result.data.\*.stats.resourceStats.\*.size | numeric |  |   366814 
+action_result.data.\*.stats.resourceStats.\*.type | string |  |   Script 
+action_result.data.\*.stats.securePercentage | numeric |  |   86 
+action_result.data.\*.stats.secureRequests | numeric |  |   59 
+action_result.data.\*.stats.serverStats.\*.count | numeric |  |   54 
+action_result.data.\*.stats.serverStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.serverStats.\*.encodedSize | numeric |  |   894416 
+action_result.data.\*.stats.serverStats.\*.ips | string |  |   [2a00:1450:4001:824::200a] 
+action_result.data.\*.stats.serverStats.\*.server | string |  |   TestServer/1.4 
+action_result.data.\*.stats.serverStats.\*.size | numeric |  |   889425 
+action_result.data.\*.stats.tlsStats.\*.count | numeric |  |   59 
+action_result.data.\*.stats.tlsStats.\*.countries | string |  |   BG 
+action_result.data.\*.stats.tlsStats.\*.encodedSize | numeric |  |   976819 
+action_result.data.\*.stats.tlsStats.\*.ips | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.2 / ECDHE_ECDSA / AES_128_GCM | numeric |  |   4 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.2 / ECDHE_RSA / AES_128_GCM | numeric |  |   55 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.3 /  / AES_128_GCM | numeric |  |   17 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.3 /  / AES_256_GCM | numeric |  |   3 
+action_result.data.\*.stats.tlsStats.\*.securityState | string |  |   secure 
+action_result.data.\*.stats.tlsStats.\*.size | numeric |  |   1056847 
+action_result.data.\*.stats.totalLinks | numeric |  |   4 
+action_result.data.\*.stats.uniqCountries | numeric |  |   2 
+action_result.data.\*.submitter.country | string |  |   US 
+action_result.data.\*.task.domURL | string |  `url`  |   https://urlscan.io/dom/86b7f70a-5039-419f-9aeb-8cba09404e92/ 
+action_result.data.\*.task.method | string |  |   manual 
+action_result.data.\*.task.options.useragent | string |  |   TestBrowser/7.0 
+action_result.data.\*.task.reportURL | string |  `url`  |   https://urlscan.io/result/86b7f70a-5039-419f-9aeb-8cba09404e92/ 
+action_result.data.\*.task.screenshotURL | string |  `url`  |   https://urlscan.io/screenshots/86b7f70a-5039-419f-9aeb-8cba09404e92.png 
+action_result.data.\*.task.source | string |  |   web 
+action_result.data.\*.task.time | string |  |   2017-08-08T15:04:49.501Z 
+action_result.data.\*.task.url | string |  `url`  |   https://test.test/index.html 
+action_result.data.\*.task.userAgent | string |  |   TestBrowser/7.0 
+action_result.data.\*.task.uuid | string |  `urlscan submission id`  |   86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.task.visibility | string |  |   public 
+action_result.data.\*.verdicts.community.score | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesBenign | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesMalicious | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.benignTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.enginesTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.maliciousTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.score | numeric |  |   0 
+action_result.data.\*.verdicts.overall.hasVerdicts | numeric |  |   0 
+action_result.data.\*.verdicts.overall.malicious | boolean |  |   False 
+action_result.data.\*.verdicts.overall.score | numeric |  |   0 
+action_result.data.\*.verdicts.urlscan.malicious | boolean |  |   False 
+action_result.data.\*.verdicts.urlscan.score | numeric |  |   0 
+action_result.summary.added_tags_num | numeric |  |   0 
+action_result.summary.report_uuid | string |  `urlscan submission id`  |   value 
+action_result.message | string |  |   Successfully retrieved information 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'lookup domain'
-Find information about a domain at urlscan\.io
+Find information about a domain at urlscan.io
 
 Type: **investigate**  
 Read only: **True**
@@ -716,49 +716,49 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **domain** |  required  | Domain to lookup | string |  `domain` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.domain | string |  `domain` 
-action\_result\.data\.\*\.has\_more | boolean | 
-action\_result\.data\.\*\.results\.\*\.\_id | string | 
-action\_result\.data\.\*\.results\.\*\.indexedAt | string | 
-action\_result\.data\.\*\.results\.\*\.page\.asn | string | 
-action\_result\.data\.\*\.results\.\*\.page\.asnname | string | 
-action\_result\.data\.\*\.results\.\*\.page\.city | string | 
-action\_result\.data\.\*\.results\.\*\.page\.country | string | 
-action\_result\.data\.\*\.results\.\*\.page\.domain | string |  `domain` 
-action\_result\.data\.\*\.results\.\*\.page\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.results\.\*\.page\.mimeType | string | 
-action\_result\.data\.\*\.results\.\*\.page\.ptr | string | 
-action\_result\.data\.\*\.results\.\*\.page\.server | string | 
-action\_result\.data\.\*\.results\.\*\.page\.status | string | 
-action\_result\.data\.\*\.results\.\*\.page\.url | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.result | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.screenshot | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.stats\.consoleMsgs | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.dataLength | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.requests | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.uniqCountries | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.uniqIPs | numeric | 
-action\_result\.data\.\*\.results\.\*\.task\.domain | string | 
-action\_result\.data\.\*\.results\.\*\.task\.method | string | 
-action\_result\.data\.\*\.results\.\*\.task\.source | string | 
-action\_result\.data\.\*\.results\.\*\.task\.time | string | 
-action\_result\.data\.\*\.results\.\*\.task\.url | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.task\.uuid | string | 
-action\_result\.data\.\*\.results\.\*\.task\.visibility | string | 
-action\_result\.data\.\*\.results\.\*\.uniq\_countries | numeric | 
-action\_result\.data\.\*\.took | numeric | 
-action\_result\.data\.\*\.total | numeric | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.domain | string |  `domain`  |   test.test 
+action_result.data.\*.has_more | boolean |  |   False 
+action_result.data.\*.results.\*._id | string |  |   86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.results.\*.indexedAt | string |  |   2021-02-14T15:16:53.879Z 
+action_result.data.\*.results.\*.page.asn | string |  |   ASundefined 
+action_result.data.\*.results.\*.page.asnname | string |  |  
+action_result.data.\*.results.\*.page.city | string |  |  
+action_result.data.\*.results.\*.page.country | string |  |   BG 
+action_result.data.\*.results.\*.page.domain | string |  `domain`  |   test.test 
+action_result.data.\*.results.\*.page.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.results.\*.page.mimeType | string |  |   text/html 
+action_result.data.\*.results.\*.page.ptr | string |  |   abc.test.test 
+action_result.data.\*.results.\*.page.server | string |  |   TestServer/1.4 
+action_result.data.\*.results.\*.page.status | string |  |   200 
+action_result.data.\*.results.\*.page.url | string |  `url`  |   https://test.test 
+action_result.data.\*.results.\*.result | string |  `url`  |   https://urlscan.io/api/v1/result/86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.results.\*.screenshot | string |  `url`  |   https://urlscan.io/screenshots/f04f2a29-d455-4830-874a-88191fb79352.png 
+action_result.data.\*.results.\*.stats.consoleMsgs | numeric |  |   1 
+action_result.data.\*.results.\*.stats.dataLength | numeric |  |   1082510 
+action_result.data.\*.results.\*.stats.encodedDataLength | numeric |  |   1002482 
+action_result.data.\*.results.\*.stats.requests | numeric |  |   69 
+action_result.data.\*.results.\*.stats.uniqCountries | numeric |  |   3 
+action_result.data.\*.results.\*.stats.uniqIPs | numeric |  |   5 
+action_result.data.\*.results.\*.task.domain | string |  |   abc.test.test 
+action_result.data.\*.results.\*.task.method | string |  |   manual 
+action_result.data.\*.results.\*.task.source | string |  |   web 
+action_result.data.\*.results.\*.task.time | string |  |   2017-08-08T15:04:49.501Z 
+action_result.data.\*.results.\*.task.url | string |  `url`  |   https://test.test 
+action_result.data.\*.results.\*.task.uuid | string |  |   f04f2a29-d455-4830-874a-88191fb79352 
+action_result.data.\*.results.\*.task.visibility | string |  |   public 
+action_result.data.\*.results.\*.uniq_countries | numeric |  |   2 
+action_result.data.\*.took | numeric |  |   25 
+action_result.data.\*.total | numeric |  |   1 
+action_result.summary | string |  |  
+action_result.message | string |  |   Successfully retrieved information 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'lookup ip'
-Find information about an IP address at urlscan\.io
+Find information about an IP address at urlscan.io
 
 Type: **investigate**  
 Read only: **True**
@@ -769,801 +769,803 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **ip** |  required  | IP to lookup | string |  `ip`  `ipv6` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.has\_more | boolean | 
-action\_result\.data\.\*\.results\.\*\.\_id | string | 
-action\_result\.data\.\*\.results\.\*\.indexedAt | string | 
-action\_result\.data\.\*\.results\.\*\.page\.asn | string | 
-action\_result\.data\.\*\.results\.\*\.page\.asnname | string | 
-action\_result\.data\.\*\.results\.\*\.page\.city | string | 
-action\_result\.data\.\*\.results\.\*\.page\.country | string | 
-action\_result\.data\.\*\.results\.\*\.page\.domain | string |  `domain` 
-action\_result\.data\.\*\.results\.\*\.page\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.results\.\*\.page\.mimeType | string | 
-action\_result\.data\.\*\.results\.\*\.page\.ptr | string | 
-action\_result\.data\.\*\.results\.\*\.page\.server | string | 
-action\_result\.data\.\*\.results\.\*\.page\.status | string | 
-action\_result\.data\.\*\.results\.\*\.page\.url | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.result | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.screenshot | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.stats\.consoleMsgs | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.dataLength | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.requests | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.uniqCountries | numeric | 
-action\_result\.data\.\*\.results\.\*\.stats\.uniqIPs | numeric | 
-action\_result\.data\.\*\.results\.\*\.task\.domain | string | 
-action\_result\.data\.\*\.results\.\*\.task\.method | string | 
-action\_result\.data\.\*\.results\.\*\.task\.source | string | 
-action\_result\.data\.\*\.results\.\*\.task\.time | string | 
-action\_result\.data\.\*\.results\.\*\.task\.url | string |  `url` 
-action\_result\.data\.\*\.results\.\*\.task\.uuid | string | 
-action\_result\.data\.\*\.results\.\*\.task\.visibility | string | 
-action\_result\.data\.\*\.results\.\*\.uniq\_countries | numeric | 
-action\_result\.data\.\*\.took | numeric | 
-action\_result\.data\.\*\.total | numeric | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.has_more | boolean |  |   False 
+action_result.data.\*.results.\*._id | string |  |   86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.results.\*.indexedAt | string |  |   2021-02-25T20:59:59.079Z 
+action_result.data.\*.results.\*.page.asn | string |  |   ASundefined 
+action_result.data.\*.results.\*.page.asnname | string |  |   POWERNET-AS, BG 
+action_result.data.\*.results.\*.page.city | string |  |  
+action_result.data.\*.results.\*.page.country | string |  |   BG 
+action_result.data.\*.results.\*.page.domain | string |  `domain`  |   test.test 
+action_result.data.\*.results.\*.page.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.results.\*.page.mimeType | string |  |   text/html 
+action_result.data.\*.results.\*.page.ptr | string |  |   abc.test.test 
+action_result.data.\*.results.\*.page.server | string |  |   TestServer/1.4 
+action_result.data.\*.results.\*.page.status | string |  |   200 
+action_result.data.\*.results.\*.page.url | string |  `url`  |   https://test.test 
+action_result.data.\*.results.\*.result | string |  `url`  |   https://urlscan.io/api/v1/result/86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.data.\*.results.\*.screenshot | string |  `url`  |   https://urlscan.io/screenshots/f04f2a29-d455-4830-874a-88191fb79352.png 
+action_result.data.\*.results.\*.stats.consoleMsgs | numeric |  |   1 
+action_result.data.\*.results.\*.stats.dataLength | numeric |  |   1082510 
+action_result.data.\*.results.\*.stats.encodedDataLength | numeric |  |   1002482 
+action_result.data.\*.results.\*.stats.requests | numeric |  |   69 
+action_result.data.\*.results.\*.stats.uniqCountries | numeric |  |   2 
+action_result.data.\*.results.\*.stats.uniqIPs | numeric |  |   5 
+action_result.data.\*.results.\*.task.domain | string |  |   abc.test.test 
+action_result.data.\*.results.\*.task.method | string |  |   manual 
+action_result.data.\*.results.\*.task.source | string |  |   web 
+action_result.data.\*.results.\*.task.time | string |  |   2017-08-08T15:04:49.501Z 
+action_result.data.\*.results.\*.task.url | string |  `url`  |   https://test.test 
+action_result.data.\*.results.\*.task.uuid | string |  |   f04f2a29-d455-4830-874a-88191fb79352 
+action_result.data.\*.results.\*.task.visibility | string |  |   public 
+action_result.data.\*.results.\*.uniq_countries | numeric |  |   2 
+action_result.data.\*.took | numeric |  |   77 
+action_result.data.\*.total | numeric |  |   104 
+action_result.summary | string |  |  
+action_result.message | string |  |   Successfully retrieved information 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'detonate url'
-Detonate a URL at urlscan\.io
+Detonate a URL at urlscan.io
 
 Type: **investigate**  
 Read only: **False**
 
-If the get\_result parameter is set to true, then the action may take up to 2\-3 minutes to execute because the action will poll for the results in the same call\.
+If the get_result parameter is set to true, then the action may take up to 2-3 minutes to execute because the action will poll for the results in the same call.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **url** |  required  | URL to detonate | string |  `url`  `domain` 
-**tags** |  optional  | Comma\-separated list of tags to annotate this scan\. Limited to 10 tags\. Tags with lengths longer than 29 will be omitted\. | string | 
+**tags** |  optional  | Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted. | string | 
 **private** |  optional  | Run a private scan | boolean | 
-**custom\_agent** |  optional  | Override User\-Agent for this scan | string | 
-**get\_result** |  optional  | Get scan result in same call | boolean | 
+**custom_agent** |  optional  | Override User-Agent for this scan | string | 
+**get_result** |  optional  | Get scan result in same call | boolean | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.custom\_agent | string | 
-action\_result\.parameter\.get\_result | boolean | 
-action\_result\.parameter\.private | boolean | 
-action\_result\.parameter\.tags | string | 
-action\_result\.parameter\.url | string |  `url`  `domain` 
-action\_result\.data\.\*\.api | string |  `url` 
-action\_result\.data\.\*\.data\.console\.\*\.message\.column | numeric | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.level | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.line | numeric | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.source | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.text | string | 
-action\_result\.data\.\*\.data\.console\.\*\.message\.url | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.data\.cookies\.\*\.expires | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.httpOnly | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.name | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.path | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.priority | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sameParty | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sameSite | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.secure | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.session | boolean | 
-action\_result\.data\.\*\.data\.cookies\.\*\.size | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sourcePort | numeric | 
-action\_result\.data\.\*\.data\.cookies\.\*\.sourceScheme | string | 
-action\_result\.data\.\*\.data\.cookies\.\*\.value | string | 
-action\_result\.data\.\*\.data\.globals\.\*\.prop | string | 
-action\_result\.data\.\*\.data\.globals\.\*\.type | string | 
-action\_result\.data\.\*\.data\.links\.\*\.href | string |  `url` 
-action\_result\.data\.\*\.data\.links\.\*\.text | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.initiatorInfo\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.documentURL | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.frameId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.hasUserGesture | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.functionName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.scriptId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.stack\.callFrames\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.initiator\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.loaderId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.primaryRequest | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Keep\-Alive | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Non\-Authoritative\-Reason | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.Transfer\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.X\-DIS\-Request\-ID | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.access\-control\-allow\-credentials | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.access\-control\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.alt\-svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.cross\-origin\-resource\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.p3p | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.permissions\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.set\-cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.strict\-transport\-security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.timing\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.x\-content\-type\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.x\-frame\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.headers\.x\-xss\-protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.\:authority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.\:method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.\:path | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.\:scheme | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.accept\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.accept\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.sec\-fetch\-dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.sec\-fetch\-mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.sec\-fetch\-site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.sec\-fetch\-user | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.upgrade\-insecure\-requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.requestHeaders\.user\-agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.redirectResponse\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.hasPostData | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Origin | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Referer | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.headers\.X\-Same\-Domain | string |  `domain` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.initialPriority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.mixedContentType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.postData | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.postDataEntries\.\*\.bytes | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.referrerPolicy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.request\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.request\.wallTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.documentURL | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.frameId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.hasUserGesture | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.stack\.callFrames\.\*\.columnNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.stack\.callFrames\.\*\.functionName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.stack\.callFrames\.\*\.lineNumber | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.stack\.callFrames\.\*\.scriptId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.stack\.callFrames\.\*\.url | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.initiator\.url | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.loaderId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.asn | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.description | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.registrar | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.asn\.route | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.area | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.city | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.eu | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.range | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.region | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.geoip\.timezone | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Security\-Policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Keep\-Alive | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Non\-Authoritative\-Reason | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Set\-Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.Transfer\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.X\-DIS\-Request\-ID | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.X\-Frame\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.X\-XSS\-Protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.access\-control\-allow\-credentials | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.access\-control\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.alt\-svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-security\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.cross\-origin\-resource\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.expect\-ct | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.location | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.p3p | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.permissions\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.referrer\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.set\-cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.strict\-transport\-security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.timing\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-content\-type\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-frame\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.headers\.x\-xss\-protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.rdns\.ptr | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:authority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:path | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.\:scheme | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.accept\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.sec\-fetch\-user | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.upgrade\-insecure\-requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.requestHeaders\.user\-agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.redirectResponse\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.headers\.Referer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.headers\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.headers\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.initialPriority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.mixedContentType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.referrerPolicy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.request\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.requestId | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.requests\.\*\.wallTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.source | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.abp\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.asn | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.description | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.registrar | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.asn\.route | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.dataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.canceled | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.errorText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.failed\.type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.area | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.city | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.country | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.eu | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.range | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.region | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.timezone | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hash | string |  `sha256` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.file | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.project | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.project\_url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.source | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.hashmatches\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.rdns\.ptr | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.requestId | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.encodedDataLength | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.fromPrefetchCache | boolean | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Accept\-Ranges | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Credentials | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Methods | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Allow\-Origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Expose\-Headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Access\-Control\-Max\-Age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Alt\-Svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Security\-Policy\-Report\-Only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Content\-Type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.ETag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Etag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Expect\-CT | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Keep\-Alive | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Last\-Modified | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.P3P | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Public\-Key\-Pins\-Report\-Only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Referrer\-Policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Strict\-Transport\-Security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Timing\-Allow\-Origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Transfer\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Vary | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.Via | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Amz\-Cf\-Id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Amz\-Cf\-Pop | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Cache | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Content\-Type\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-DIS\-Request\-ID | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Frame\-Options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-LLID | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-Powered\-By | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.X\-XSS\-Protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.accept\-ranges | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-credentials | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-methods | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-allow\-origin | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.access\-control\-expose\-headers | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.age | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.alt\-svc | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.ats\-carp\-promotion | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-disposition | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-md5 | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-security\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-security\-policy\-report\-only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.cross\-origin\-opener\-policy\-report\-only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.cross\-origin\-resource\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.date | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.etag | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.expect\-ct | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.expires | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.last\-modified | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.link | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.p3p | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.public\-key\-pins\-report\-only | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.referrer\-policy | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.report\-to | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.server | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.set\-cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.status | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.strict\-transport\-security | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.timing\-allow\-origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.vary | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.via | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-cf\-id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-cf\-pop | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-id\-2 | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-request\-id | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-amz\-server\-side\-encryption | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-cache | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-content\-type\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-fb\-content\-md5 | string |  `md5` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-fb\-debug | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-frame\-options | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-ua\-compatible | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.headers\.x\-xss\-protection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.mimeType | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.protocol | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.remoteIPAddress | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.remotePort | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\* | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\:authority | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\:method | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\:path | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.\:scheme | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept\-Encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Accept\-Language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Cache\-Control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Connection | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Host | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Referer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-Site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Sec\-Fetch\-User | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.Upgrade\-Insecure\-Requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.User\-Agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.accept | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.accept\-encoding | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.accept\-language | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.cache\-control | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.content\-length | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.content\-type | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.cookie | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.origin | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.pragma | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.referer | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.sec\-fetch\-dest | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.sec\-fetch\-mode | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.sec\-fetch\-site | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.sec\-fetch\-user | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.upgrade\-insecure\-requests | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.user\-agent | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.requestHeaders\.x\-same\-domain | string |  `domain` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.responseTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.certificateId | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.certificateTransparencyCompliance | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.cipher | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.issuer | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.keyExchange | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.keyExchangeGroup | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.protocol | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.sanList | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.hashAlgorithm | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.logDescription | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.logId | string |  `sha256` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.origin | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.signatureAlgorithm | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.signatureData | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.status | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.signedCertificateTimestampList\.\*\.timestamp | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.subjectName | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.validFrom | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityDetails\.validTo | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityHeaders\.\*\.name | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityHeaders\.\*\.value | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.securityState | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.status | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.statusText | string | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.connectEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.connectStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.dnsEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.dnsStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.proxyEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.proxyStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.pushEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.pushStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.receiveHeadersEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.requestTime | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sendEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sendStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sslEnd | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.sslStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerFetchStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerReady | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerRespondWithSettled | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.timing\.workerStart | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.response\.url | string |  `url` 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.size | numeric | 
-action\_result\.data\.\*\.data\.requests\.\*\.response\.type | string | 
-action\_result\.data\.\*\.data\.timing\.beginNavigation | string | 
-action\_result\.data\.\*\.data\.timing\.domContentEventFired | string | 
-action\_result\.data\.\*\.data\.timing\.frameNavigated | string | 
-action\_result\.data\.\*\.data\.timing\.frameStartedLoading | string | 
-action\_result\.data\.\*\.data\.timing\.frameStoppedLoading | string | 
-action\_result\.data\.\*\.data\.timing\.loadEventFired | string | 
-action\_result\.data\.\*\.description | string | 
-action\_result\.data\.\*\.fieldErrors\.\*\.location | string | 
-action\_result\.data\.\*\.fieldErrors\.\*\.msg | string | 
-action\_result\.data\.\*\.fieldErrors\.\*\.param | string | 
-action\_result\.data\.\*\.fieldErrors\.\*\.value | string | 
-action\_result\.data\.\*\.lists\.asns | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.issuer | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.sanList | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.subjectName | string | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.validFrom | numeric | 
-action\_result\.data\.\*\.lists\.certificates\.\*\.validTo | numeric | 
-action\_result\.data\.\*\.lists\.countries | string | 
-action\_result\.data\.\*\.lists\.domains | string | 
-action\_result\.data\.\*\.lists\.hashes | string |  `sha256` 
-action\_result\.data\.\*\.lists\.ips | string | 
-action\_result\.data\.\*\.lists\.linkDomains | string | 
-action\_result\.data\.\*\.lists\.servers | string | 
-action\_result\.data\.\*\.lists\.urls | string |  `url` 
-action\_result\.data\.\*\.message | string | 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.source | string | 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.type | string | 
-action\_result\.data\.\*\.meta\.processors\.abp\.data\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.meta\.processors\.abp\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.asn | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.country | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.date | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.description | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.name | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.registrar | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.data\.\*\.route | string | 
-action\_result\.data\.\*\.meta\.processors\.asn\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.data\.\*\.hash | string |  `sha256` 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.data\.\*\.matches | string | 
-action\_result\.data\.\*\.meta\.processors\.cdnjs\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.done\.data\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.done\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.area | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.city | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.country | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.eu | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.range | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.region | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.timezone | string | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.meta\.processors\.geoip\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.geoip\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.gsb\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.rdns\.data\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.meta\.processors\.rdns\.data\.\*\.ptr | string | 
-action\_result\.data\.\*\.meta\.processors\.rdns\.state | string | 
-action\_result\.data\.\*\.meta\.processors\.wappa\.state | string | 
-action\_result\.data\.\*\.options\.useragent | string | 
-action\_result\.data\.\*\.page\.asn | string | 
-action\_result\.data\.\*\.page\.asnname | string | 
-action\_result\.data\.\*\.page\.city | string | 
-action\_result\.data\.\*\.page\.country | string | 
-action\_result\.data\.\*\.page\.domain | string |  `domain` 
-action\_result\.data\.\*\.page\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.page\.ptr | string | 
-action\_result\.data\.\*\.page\.server | string | 
-action\_result\.data\.\*\.page\.url | string |  `url` 
-action\_result\.data\.\*\.result | string |  `url` 
-action\_result\.data\.\*\.stats\.IPv6Percentage | numeric | 
-action\_result\.data\.\*\.stats\.adBlocked | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.initiators | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.domainStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.asn | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.country | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.date | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.description | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.name | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.registrar | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.asn\.route | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.count | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.domains | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.area | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.city | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.country | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.country\_name | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.eu | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.ll | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.metro | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.range | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.region | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.timezone | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.geoip\.zip | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.ipv6 | boolean | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.rdns\.ip | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.rdns\.ptr | string | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.requests | numeric | 
-action\_result\.data\.\*\.stats\.ipStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.malicious | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.protocol | string |  `url` 
-action\_result\.data\.\*\.stats\.protocolStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.index | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.redirects | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.regDomain | string |  `domain` 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.country | string | 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.domain | string |  `domain` 
-action\_result\.data\.\*\.stats\.regDomainStats\.\*\.subDomains\.\*\.failed | boolean | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.compression | string | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.ips | string |  `ip`  `ipv6` 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.latency | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.percentage | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.resourceStats\.\*\.type | string | 
-action\_result\.data\.\*\.stats\.securePercentage | numeric | 
-action\_result\.data\.\*\.stats\.secureRequests | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.server | string | 
-action\_result\.data\.\*\.stats\.serverStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.count | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.countries | string | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.encodedSize | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.ips | string | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.QUIC /  / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.2 / ECDHE\_ECDSA / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.2 / ECDHE\_RSA / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.3 /  / AES\_128\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.protocols\.TLS 1\.3 /  / AES\_256\_GCM | numeric | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.securityState | string | 
-action\_result\.data\.\*\.stats\.tlsStats\.\*\.size | numeric | 
-action\_result\.data\.\*\.stats\.totalLinks | numeric | 
-action\_result\.data\.\*\.stats\.uniqCountries | numeric | 
-action\_result\.data\.\*\.status | numeric | 
-action\_result\.data\.\*\.submitter\.country | string | 
-action\_result\.data\.\*\.task\.domURL | string |  `url` 
-action\_result\.data\.\*\.task\.method | string | 
-action\_result\.data\.\*\.task\.options\.useragent | string | 
-action\_result\.data\.\*\.task\.reportURL | string |  `url` 
-action\_result\.data\.\*\.task\.screenshotURL | string |  `url` 
-action\_result\.data\.\*\.task\.source | string | 
-action\_result\.data\.\*\.task\.time | string | 
-action\_result\.data\.\*\.task\.url | string |  `url` 
-action\_result\.data\.\*\.task\.userAgent | string | 
-action\_result\.data\.\*\.task\.uuid | string |  `urlscan submission id` 
-action\_result\.data\.\*\.task\.visibility | string | 
-action\_result\.data\.\*\.url | string |  `url` 
-action\_result\.data\.\*\.uuid | string | 
-action\_result\.data\.\*\.verdicts\.community\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesBenign | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesMalicious | numeric | 
-action\_result\.data\.\*\.verdicts\.community\.votesTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.benignTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.enginesTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.maliciousTotal | numeric | 
-action\_result\.data\.\*\.verdicts\.engines\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.overall\.hasVerdicts | numeric | 
-action\_result\.data\.\*\.verdicts\.overall\.malicious | boolean | 
-action\_result\.data\.\*\.verdicts\.overall\.score | numeric | 
-action\_result\.data\.\*\.verdicts\.urlscan\.malicious | boolean | 
-action\_result\.data\.\*\.verdicts\.urlscan\.score | numeric | 
-action\_result\.data\.\*\.visibility | string | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.custom_agent | string |  |   TestBrowser/7.0 
+action_result.parameter.get_result | boolean |  |   True  False 
+action_result.parameter.private | boolean |  |   True  False 
+action_result.parameter.tags | string |  |   demotag1,demotag2 
+action_result.parameter.url | string |  `url`  `domain`  |   http://test.test 
+action_result.data.\*.api | string |  `url`  |   https://urlscan.io/api/v1/result/f04f2a29-d455-4830-874a-88191fb79352/ 
+action_result.data.\*.data.console.\*.message.column | numeric |  |   250 
+action_result.data.\*.data.console.\*.message.level | string |  |   log 
+action_result.data.\*.data.console.\*.message.line | numeric |  |   500 
+action_result.data.\*.data.console.\*.message.source | string |  |   console-api 
+action_result.data.\*.data.console.\*.message.text | string |  |   %c%s color: red; background: yellow; font-size: 24px; WARNING! 
+action_result.data.\*.data.console.\*.message.url | string |  |   /_/mss/boq-identity/_/js/k=boq-identity.ConsentUi.en.wbI8C7EDzao.es5.O/am=CwAQ/d=1/excm=_b,_tp,mainview/ed=1/dg=0/wt=2/rs=AOaEmlFuEZIwaq7Xwoq3xS-5oRO8y6-S_A/m=_b,_tp 
+action_result.data.\*.data.cookies.\*.domain | string |  `domain`  |   test.test 
+action_result.data.\*.data.cookies.\*.expires | numeric |  |   1517901199000 
+action_result.data.\*.data.cookies.\*.httpOnly | boolean |  |   True  False 
+action_result.data.\*.data.cookies.\*.name | string |  |   __utmz 
+action_result.data.\*.data.cookies.\*.path | string |  |   / 
+action_result.data.\*.data.cookies.\*.priority | string |  |   Medium 
+action_result.data.\*.data.cookies.\*.sameParty | boolean |  |   False 
+action_result.data.\*.data.cookies.\*.sameSite | string |  |  
+action_result.data.\*.data.cookies.\*.secure | boolean |  |   True  False 
+action_result.data.\*.data.cookies.\*.session | boolean |  |   True  False 
+action_result.data.\*.data.cookies.\*.size | numeric |  |   76 
+action_result.data.\*.data.cookies.\*.sourcePort | numeric |  |   443 
+action_result.data.\*.data.cookies.\*.sourceScheme | string |  |   Secure 
+action_result.data.\*.data.cookies.\*.value | string |  |   215733128.1502133199.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none) 
+action_result.data.\*.data.globals.\*.prop | string |  |   onbeforexrselect 
+action_result.data.\*.data.globals.\*.type | string |  |   object 
+action_result.data.\*.data.links.\*.href | string |  `url`  |   http://test.test 
+action_result.data.\*.data.links.\*.text | string |  |   stor perde 
+action_result.data.\*.data.requests.\*.initiatorInfo.host | string |  |   www.test.test 
+action_result.data.\*.data.requests.\*.initiatorInfo.type | string |  |   parser 
+action_result.data.\*.data.requests.\*.initiatorInfo.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.documentURL | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.frameId | string |  |   24696.1 
+action_result.data.\*.data.requests.\*.request.hasUserGesture | boolean |  |   False 
+action_result.data.\*.data.requests.\*.request.initiator.columnNumber | numeric |  |   88 
+action_result.data.\*.data.requests.\*.request.initiator.lineNumber | numeric |  |   27 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.columnNumber | numeric |  |   386 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.functionName | string |  |   lb 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.lineNumber | numeric |  |   13 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.scriptId | string |  |   40 
+action_result.data.\*.data.requests.\*.request.initiator.stack.callFrames.\*.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.request.initiator.type | string |  |   other 
+action_result.data.\*.data.requests.\*.request.initiator.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.loaderId | string |  |   24696.1 
+action_result.data.\*.data.requests.\*.request.primaryRequest | boolean |  |   True 
+action_result.data.\*.data.requests.\*.request.redirectResponse.encodedDataLength | numeric |  |   233 
+action_result.data.\*.data.requests.\*.request.redirectResponse.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Connection | string |  |   Keep-Alive 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Content-Length | string |  |   273 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Content-Type | string |  |   text/html; charset=iso-8859-1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Date | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Keep-Alive | string |  |   timeout=1, max=100 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Location | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Non-Authoritative-Reason | string |  |   HSTS 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Server | string |  |   TestServer/1.4 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.Transfer-Encoding | string |  |   chunked 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.X-DIS-Request-ID | string |  |   090e3c74f52631470b8375f9d7f2da55 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.access-control-allow-credentials | string |  |   true 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.access-control-allow-origin | string |  |   https://abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.alt-svc | string |  |   h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43" 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.cache-control | string |  |   no-cache, no-store, max-age=0, must-revalidate 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.content-length | string |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.content-type | string |  |   application/binary 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.cross-origin-resource-policy | string |  |   cross-origin 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.date | string |  |   Mon, 10 May 2021 10:52:44 GMT 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.expires | string |  |   Mon, 01 Jan 1990 00:00:00 GMT 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.location | string |  `url`  |   https://consent.test.test/?h=123 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.p3p | string |  |   CP="This is not a P3 policy! See abc.test.test for more info." 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.permissions-policy | string |  |   ch-ua-full-version=\*, ch-ua-platform=\*, ch-ua-platform-version=\*, ch-ua-arch=\*, ch-ua-model=\* 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.server | string |  |   ESF 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.set-cookie | string |  |   CONSENT=PENDING+166; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test; Secure 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.strict-transport-security | string |  |   max-age=31536000 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.timing-allow-origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.x-content-type-options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.x-frame-options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.x-xss-protection | string |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.mimeType | string |  |   text/html 
+action_result.data.\*.data.requests.\*.request.redirectResponse.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.remoteIPAddress | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.request.redirectResponse.remotePort | numeric |  |   80 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.:authority | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.:method | string |  |   GET 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.:path | string |  |   / 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.:scheme | string |  `url`  |   https 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept-Encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Cookie | string |  |   B=dv5klk1g9hcet&b=3&s=t9; GUCS=AVkRFB1g 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Sec-Fetch-User | string |  |   ?1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.accept-encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.accept-language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.cache-control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.sec-fetch-dest | string |  |   document 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.sec-fetch-mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.sec-fetch-site | string |  |  
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.sec-fetch-user | string |  |   ?1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.upgrade-insecure-requests | string |  |   1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.requestHeaders.user-agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.responseTime | numeric |  |   1620619741414.982 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.keyExchange | string |  |   ECDHE_RSA 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.keyExchangeGroup | string |  |   P-256 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.protocol | string |  |   TLS 1.2 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.sanList | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.subjectName | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.validFrom | numeric |  |   1615766400 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.validTo | numeric |  |   1631145599 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityState | string |  |   neutral 
+action_result.data.\*.data.requests.\*.request.redirectResponse.status | numeric |  |   302 
+action_result.data.\*.data.requests.\*.request.redirectResponse.statusText | string |  |   Found 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.connectEnd | numeric |  |   84.8650000989437 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.connectStart | numeric |  |   0.484999269247055 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.dnsEnd | numeric |  |   0.484999269247055 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.dnsStart | numeric |  |   0.0520013272762299 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.receiveHeadersEnd | numeric |  |   170.065999031067 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.requestTime | numeric |  |   25061895.849275 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sendEnd | numeric |  |   84.9450007081032 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sendStart | numeric |  |   84.9259980022907 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sslEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.sslStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.request.redirectResponse.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.request.hasPostData | boolean |  |   True 
+action_result.data.\*.data.requests.\*.request.request.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.request.request.headers.Content-Type | string |  |   application/csp-report 
+action_result.data.\*.data.requests.\*.request.request.headers.Origin | string |  `url`  |   abc.test.test 
+action_result.data.\*.data.requests.\*.request.request.headers.Referer | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.request.headers.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.request.request.headers.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.request.request.headers.X-Same-Domain | string |  `domain`  |   1 
+action_result.data.\*.data.requests.\*.request.request.initialPriority | string |  |   VeryHigh 
+action_result.data.\*.data.requests.\*.request.request.method | string |  |   GET 
+action_result.data.\*.data.requests.\*.request.request.mixedContentType | string |  |  
+action_result.data.\*.data.requests.\*.request.request.postData | string |  |   {"csp-report":{"document-uri":"https://abc.test.test/v2?sessionId=123","referrer":"","violated-directive":"script-src-elem","effective-directive":"script-src-elem","original-policy":"default-src 'none'; block-all-mixed-content; connect-src https://abc.test.test 'self'; frame-ancestors 'none'; img-src 'self'; media-src 'none'; script-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; style-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; font-src 'self'; object-src 'none'; frame-src 'none'; report-uri https://abc.test.test/report","disposition":"report","blocked-uri":"https://xyz.test.test","status-code":0,"script-sample":""}} 
+action_result.data.\*.data.requests.\*.request.request.postDataEntries.\*.bytes | string |  |  
+action_result.data.\*.data.requests.\*.request.request.referrerPolicy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.request.request.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.request.requestId | string |  |   24696.1 
+action_result.data.\*.data.requests.\*.request.timestamp | numeric |  |   25061896.019653 
+action_result.data.\*.data.requests.\*.request.type | string |  |   Document 
+action_result.data.\*.data.requests.\*.request.wallTime | numeric |  |   1502133198.32155 
+action_result.data.\*.data.requests.\*.requests.\*.documentURL | string |  `url`  |   http://abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.frameId | string |  `md5`  |   6160E8BDE221F1BEA3E15CF13AD40EAF 
+action_result.data.\*.data.requests.\*.requests.\*.hasUserGesture | boolean |  |   False 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.columnNumber | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.lineNumber | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.stack.callFrames.\*.columnNumber | numeric |  |   493 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.stack.callFrames.\*.functionName | string |  |   zg 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.stack.callFrames.\*.lineNumber | numeric |  |   532 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.stack.callFrames.\*.scriptId | string |  |   8 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.stack.callFrames.\*.url | string |  |   https://abc.test.test/s/player/ 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.type | string |  |   other 
+action_result.data.\*.data.requests.\*.requests.\*.initiator.url | string |  |   https://abc.test.test/embed/abc 
+action_result.data.\*.data.requests.\*.requests.\*.loaderId | string |  `md5`  |   0B0AA65E4A0D942DBF007F12F2B5081F 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.asn | string |  |   34010 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.country | string |  |   GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.date | string |  |   2004-09-29 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.description | string |  |   TEST-IRD, GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.ip | string |  `ip`  `ipv6`  |   2a00:1288:110:c305::1:8000 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.name | string |  |   TEST-IRD 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.registrar | string |  |   ripencc 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.asn.route | string |  |   2a00:1288:110::/46 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.encodedDataLength | numeric |  |   1132 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.area | numeric |  |   100 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.city | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.country | string |  |   GB 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.country_name | string |  |   United Kingdom 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.eu | string |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.ll | numeric |  |   -6.2591 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.metro | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.range | numeric |  |   780744703 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.region | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.geoip.timezone | string |  |   Europe/London 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Cache-Control | string |  |   no-store, no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Language | string |  |   en 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Length | string |  |   8 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Security-Policy | string |  |   frame-ancestors 'self' https://\*.abc.test https://\*.test.abc https://\*.test.test https://\*.abc.abc; sandbox allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation; report-uri https://abc.test.test/beacon/csp?src=ats&region=US&lang=en-US; 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Content-Type | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Date | string |  |   Mon, 10 May 2021 04:09:01 GMT 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Keep-Alive | string |  |   timeout=20 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Location | string |  `url`  |   https://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Non-Authoritative-Reason | string |  |   HSTS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Server | string |  |   ATS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Set-Cookie | string |  |   B=dv5klk1g9hcet&b=3&s=t9; expires=Tue, 10-May-2022 04:09:01 GMT; path=/; domain=.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.Transfer-Encoding | string |  |   chunked 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.X-DIS-Request-ID | string |  |   99b17817a2924a8349438143b10d69af 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.X-Frame-Options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.X-XSS-Protection | string |  |   1; report="https://abc.test.test/beacon/csp?src=ftest" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.access-control-allow-credentials | string |  |   true 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.access-control-allow-origin | string |  |   https://abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.alt-svc | string |  |   h3-29=":443"; ma=2592000,h3-T051=":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma=2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="46,43" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.cache-control | string |  |   no-store 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-language | string |  |   en 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-length | string |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-security-policy | string |  |   frame-ancestors 'self' https://\*.abc.test https://\*.test.abc https://\*.test.test https://\*.abc.abc; sandbox allow-forms allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-presentation; report-uri https://abc.test.test/beacon/csp?src=ats&region=US&lang=en-US; 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-type | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.cross-origin-resource-policy | string |  |   cross-origin 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.date | string |  |   Mon, 10 May 2021 04:09:01 GMT 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.expect-ct | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=t-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.expires | string |  |   Mon, 01 Jan 1990 00:00:00 GMT 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.location | string |  `url`  |   https://abc.test.test/?h=us 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.p3p | string |  |   CP="This is not a P3 policy! See abc.test.test for more info." 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.permissions-policy | string |  |   ch-ua-full-version=\*, ch-ua-platform=\*, ch-ua-platform-version=\*, ch-ua-arch=\*, ch-ua-model=\* 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.server | string |  |   ATS 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.set-cookie | string |  |   RRC=st=1620619741&cnt=1; expires=Mon, 10-May-2021 04:09:31 GMT; path=/; domain=.abc.test.test; HttpOnly 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.strict-transport-security | string |  |   max-age=31536000 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.timing-allow-origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-content-type-options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-frame-options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-xss-protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.mimeType | string |  |   text/html 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.remoteIPAddress | string |  `ip`  `ipv6`  |   [2a00:1288:110:c305::1:8000] 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.remotePort | numeric |  |   80 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:authority | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:method | string |  |   GET 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:path | string |  |   / 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.:scheme | string |  `url`  |   https 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept-Encoding | string |  |   gzip, deflate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Cookie | string |  |   B=dv5klk1g9hcet&b=3&s=t9; GUCS=AVkRFB1g 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Sec-Fetch-User | string |  |   ?1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept-encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.accept-language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.cache-control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.cookie | string |  |   B=dv5klk1g9hcet&b=3&s=t9 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-dest | string |  |   document 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-site | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.sec-fetch-user | string |  |   ?1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.upgrade-insecure-requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.requestHeaders.user-agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.responseTime | numeric |  |   1620619741065.401 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.keyExchange | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.keyExchangeGroup | string |  |   X25519 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.protocol | string |  |   TLS 1.3 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.sanList | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.subjectName | string |  |   \*.abc.test.test 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.validFrom | numeric |  |   1614556800 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.validTo | numeric |  |   1629849599 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityState | string |  |   insecure 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.status | numeric |  |   301 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.statusText | string |  |   Moved Permanently 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.connectEnd | numeric |  |   31.252 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.connectStart | numeric |  |   1.22 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.dnsEnd | numeric |  |   1.22 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.dnsStart | numeric |  |   0.231 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.receiveHeadersEnd | numeric |  |   64.224 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.requestTime | numeric |  |   31833815.69294 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sendEnd | numeric |  |   31.332 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sendStart | numeric |  |   31.292 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sslEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.sslStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.url | string |  `url`  |   http://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.request.headers.Referer | string |  |   https://abc.test.test/embed/abc 
+action_result.data.\*.data.requests.\*.requests.\*.request.headers.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.requests.\*.request.headers.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.requests.\*.request.initialPriority | string |  |   VeryHigh 
+action_result.data.\*.data.requests.\*.requests.\*.request.method | string |  |   GET 
+action_result.data.\*.data.requests.\*.requests.\*.request.mixedContentType | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.request.referrerPolicy | string |  |   strict-origin-when-cross-origin 
+action_result.data.\*.data.requests.\*.requests.\*.request.url | string |  `url`  |   http://abc.test.test/ 
+action_result.data.\*.data.requests.\*.requests.\*.requestId | string |  `md5`  |   0B0AA65E4A0D942DBF007F12F2B5081F 
+action_result.data.\*.data.requests.\*.requests.\*.timestamp | numeric |  |   31833815.69249 
+action_result.data.\*.data.requests.\*.requests.\*.type | string |  |   Document 
+action_result.data.\*.data.requests.\*.requests.\*.wallTime | numeric |  |   1620619741.000826 
+action_result.data.\*.data.requests.\*.response.abp.source | string |  |   Test Inc. 
+action_result.data.\*.data.requests.\*.response.abp.type | string |  |   annoyance 
+action_result.data.\*.data.requests.\*.response.abp.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.response.asn.asn | string |  |   43260 
+action_result.data.\*.data.requests.\*.response.asn.country | string |  |   TR 
+action_result.data.\*.data.requests.\*.response.asn.date | string |  |   2007-07-04 
+action_result.data.\*.data.requests.\*.response.asn.description | string |  |   DGN, TR 
+action_result.data.\*.data.requests.\*.response.asn.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.response.asn.name | string |  |   DGN 
+action_result.data.\*.data.requests.\*.response.asn.registrar | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.response.asn.route | string |  |   34.248.0.0/13 
+action_result.data.\*.data.requests.\*.response.dataLength | numeric |  |   48900 
+action_result.data.\*.data.requests.\*.response.encodedDataLength | numeric |  |   10586 
+action_result.data.\*.data.requests.\*.response.failed.canceled | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.response.failed.errorText | string |  |  
+action_result.data.\*.data.requests.\*.response.failed.requestId | string |  |   24696.156 
+action_result.data.\*.data.requests.\*.response.failed.timestamp | numeric |  |   25061896.916161 
+action_result.data.\*.data.requests.\*.response.failed.type | string |  |   Document 
+action_result.data.\*.data.requests.\*.response.geoip.area | numeric |  |   1000 
+action_result.data.\*.data.requests.\*.response.geoip.city | string |  |   Bursa 
+action_result.data.\*.data.requests.\*.response.geoip.country | string |  |   TR 
+action_result.data.\*.data.requests.\*.response.geoip.country_name | string |  |   Turkey 
+action_result.data.\*.data.requests.\*.response.geoip.eu | string |  |   1 
+action_result.data.\*.data.requests.\*.response.geoip.ll | numeric |  |   -8 
+action_result.data.\*.data.requests.\*.response.geoip.metro | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.geoip.range | numeric |  |   1167286271 
+action_result.data.\*.data.requests.\*.response.geoip.region | string |  |   16 
+action_result.data.\*.data.requests.\*.response.geoip.timezone | string |  |   Europe/Dublin 
+action_result.data.\*.data.requests.\*.response.geoip.zip | numeric |  |   16245 
+action_result.data.\*.data.requests.\*.response.hash | string |  `sha256`  |   90e62949116352899d321b982d3c8dd6e269538d9832a82e86b6f08b10f54883 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.file | string |  |   mediaelement/2.0.0/jquery.js 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.project | string |  |   mediaelement 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.project_url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.source | string |  |   Test Inc. 
+action_result.data.\*.data.requests.\*.response.hashmatches.\*.url | string |  `url`  |   https://test.test 
+action_result.data.\*.data.requests.\*.response.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.response.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.response.requestId | string |  |   24696.1 
+action_result.data.\*.data.requests.\*.response.response.encodedDataLength | numeric |  |   261 
+action_result.data.\*.data.requests.\*.response.response.fromPrefetchCache | boolean |  |   False 
+action_result.data.\*.data.requests.\*.response.response.headers.\* | string |  |  
+action_result.data.\*.data.requests.\*.response.response.headers.Accept-Ranges | string |  |   bytes 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Credentials | string |  |   true 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Headers | string |  |   origin,range,hdntl,hdnts 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Methods | string |  |   GET,POST,OPTIONS 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Allow-Origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Expose-Headers | string |  |   Content-Range, X-ATLAS-MARKERS 
+action_result.data.\*.data.requests.\*.response.response.headers.Access-Control-Max-Age | string |  |   86400 
+action_result.data.\*.data.requests.\*.response.response.headers.Age | string |  |   0 
+action_result.data.\*.data.requests.\*.response.response.headers.Alt-Svc | string |  |   h3-29=":443"; ma=93600,h3-Q050=":443"; ma=93600,quic=":443"; ma=93600; v="46,43" 
+action_result.data.\*.data.requests.\*.response.response.headers.Cache-Control | string |  |   no-cache, no-store, must-revalidate 
+action_result.data.\*.data.requests.\*.response.response.headers.Connection | string |  |   Keep-Alive 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Encoding | string |  |   gzip 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Length | string |  |   10586 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Security-Policy-Report-Only | string |  |   default-src 'none'; block-all-mixed-content; connect-src https://\*.abc.test.test https://\*.abc.abc.test 'self'; frame-ancestors 'none'; img-src 'self' https://test.img https://\*.img.test; media-src 'none'; script-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; style-src 'self' 'nonce-iXnashVb/x3vqerVfc25bndc5thiav8Q'; 
+action_result.data.\*.data.requests.\*.response.response.headers.Content-Type | string |  |   text/html 
+action_result.data.\*.data.requests.\*.response.response.headers.Date | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.ETag | string |  |   "5c17f0-1bf5-4bc7627477580" 
+action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "b4491705564909da7f9eaf749dbbfbb1" 
+action_result.data.\*.data.requests.\*.response.response.headers.Expect-CT | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=test-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.Expires | string |  |   0 
+action_result.data.\*.data.requests.\*.response.response.headers.Keep-Alive | string |  |   timeout=1, max=99 
+action_result.data.\*.data.requests.\*.response.response.headers.Last-Modified | string |  |   Fri, 30 Mar 2012 13:52:38 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.P3P | string |  |   CP="NON DSP COR ADMa OUR IND UNI COM NAV INT" 
+action_result.data.\*.data.requests.\*.response.response.headers.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |   max-age=2592000; pin-sha256="2fRAUXyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY="; pin-sha256="I/Lt/z7ekCWanjCvj5EqXls2lOaThEA0H2Bg4BT/o="; pin-sha256="K87oWBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q="; pin-sha256="Wd8xe/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw="; pin-sha256="WoiWRyIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18="; pin-sha256="cGuxAXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A="; pin-sha256="dolnbtzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A="; pin-sha256="i7WTqTvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY="; pin-sha256="r/mIkG3eEpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E="; pin-sha256="uUwZgwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc="; includeSubdomains; report-uri="http://abc.test.test/beacon/csp?src=test-hpkp-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.Referrer-Policy | string |  |   strict-origin-when-cross-origin 
+action_result.data.\*.data.requests.\*.response.response.headers.Server | string |  |   TestServer/1.4 
+action_result.data.\*.data.requests.\*.response.response.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
+action_result.data.\*.data.requests.\*.response.response.headers.Timing-Allow-Origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.Transfer-Encoding | string |  |   chunked 
+action_result.data.\*.data.requests.\*.response.response.headers.Vary | string |  |   Accept-Encoding,User-Agent 
+action_result.data.\*.data.requests.\*.response.response.headers.Via | string |  |   1.1 9c157874a076ffdde5f5a44371f3a1.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Amz-Cf-Id | string |  |   wznqqSUHDRcnnyCbk9Dimhb-WD6cpBAdjEUd2PE58mwE7HIv2BIw== 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Amz-Cf-Pop | string |  |   VIE50-C1 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Cache | string |  |   HIT 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Content-Type-Options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.response.response.headers.X-DIS-Request-ID | string |  |   9137843c7fc8d206d8a5f450cc63f525 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Frame-Options | string |  |   DENY 
+action_result.data.\*.data.requests.\*.response.response.headers.X-LLID | string |  `md5`  |   7d093909d3419b732aeaa85b2f081282 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Powered-By | string |  |   PHP/5.2.17 
+action_result.data.\*.data.requests.\*.response.response.headers.X-XSS-Protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.response.response.headers.accept-ranges | string |  |   bytes 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-credentials | string |  |   true 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-headers | string |  |   X-Playlog-Web 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-method | string |  |   OPTIONS 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-methods | string |  |   GET 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-allow-origin | string |  `url`  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-expose-headers | string |  |   X-FB-Content-MD5 
+action_result.data.\*.data.requests.\*.response.response.headers.age | string |  |   734 
+action_result.data.\*.data.requests.\*.response.response.headers.alt-svc | string |  |   quic=":443"; ma=2592000; v="39,38,37,36,35" 
+action_result.data.\*.data.requests.\*.response.response.headers.ats-carp-promotion | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.headers.cache-control | string |  |   private, max-age=1800, stale-while-revalidate=1800 
+action_result.data.\*.data.requests.\*.response.response.headers.content-disposition | string |  |   attachment; filename="response.bin"; filename\*=UTF-8''response.bin 
+action_result.data.\*.data.requests.\*.response.response.headers.content-encoding | string |  |   gzip 
+action_result.data.\*.data.requests.\*.response.response.headers.content-length | string |  |   16022 
+action_result.data.\*.data.requests.\*.response.response.headers.content-md5 | string |  |   9Bs4q2xta3z6+p7pgFz0Ww== 
+action_result.data.\*.data.requests.\*.response.response.headers.content-security-policy | string |  |   default-src \* data: blob:;script-src \*.test.test \*.test2.test 127.0.0.1:\* 'unsafe-inline' 'unsafe-eval' 'self'; 
+action_result.data.\*.data.requests.\*.response.response.headers.content-security-policy-report-only | string |  |   default-src 'self'; report-uri https://abc.test.test/beacon/csp?src=test 
+action_result.data.\*.data.requests.\*.response.response.headers.content-type | string |  |   application/javascript; charset=utf-8 
+action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-opener-policy-report-only | string |  |   unsafe-none; report-to="ConsentUi" 
+action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-resource-policy | string |  |   same-site 
+action_result.data.\*.data.requests.\*.response.response.headers.date | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.etag | string |  |   "7eb07c4c7de07fe8def6029af1192b2d" 
+action_result.data.\*.data.requests.\*.response.response.headers.expect-ct | string |  |   max-age=31536000, report-uri="http://cabc.test.test/beacon/csp?src=test-expect-ct-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.expires | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.last-modified | string |  |   Tue, 01 Aug 2017 03:25:32 GMT 
+action_result.data.\*.data.requests.\*.response.response.headers.link | string |  |   <https://abc.test.test>; rel=preconnect; crossorigin 
+action_result.data.\*.data.requests.\*.response.response.headers.p3p | string |  |   CP="This is not a P3P policy! See https://support.test.test for more info." 
+action_result.data.\*.data.requests.\*.response.response.headers.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.headers.public-key-pins-report-only | string |  |   max-age=500; pin-sha256="WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E="; pin-sha256="q4PO2G2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ="; report-uri="http://abc.test.test/" 
+action_result.data.\*.data.requests.\*.response.response.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
+action_result.data.\*.data.requests.\*.response.response.headers.report-to | string |  |   {"group":"ConsentUi","max_age":2592000,"endpoints":[{"url":"https://abc.test.test/csp/external"}]} 
+action_result.data.\*.data.requests.\*.response.response.headers.server | string |  |   ESF 
+action_result.data.\*.data.requests.\*.response.response.headers.set-cookie | string |  |   YSC=a-rkoUxJ3S4; Domain=.test.test; Path=/; Secure; HttpOnly; SameSite=none
+VISITOR_INFO1_LIVE=gH7gS_3ehDQ; Domain=.test.test; Expires=Wed, 25-Aug-2021 05:33:56 GMT; Path=/; Secure; HttpOnly; SameSite=none
+CONSENT=PENDING+007; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.status | string |  |   200 
+action_result.data.\*.data.requests.\*.response.response.headers.strict-transport-security | string |  |   max-age=31536000 
+action_result.data.\*.data.requests.\*.response.response.headers.timing-allow-origin | string |  |   \* 
+action_result.data.\*.data.requests.\*.response.response.headers.vary | string |  |   Accept-Encoding 
+action_result.data.\*.data.requests.\*.response.response.headers.via | string |  |   1.1 73f3a231569992949c078c30859.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-cf-id | string |  |   2fSWemgLL1daViXpR9QBZrtaZnsqQpggTXr_vB__XSQqPkjy_r5Q== 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-cf-pop | string |  |   FRA53-C1 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-id-2 | string |  |   ha+gqKNXBkV1gqr4AHswgx1OZSCdM7otKBZCL/JFLsojoWZn3VruarvQAhNV9ejI7FMh7PalI= 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-request-id | string |  |   2KMY2R40Y5WJNG70 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-server-side-encryption | string |  |   AES256 
+action_result.data.\*.data.requests.\*.response.response.headers.x-cache | string |  |   Hit from TestCloud 
+action_result.data.\*.data.requests.\*.response.response.headers.x-content-type-options | string |  |   nosniff 
+action_result.data.\*.data.requests.\*.response.response.headers.x-fb-content-md5 | string |  `md5`  |   0bd61dc947229e72968554f0c9fb51db 
+action_result.data.\*.data.requests.\*.response.response.headers.x-fb-debug | string |  |   hUiq7Iq/Mt3plXYg3YAU6tS/1K06AainVmY+EU3e6s9L1+7n8CrQFf6Va+EHLQ2tSVCOePLr3hQ5PcEZ6c8R/Q== 
+action_result.data.\*.data.requests.\*.response.response.headers.x-frame-options | string |  |   SAMEORIGIN 
+action_result.data.\*.data.requests.\*.response.response.headers.x-ua-compatible | string |  |   IE=edge, chrome=1 
+action_result.data.\*.data.requests.\*.response.response.headers.x-xss-protection | string |  |   1; mode=block 
+action_result.data.\*.data.requests.\*.response.response.mimeType | string |  |   text/html 
+action_result.data.\*.data.requests.\*.response.response.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.data.requests.\*.response.response.remoteIPAddress | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.data.requests.\*.response.response.remotePort | numeric |  |   80 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.\* | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.:authority | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.:method | string |  |   GET 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.:path | string |  |   / 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.:scheme | string |  `url`  |   https 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept-Encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Accept-Language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Cache-Control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Connection | string |  |   keep-alive 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Cookie | string |  |   B=dv5klk1g9hcet&b=3&s=t9; GUCS=AVkRFB1g 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Host | string |  |   abc.test.test 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Referer | string |  |   https://www.test.test/ 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Dest | string |  |   document 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-Site | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Sec-Fetch-User | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.Upgrade-Insecure-Requests | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.User-Agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.accept | string |  |   text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,\*/\*;q=0.8,application/signed-exchange;v=b3;q=0.9 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.accept-encoding | string |  |   gzip, deflate, br 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.accept-language | string |  |   en-US 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.cache-control | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.content-length | string |  |   133 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.content-type | string |  |   application/x-www-form-urlencoded;charset=UTF-8 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.cookie | string |  |   CONSENT=PENDING+166 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.origin | string |  `url`  |   https://abc.test.test 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.pragma | string |  |   no-cache 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.referer | string |  `url`  |   https://abc.test.test/ 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.sec-fetch-dest | string |  |   document 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.sec-fetch-mode | string |  |   navigate 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.sec-fetch-site | string |  |  
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.sec-fetch-user | string |  |   ?1 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.upgrade-insecure-requests | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.user-agent | string |  |   TestBrowser/7.0 
+action_result.data.\*.data.requests.\*.response.response.requestHeaders.x-same-domain | string |  `domain`  |   1 
+action_result.data.\*.data.requests.\*.response.response.responseTime | numeric |  |   1620619741627.715 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.certificateId | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.certificateTransparencyCompliance | string |  |   unknown 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.cipher | string |  |   AES_128_GCM 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.issuer | string |  |   Test Authority 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.keyExchange | string |  |   ECDHE_RSA 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.keyExchangeGroup | string |  |   X25519 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.protocol | string |  |   TLS 1.2 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.sanList | string |  |   test.test 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.hashAlgorithm | string |  |   SHA-256 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.logDescription | string |  |   Test 'test' log 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.logId | string |  `sha256`  |   A4B90990B418581487BB13A2CC67700A3C359804F91BDFB8E377CD0EC80DDC10 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.origin | string |  |   TLS extension 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.signatureAlgorithm | string |  |   ECDSA 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.signatureData | string |  |   304502201B93510379EBD837E19EA9C684D5EF8D8E777A9A6D0B094AD30465C394FEFCEA0221008622A01AE4C1FDFA376F53FE0E9231E95E6FAE68E47559DA04F147E2461DC1C8 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.status | string |  |   Verified 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.signedCertificateTimestampList.\*.timestamp | numeric |  |   1500976811010 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.subjectName | string |  |   \*.apis.test.test 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.validFrom | numeric |  |   1500972335 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.validTo | numeric |  |   1508228880 
+action_result.data.\*.data.requests.\*.response.response.securityHeaders.\*.name | string |  |   Strict-Transport-Security 
+action_result.data.\*.data.requests.\*.response.response.securityHeaders.\*.value | string |  |   max-age=31536000 
+action_result.data.\*.data.requests.\*.response.response.securityState | string |  |   neutral 
+action_result.data.\*.data.requests.\*.response.response.status | numeric |  |   200 
+action_result.data.\*.data.requests.\*.response.response.statusText | string |  |   OK 
+action_result.data.\*.data.requests.\*.response.response.timing.connectEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.connectStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.dnsEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.dnsStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.proxyEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.proxyStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.pushEnd | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.timing.pushStart | numeric |  |   0 
+action_result.data.\*.data.requests.\*.response.response.timing.receiveHeadersEnd | numeric |  |   229.759000241756 
+action_result.data.\*.data.requests.\*.response.response.timing.requestTime | numeric |  |   25061896.019843 
+action_result.data.\*.data.requests.\*.response.response.timing.sendEnd | numeric |  |   0.0940002501010895 
+action_result.data.\*.data.requests.\*.response.response.timing.sendStart | numeric |  |   0.0710003077983856 
+action_result.data.\*.data.requests.\*.response.response.timing.sslEnd | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.sslStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerFetchStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerReady | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerRespondWithSettled | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.timing.workerStart | numeric |  |   -1 
+action_result.data.\*.data.requests.\*.response.response.url | string |  `url`  |   http://test.test 
+action_result.data.\*.data.requests.\*.response.size | numeric |  |   48900 
+action_result.data.\*.data.requests.\*.response.type | string |  |   Document 
+action_result.data.\*.data.timing.beginNavigation | string |  |   2017-08-07T19:13:17.987Z 
+action_result.data.\*.data.timing.domContentEventFired | string |  |   2017-08-07T19:13:19.165Z 
+action_result.data.\*.data.timing.frameNavigated | string |  |   2017-08-07T19:13:19.897Z 
+action_result.data.\*.data.timing.frameStartedLoading | string |  |   2017-08-07T19:13:19.902Z 
+action_result.data.\*.data.timing.frameStoppedLoading | string |  |   2017-08-07T19:13:20.116Z 
+action_result.data.\*.data.timing.loadEventFired | string |  |   2017-08-07T19:13:19.897Z 
+action_result.data.\*.description | string |  |   The submitted domain is on our blacklist. For your own safety we did not perform this scan... 
+action_result.data.\*.fieldErrors.\*.location | string |  |   body 
+action_result.data.\*.fieldErrors.\*.msg | string |  |   must be between 5 and 2083 characters 
+action_result.data.\*.fieldErrors.\*.param | string |  |  
+action_result.data.\*.fieldErrors.\*.value | string |  |   123 
+action_result.data.\*.lists.asns | string |  |   32934 
+action_result.data.\*.lists.certificates.\*.issuer | string |  |   Test Authority 
+action_result.data.\*.lists.certificates.\*.sanList | string |  |   test.test 
+action_result.data.\*.lists.certificates.\*.subjectName | string |  |   \*.apis.test.test 
+action_result.data.\*.lists.certificates.\*.validFrom | numeric |  |   1500972335 
+action_result.data.\*.lists.certificates.\*.validTo | numeric |  |   1508228880 
+action_result.data.\*.lists.countries | string |  |   IE 
+action_result.data.\*.lists.domains | string |  |   accounts.test.test 
+action_result.data.\*.lists.hashes | string |  `sha256`  |   548f2d6f4d0d820c6c5ffbeffcbd7f0e73193e2932eefe542accc84762deec87 
+action_result.data.\*.lists.ips | string |  |   2a03:2880:f11c:8183:face:b00c:0:25de 
+action_result.data.\*.lists.linkDomains | string |  |   test.test 
+action_result.data.\*.lists.servers | string |  |   ESF 
+action_result.data.\*.lists.urls | string |  `url`  |   https://test.test 
+action_result.data.\*.message | string |  |   Submission successful 
+action_result.data.\*.meta.processors.abp.data.\*.source | string |  |   Test Authority 
+action_result.data.\*.meta.processors.abp.data.\*.type | string |  |   annoyance 
+action_result.data.\*.meta.processors.abp.data.\*.url | string |  `url`  |   http://test.test 
+action_result.data.\*.meta.processors.abp.state | string |  |   done 
+action_result.data.\*.meta.processors.asn.data.\*.asn | string |  |   43260 
+action_result.data.\*.meta.processors.asn.data.\*.country | string |  |   TR 
+action_result.data.\*.meta.processors.asn.data.\*.date | string |  |   2007-07-04 
+action_result.data.\*.meta.processors.asn.data.\*.description | string |  |   DGN, TR 
+action_result.data.\*.meta.processors.asn.data.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.meta.processors.asn.data.\*.name | string |  |   DGN 
+action_result.data.\*.meta.processors.asn.data.\*.registrar | string |  |   Test Authority 
+action_result.data.\*.meta.processors.asn.data.\*.route | string |  |   34.248.0.0/13 
+action_result.data.\*.meta.processors.asn.state | string |  |   done 
+action_result.data.\*.meta.processors.cdnjs.data.\*.hash | string |  `sha256`  |   900b8e0052d80e532dcdca466e31b30d4f8eea58992ed9ff2b253d7d5346c811 
+action_result.data.\*.meta.processors.cdnjs.data.\*.matches | string |  |   ckeditor/4.2/plugins/fakeobjects/images/spacer.gif 
+action_result.data.\*.meta.processors.cdnjs.state | string |  |   done 
+action_result.data.\*.meta.processors.done.data.state | string |  |   done 
+action_result.data.\*.meta.processors.done.state | string |  |   done 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.area | numeric |  |   1000 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.city | string |  |   Bursa 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.country | string |  |   TR 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.country_name | string |  |   Turkey 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.eu | string |  |   1 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.ll | numeric |  |   -8 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.metro | numeric |  |   0 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.range | numeric |  |   780744703 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.region | string |  |   16 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.timezone | string |  |   Europe/Dublin 
+action_result.data.\*.meta.processors.geoip.data.\*.geoip.zip | numeric |  |   16245 
+action_result.data.\*.meta.processors.geoip.data.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.meta.processors.geoip.state | string |  |   done 
+action_result.data.\*.meta.processors.gsb.state | string |  |   done 
+action_result.data.\*.meta.processors.rdns.data.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.meta.processors.rdns.data.\*.ptr | string |  |   abc.test.test 
+action_result.data.\*.meta.processors.rdns.state | string |  |   done 
+action_result.data.\*.meta.processors.wappa.state | string |  |   done 
+action_result.data.\*.options.useragent | string |  |   TestBrowser/7.0 
+action_result.data.\*.page.asn | string |  |   AS43260 
+action_result.data.\*.page.asnname | string |  |   DGN, TR 
+action_result.data.\*.page.city | string |  |   Bursa 
+action_result.data.\*.page.country | string |  |   TR 
+action_result.data.\*.page.domain | string |  `domain`  |   www.test.test 
+action_result.data.\*.page.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.page.ptr | string |  |   abc.test.test 
+action_result.data.\*.page.server | string |  |   TestServer/1.4 
+action_result.data.\*.page.url | string |  `url`  |   http://test.test 
+action_result.data.\*.result | string |  `url`  |   https://urlscan.io/result/f04f2a29-d455-4830-874a-88191fb79352/ 
+action_result.data.\*.stats.IPv6Percentage | numeric |  |   75 
+action_result.data.\*.stats.adBlocked | numeric |  |   2 
+action_result.data.\*.stats.domainStats.\*.count | numeric |  |   55 
+action_result.data.\*.stats.domainStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.domainStats.\*.domain | string |  `domain`  |   www.test.test 
+action_result.data.\*.stats.domainStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.domainStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.domainStats.\*.initiators | string |  |   apis.test.test 
+action_result.data.\*.stats.domainStats.\*.ips | string |  |   [2a03:2880:f006:21:face:b00c:0:3] 
+action_result.data.\*.stats.domainStats.\*.redirects | numeric |  |   0 
+action_result.data.\*.stats.domainStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.ipStats.\*.asn.asn | string |  |   43260 
+action_result.data.\*.stats.ipStats.\*.asn.country | string |  |   TR 
+action_result.data.\*.stats.ipStats.\*.asn.date | string |  |   2007-07-04 
+action_result.data.\*.stats.ipStats.\*.asn.description | string |  |   DGN, TR 
+action_result.data.\*.stats.ipStats.\*.asn.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.ipStats.\*.asn.name | string |  |   DGN 
+action_result.data.\*.stats.ipStats.\*.asn.registrar | string |  |   ripencc 
+action_result.data.\*.stats.ipStats.\*.asn.route | string |  |   2a00:1288:110::/46 
+action_result.data.\*.stats.ipStats.\*.count | string |  |  
+action_result.data.\*.stats.ipStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.ipStats.\*.domains | string |  |   www.test.test 
+action_result.data.\*.stats.ipStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.ipStats.\*.geoip.area | numeric |  |   100 
+action_result.data.\*.stats.ipStats.\*.geoip.city | string |  |   Bursa 
+action_result.data.\*.stats.ipStats.\*.geoip.country | string |  |   TR 
+action_result.data.\*.stats.ipStats.\*.geoip.country_name | string |  |   Turkey 
+action_result.data.\*.stats.ipStats.\*.geoip.eu | string |  |   0 
+action_result.data.\*.stats.ipStats.\*.geoip.ll | numeric |  |   -8 
+action_result.data.\*.stats.ipStats.\*.geoip.metro | numeric |  |   0 
+action_result.data.\*.stats.ipStats.\*.geoip.range | numeric |  |   1167286271 
+action_result.data.\*.stats.ipStats.\*.geoip.region | string |  |   16 
+action_result.data.\*.stats.ipStats.\*.geoip.timezone | string |  |   Europe/London 
+action_result.data.\*.stats.ipStats.\*.geoip.zip | numeric |  |   16245 
+action_result.data.\*.stats.ipStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.ipStats.\*.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.ipStats.\*.ipv6 | boolean |  |   True  False 
+action_result.data.\*.stats.ipStats.\*.rdns.ip | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.ipStats.\*.rdns.ptr | string |  |   abc.test.test 
+action_result.data.\*.stats.ipStats.\*.redirects | numeric |  |   3 
+action_result.data.\*.stats.ipStats.\*.requests | numeric |  |   55 
+action_result.data.\*.stats.ipStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.malicious | numeric |  |   0 
+action_result.data.\*.stats.protocolStats.\*.count | numeric |  |   55 
+action_result.data.\*.stats.protocolStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.protocolStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.protocolStats.\*.ips | string |  |   [2a03:2880:f11c:8183:face:b00c:0:25de] 
+action_result.data.\*.stats.protocolStats.\*.protocol | string |  `url`  |   http/1.1 
+action_result.data.\*.stats.protocolStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.regDomainStats.\*.count | numeric |  |   55 
+action_result.data.\*.stats.regDomainStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.regDomainStats.\*.index | numeric |  |   0 
+action_result.data.\*.stats.regDomainStats.\*.ips | string |  |   [2a03:2880:f006:21:face:b00c:0:3] 
+action_result.data.\*.stats.regDomainStats.\*.redirects | numeric |  |   4 
+action_result.data.\*.stats.regDomainStats.\*.regDomain | string |  `domain`  |   test.test 
+action_result.data.\*.stats.regDomainStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.country | string |  |   GB 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.domain | string |  `domain`  |   apis 
+action_result.data.\*.stats.regDomainStats.\*.subDomains.\*.failed | boolean |  |   True  False 
+action_result.data.\*.stats.resourceStats.\*.compression | string |  |   1.0 
+action_result.data.\*.stats.resourceStats.\*.count | numeric |  |   40 
+action_result.data.\*.stats.resourceStats.\*.countries | string |  |   TR 
+action_result.data.\*.stats.resourceStats.\*.encodedSize | numeric |  |   1876966 
+action_result.data.\*.stats.resourceStats.\*.ips | string |  `ip`  `ipv6`  |   8.8.8.8 
+action_result.data.\*.stats.resourceStats.\*.latency | numeric |  |   0 
+action_result.data.\*.stats.resourceStats.\*.percentage | numeric |  |   59 
+action_result.data.\*.stats.resourceStats.\*.size | numeric |  |   1876925 
+action_result.data.\*.stats.resourceStats.\*.type | string |  |   Image 
+action_result.data.\*.stats.securePercentage | numeric |  |   10 
+action_result.data.\*.stats.secureRequests | numeric |  |   7 
+action_result.data.\*.stats.serverStats.\*.count | numeric |  |   55 
+action_result.data.\*.stats.serverStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.serverStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.serverStats.\*.ips | string |  |   [2a00:1450:4001:825::200e] 
+action_result.data.\*.stats.serverStats.\*.server | string |  |   TestServer/1.4 
+action_result.data.\*.stats.serverStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.tlsStats.\*.count | numeric |  |   55 
+action_result.data.\*.stats.tlsStats.\*.countries | string |  |   IE 
+action_result.data.\*.stats.tlsStats.\*.encodedSize | numeric |  |   2042170 
+action_result.data.\*.stats.tlsStats.\*.ips | string |  |   [2a03:2880:f11c:8183:face:b00c:0:25de] 
+action_result.data.\*.stats.tlsStats.\*.protocols.QUIC /  / AES_128_GCM | numeric |  |   9 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.2 / ECDHE_ECDSA / AES_128_GCM | numeric |  |   2 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.2 / ECDHE_RSA / AES_128_GCM | numeric |  |   5 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.3 /  / AES_128_GCM | numeric |  |   17 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.3 /  / AES_256_GCM | numeric |  |   3 
+action_result.data.\*.stats.tlsStats.\*.securityState | string |  |   neutral 
+action_result.data.\*.stats.tlsStats.\*.size | numeric |  |   2410398 
+action_result.data.\*.stats.totalLinks | numeric |  |   4 
+action_result.data.\*.stats.uniqCountries | numeric |  |   2 
+action_result.data.\*.status | numeric |  |   400 
+action_result.data.\*.submitter.country | string |  |   US 
+action_result.data.\*.task.domURL | string |  `url`  |   https://urlscan.io/dom/f04f2a29-d455-4830-874a-88191fb79352/ 
+action_result.data.\*.task.method | string |  |   api 
+action_result.data.\*.task.options.useragent | string |  |   TestBrowser/7.0 
+action_result.data.\*.task.reportURL | string |  `url`  |   https://urlscan.io/result/f04f2a29-d455-4830-874a-88191fb79352/ 
+action_result.data.\*.task.screenshotURL | string |  `url`  |   https://urlscan.io/screenshots/f04f2a29-d455-4830-874a-88191fb79352.png 
+action_result.data.\*.task.source | string |  |   4b0fb6d4 
+action_result.data.\*.task.time | string |  |   2017-08-07T19:13:17.870Z 
+action_result.data.\*.task.url | string |  `url`  |   http://test.test 
+action_result.data.\*.task.userAgent | string |  |   TestBrowser/7.0 
+action_result.data.\*.task.uuid | string |  `urlscan submission id`  |   f04f2a29-d455-4830-874a-88191fb79352 
+action_result.data.\*.task.visibility | string |  |   public 
+action_result.data.\*.url | string |  `url`  |   abc.test.test 
+action_result.data.\*.uuid | string |  |   f04f2a29-d455-4830-874a-88191fb79352 
+action_result.data.\*.verdicts.community.score | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesBenign | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesMalicious | numeric |  |   0 
+action_result.data.\*.verdicts.community.votesTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.benignTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.enginesTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.maliciousTotal | numeric |  |   0 
+action_result.data.\*.verdicts.engines.score | numeric |  |   0 
+action_result.data.\*.verdicts.overall.hasVerdicts | numeric |  |   0 
+action_result.data.\*.verdicts.overall.malicious | boolean |  |   False 
+action_result.data.\*.verdicts.overall.score | numeric |  |   0 
+action_result.data.\*.verdicts.urlscan.malicious | boolean |  |   False 
+action_result.data.\*.verdicts.urlscan.score | numeric |  |   0 
+action_result.data.\*.visibility | string |  |   public 
+action_result.summary | string |  |  
+action_result.message | string |  |   Successfully retrieved information 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 
