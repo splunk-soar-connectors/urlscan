@@ -10,7 +10,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2017-2024 Splunk Inc.",
-    "app_version": "2.5.1",
+    "app_version": "2.6.0",
     "utctime_updated": "2022-11-14T04:59:03.000000Z",
     "python_version": "3",
     "fips_compliant": true,
@@ -21,6 +21,11 @@
         "Cloud November 16, 2022"
     ],
     "app_wizard_version": "1.0.0",
+    "contributors": [
+        {
+            "name": "Jaime Park"
+        }
+    ],
     "configuration": {
         "api_key": {
             "description": "API key for urlscan.io",
@@ -10547,6 +10552,55 @@
                 "type": "custom",
                 "title": "Url Details",
                 "view": "urlscan_view.display_view"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get screenshot",
+            "identifier": "get_screenshot",
+            "description": "Retrieve copy of screenshot file",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "report_id": {
+                    "description": "uuid of report",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "urlscan submission id"
+                    ],
+                    "order": 0
+                },
+                "container": {
+                    "description": "Event to add file to, will default to current container",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "contains": [],
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.report_id",
+                    "data_type": "string",
+                    "column_name": "report id",
+                    "column_order": 1
+                }
+            ],
+            "render": {
+                "type": "table"
             },
             "versions": "EQ(*)"
         }

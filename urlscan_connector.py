@@ -18,12 +18,19 @@ import ipaddress
 import json
 import time
 import traceback
+import uuid
+import os
+import magic
+import shutil
+import re
 
 import phantom.app as phantom
+import phantom.rules as ph_rules
 import requests
 from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
+from phantom.vault import Vault as Vault
 
 from urlscan_consts import *
 
@@ -34,6 +41,16 @@ class RetVal(tuple):
 
 
 class UrlscanConnector(BaseConnector):
+
+    MAGIC_FORMATS = [
+        (re.compile('^PE.* Windows'), ['pe file'], '.exe'),
+        (re.compile('^MS-DOS executable'), ['pe file'], '.exe'),
+        (re.compile('^PDF '), ['pdf'], '.pdf'),
+        (re.compile('^MDMP crash'), ['process dump'], '.dmp'),
+        (re.compile('^Macromedia Flash'), ['flash'], '.flv'),
+        (re.compile('^tcpdump capture'), ['pcap'], '.pcap'),
+    ]
+
     def __init__(self):
 
         # Call the BaseConnectors init first
@@ -75,8 +92,9 @@ class UrlscanConnector(BaseConnector):
     def _process_empty_response(self, response, action_result):
 
         if response.status_code == 200:
-            return RetVal(phantom.APP_SUCCESS, {})
-
+            if response.headers.get('Content-Type') == 'application/octet-stream':
+                return RetVal(phantom.APP_SUCCESS, "Response likely includes a file")
+            return RetVal(phantom.APP_SUCCESS, None)
         return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_EMPTY_RESPONSE_ERROR.format(response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
@@ -129,6 +147,11 @@ class UrlscanConnector(BaseConnector):
 
     def _process_response(self, r, action_result):
 
+        if r.headers.get('Content-Type', '') == 'application/octet-stream':
+            r_text = ""
+        else:
+            r_text = r.text
+
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
@@ -149,6 +172,8 @@ class UrlscanConnector(BaseConnector):
             return self._process_html_response(r, action_result)
 
         # it's not content-type that is to be parsed, handle an empty response
+        if not r_text:
+            return self._process_empty_response(r, action_result)
         if not r.text:
             return self._process_empty_response(r, action_result)
 
@@ -177,6 +202,10 @@ class UrlscanConnector(BaseConnector):
         except Exception as e:
             error_message = self._get_error_message_from_exception(e)
             return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTIVITY_ERROR.format(error_message)), resp_json)
+        
+        if self.get_action_identifier() == "get_screenshot":
+            ret_val = self._process_response(r, action_result)
+            return ret_val, r
 
         return self._process_response(r, action_result)
 
@@ -354,6 +383,88 @@ class UrlscanConnector(BaseConnector):
         action_result.update_summary({})
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
+    def _handle_get_screenshot(self, param):
+        
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        report_id = param["report_id"]
+        container = param.get("container", False)
+        
+        if not container:
+            container = self.get_container_id()
+
+
+        ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id), action_result, params=None, headers=None)
+
+        if phantom.is_fail(ret_val):
+            if not action_result.get_message():
+                error_msg = response.get("message") or URLSCAN_NO_DATA_ERROR
+                self.debug_print(error_msg)
+                return action_result.set_status(phantom.APP_ERROR, error_msg)
+            return action_result.get_status()
+
+        if response.status_code == 200:
+            return self._add_file_to_vault(action_result, response, report_id + ".png")
+            # return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
+        else:
+            self.debug_print("else")
+            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERROR)
+
+    def _add_file_to_vault(self, action_result, response, file_name):
+        self.debug_print("adding to vault")
+        guid = uuid.uuid4()
+        if hasattr(Vault, 'get_vault_tmp_dir'):
+            temp_dir = Vault.get_vault_tmp_dir()
+        else:
+            temp_dir = '/vault/tmp'
+        
+        local_dir = temp_dir + '/{}'.format(guid)
+        self.save_progress("Using temp directory: {0}".format(guid))
+        try:
+            os.makedirs(local_dir)
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR,
+                                            "Unable to create temporary folder {0}.".format(temp_dir), e)
+        file_path = "{0}/{1}".format(local_dir, file_name)
+        # open and download the file
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+        contains = []
+        file_ext = ''
+        magic_str = magic.from_file(file_path)
+        for regex, cur_contains, extension in self.MAGIC_FORMATS:
+            if regex.match(magic_str):
+                contains.extend(cur_contains)
+                if not file_ext:
+                    file_ext = extension
+        file_name = '{}{}'.format(file_name, file_ext)
+
+        # move the file to the vault
+        status, vault_ret_message, vault_id = ph_rules.vault_add(file_location=file_path,
+                                                                 container=self.get_container_id(), file_name=file_name,
+                                                                 metadata={'contains': contains})
+        curr_data = {}
+
+        if status:
+            curr_data[phantom.APP_JSON_VAULT_ID] = vault_id
+            curr_data[phantom.APP_JSON_NAME] = file_name
+            if contains:
+                curr_data['file_type'] = ','.join(contains)
+            action_result.add_data(curr_data)
+            action_result.update_summary(curr_data)
+            action_result.set_status(phantom.APP_SUCCESS, "File successfully retrieved and added to vault")
+        else:
+            action_result.set_status(phantom.APP_ERROR, phantom.APP_ERR_FILE_ADD_TO_VAULT)
+            action_result.append_to_message(vault_ret_message)
+
+        # remove the /tmp/<> temporary directory
+        shutil.rmtree(local_dir)
+
+        return action_result.get_status()
+
+    
     def handle_action(self, param):
 
         ret_val = phantom.APP_SUCCESS
@@ -377,6 +488,9 @@ class UrlscanConnector(BaseConnector):
 
         elif action_id == URLSCAN_DETONATE_URL_ACTION:
             ret_val = self._handle_detonate_url(param)
+        
+        elif action_id == URLSCAN_GET_SCREENSHOT_ACTION:
+            ret_val = self._handle_get_screenshot(param)
 
         return ret_val
 

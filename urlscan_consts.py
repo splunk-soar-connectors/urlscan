@@ -28,6 +28,7 @@ URLSCAN_HUNT_IP_ENDPOINT = '/api/v1/search/?q=ip:"{}"'
 URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
 URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
 URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
+URLSCAN_SCREENSHOT_ENDPOINT = "/screenshots/{}.png"
 
 # Status messages
 URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"
@@ -55,3 +56,4 @@ URLSCAN_GET_REPORT_ACTION = "get_report"
 URLSCAN_HUNT_DOMAIN_ACTION = "hunt_domain"
 URLSCAN_HUNT_IP_ACTION = "hunt_ip"
 URLSCAN_DETONATE_URL_ACTION = "detonate_url"
+URLSCAN_GET_SCREENSHOT_ACTION = "get_screenshot"
