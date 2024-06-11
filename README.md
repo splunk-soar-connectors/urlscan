@@ -2,11 +2,11 @@
 # urlscan.io
 
 Publisher: Splunk  
-Connector Version: 2.5.1  
+Connector Version: 2.6.0  
 Product Vendor: urlscan.io  
 Product Name: urlscan.io  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.3.5  
+Minimum Product Version: 6.2.1  
 
 This app supports investigative actions on urlscan.io
 
@@ -53,6 +53,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io  
 [lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io  
 [detonate url](#action-detonate-url) - Detonate a URL at urlscan.io  
+[get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity using supplied configuration
@@ -1566,6 +1567,27 @@ action_result.data.\*.verdicts.urlscan.malicious | boolean |  |   False
 action_result.data.\*.verdicts.urlscan.score | numeric |  |   0 
 action_result.data.\*.visibility | string |  |   public 
 action_result.summary | string |  |  
+action_result.message | string |  |   Successfully retrieved information 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
+
+## action: 'get screenshot'
+Retrieve copy of screenshot file
+
+Type: **generic**  
+Read only: **True**
+
+#### Action Parameters
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**report_id** |  required  | UUID of report | string |  `urlscan submission id` 
+**container** |  optional  | Event to add file to, will default to current container | string | 
+
+#### Action Output
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.report_id | string |  `urlscan submission id`  |  
 action_result.message | string |  |   Successfully retrieved information 
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1 
