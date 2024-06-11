@@ -16,7 +16,7 @@
     "fips_compliant": true,
     "package_name": "phantom_urlscan",
     "main_module": "urlscan_connector.py",
-    "min_phantom_version": "5.3.5",
+    "min_phantom_version": "6.2.1",
     "latest_tested_versions": [
         "Cloud November 16, 2022"
     ],
@@ -10563,7 +10563,7 @@
             "read_only": true,
             "parameters": {
                 "report_id": {
-                    "description": "uuid of report",
+                    "description": "UUID of report",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
@@ -10585,8 +10585,6 @@
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0,
                     "example_values": [
                         "success",
                         "failed"
@@ -10595,8 +10593,32 @@
                 {
                     "data_path": "action_result.parameter.report_id",
                     "data_type": "string",
+                    "contains": [
+                        "urlscan submission id"
+                    ],
                     "column_name": "report id",
                     "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully retrieved information"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 }
             ],
             "render": {

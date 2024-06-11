@@ -202,7 +202,7 @@ class UrlscanConnector(BaseConnector):
         except Exception as e:
             error_message = self._get_error_message_from_exception(e)
             return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTIVITY_ERROR.format(error_message)), resp_json)
-        
+
         if self.get_action_identifier() == "get_screenshot":
             ret_val = self._process_response(r, action_result)
             return ret_val, r
@@ -384,17 +384,16 @@ class UrlscanConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
     def _handle_get_screenshot(self, param):
-        
+
         self.debug_print("In action handler for {}".format(self.get_action_identifier()))
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         report_id = param["report_id"]
         container = param.get("container", False)
-        
+
         if not container:
             container = self.get_container_id()
-
 
         ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id), action_result, params=None, headers=None)
 
@@ -413,13 +412,14 @@ class UrlscanConnector(BaseConnector):
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERROR)
 
     def _add_file_to_vault(self, action_result, response, file_name):
+        
         self.debug_print("adding to vault")
         guid = uuid.uuid4()
         if hasattr(Vault, 'get_vault_tmp_dir'):
             temp_dir = Vault.get_vault_tmp_dir()
         else:
             temp_dir = '/vault/tmp'
-        
+
         local_dir = temp_dir + '/{}'.format(guid)
         self.save_progress("Using temp directory: {0}".format(guid))
         try:
@@ -464,7 +464,6 @@ class UrlscanConnector(BaseConnector):
 
         return action_result.get_status()
 
-    
     def handle_action(self, param):
 
         ret_val = phantom.APP_SUCCESS
@@ -488,7 +487,7 @@ class UrlscanConnector(BaseConnector):
 
         elif action_id == URLSCAN_DETONATE_URL_ACTION:
             ret_val = self._handle_detonate_url(param)
-        
+
         elif action_id == URLSCAN_GET_SCREENSHOT_ACTION:
             ret_val = self._handle_get_screenshot(param)
 
