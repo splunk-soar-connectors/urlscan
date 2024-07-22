@@ -53,3 +53,5 @@ def display_view(provides, all_app_runs, context):
         return 'urlscan_detonate_url.html'
     elif provides == 'get report':
         return 'urlscan_get_report.html'
+    elif provides == 'get screenshot':
+        return 'urlscan_get_screenshot.html'

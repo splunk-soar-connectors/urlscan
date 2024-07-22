@@ -82,7 +82,7 @@
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
                     "example_values": [
-                        "86b7f70a-5039-419f-9aeb-8cba09404e92"
+                        "test-5039-419f-9aeb-8cba09404e92"
                     ],
                     "contains": [
                         "urlscan submission id"
@@ -2329,7 +2329,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.Etag",
                     "data_type": "string",
                     "example_values": [
-                        "\"b4491705564909da7f9eaf749dbbfbb1\""
+                        "\"test1705564909da7f9eaf749dbbfbb1\""
                     ]
                 },
                 {
@@ -5184,7 +5184,7 @@
                     "order": 0
                 },
                 "tags": {
-                    "description": "Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted.",
+                    "description": "Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted",
                     "verbose": "If tag length is longer than 29, the tag will be omitted.",
                     "data_type": "string",
                     "order": 1
@@ -7966,7 +7966,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.Etag",
                     "data_type": "string",
                     "example_values": [
-                        "\"b4491705564909da7f9eaf749dbbfbb1\""
+                        "\"test91705564909da7f9eaf749dbbfbb1\""
                     ]
                 },
                 {
@@ -8015,7 +8015,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.Public-Key-Pins-Report-Only",
                     "data_type": "string",
                     "example_values": [
-                        "max-age=2592000; pin-sha256=\"2fRAUXyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY=\"; pin-sha256=\"I/Lt/z7ekCWanjCvj5EqXls2lOaThEA0H2Bg4BT/o=\"; pin-sha256=\"K87oWBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q=\"; pin-sha256=\"Wd8xe/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw=\"; pin-sha256=\"WoiWRyIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18=\"; pin-sha256=\"cGuxAXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A=\"; pin-sha256=\"dolnbtzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A=\"; pin-sha256=\"i7WTqTvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY=\"; pin-sha256=\"r/mIkG3eEpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E=\"; pin-sha256=\"uUwZgwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc=\"; includeSubdomains; report-uri=\"http://abc.test.test/beacon/csp?src=test-hpkp-report-only\""
+                        "max-age=2592000; pin-sha256=\"testyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY=\"; pin-sha256=\"I/Lt/testanjCvj5EqXls2lOaThEA0H2Bg4BT/o=\"; pin-sha256=\"testBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q=\"; pin-sha256=\"test/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw=\"; pin-sha256=\"testIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18=\"; pin-sha256=\"testXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A=\"; pin-sha256=\"testzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A=\"; pin-sha256=\"testvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY=\"; pin-sha256=\"r/testpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E=\"; pin-sha256=\"testwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc=\"; includeSubdomains; report-uri=\"http://abc.test.test/beacon/csp?src=test-hpkp-report-only\""
                     ]
                 },
                 {
@@ -8287,7 +8287,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.etag",
                     "data_type": "string",
                     "example_values": [
-                        "\"7eb07c4c7de07fe8def6029af1192b2d\""
+                        "\"test4c7de07fe8def6029af1192b2d\""
                     ]
                 },
                 {
@@ -8336,7 +8336,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.public-key-pins-report-only",
                     "data_type": "string",
                     "example_values": [
-                        "max-age=500; pin-sha256=\"WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=\"; pin-sha256=\"r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=\"; pin-sha256=\"q4PO2G2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ=\"; report-uri=\"http://abc.test.test/\""
+                        "max-age=500; pin-sha256=\"testIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18=\"; pin-sha256=\"r/testeEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=\"; pin-sha256=\"test2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ=\"; report-uri=\"http://abc.test.test/\""
                     ]
                 },
                 {
@@ -8364,7 +8364,7 @@
                     "data_path": "action_result.data.*.data.requests.*.response.response.headers.set-cookie",
                     "data_type": "string",
                     "example_values": [
-                        "YSC=a-rkoUxJ3S4; Domain=.test.test; Path=/; Secure; HttpOnly; SameSite=none\nVISITOR_INFO1_LIVE=gH7gS_3ehDQ; Domain=.test.test; Expires=Wed, 25-Aug-2021 05:33:56 GMT; Path=/; Secure; HttpOnly; SameSite=none\nCONSENT=PENDING+007; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test"
+                        "YSC=a-rkoUxJ3S4; Domain=.test.test; Path=/; Secure; HttpOnly; SameSite=none VISITOR_INFO1_LIVE=gH7gS_3ehDQ; Domain=.test.test; Expires=Wed, 25-Aug-2021 05:33:56 GMT; Path=/; Secure; HttpOnly; SameSite=none CONSENT=PENDING+007; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test"
                     ]
                 },
                 {
@@ -10521,6 +10521,948 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.data.console.*.message.timestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1721648282157.842
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.isSameSite",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.timing.receiveHeadersStart",
+                    "data_type": "numeric",
+                    "example_values": [
+                        431.852
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.charset",
+                    "data_type": "string",
+                    "example_values": [
+                        "utf-8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.report-to",
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"group\":\"gws\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/gws/other\"}]}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.cross-origin-opener-policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "same-origin-allow-popups; report-to=\"gws\""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.content-security-policy-report-only",
+                    "data_type": "string",
+                    "example_values": [
+                        "object-src 'none';base-uri 'self';script-src 'nonce-testtCZXDJBcDaS7euQg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.encryptedClientHello",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.serverSignatureAlgorithm",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1027
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.logId",
+                    "data_type": "string",
+                    "example_values": [
+                        "TEST9994D5DB1ACEC55CB79DB4CD13A23287467CBCECDEC351485946711FB59B"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.origin",
+                    "data_type": "string",
+                    "example_values": [
+                        "Embedded in certificate"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "Verified"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.timestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1719214546918
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.hashAlgorithm",
+                    "data_type": "string",
+                    "example_values": [
+                        "SHA-256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.signatureData",
+                    "data_type": "string",
+                    "example_values": [
+                        "TEST9999206F7183644269E6018A0FE1BC87492E448A594771A85180714B04E90ECF74CA29022100C46AC8249C2FBC02BC77162BCDA0D4C36A1F7D2210A8FA10F182A0D981E533E3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.logDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "Google 'Argon2024' log"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.securityDetails.signedCertificateTimestampList.*.signatureAlgorithm",
+                    "data_type": "string",
+                    "example_values": [
+                        "ECDSA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.alternateProtocolUsage",
+                    "data_type": "string",
+                    "example_values": [
+                        "dnsTESTJobWonRace"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectHasExtraInfo",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.request.isSameSite",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectHasExtraInfo",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.charset",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.alternateProtocolUsage",
+                    "data_type": "string",
+                    "example_values": [
+                        "TESTalternativeJobWonWithoutRace"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.timing.receiveHeadersStart",
+                    "data_type": "numeric",
+                    "example_values": [
+                        431.852
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.report-to",
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"group\":\"gws\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/gws/other\"}]}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.cross-origin-opener-policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "same-origin-allow-popups; report-to=\"gws\""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.content-security-policy-report-only",
+                    "data_type": "string",
+                    "example_values": [
+                        "object-src 'none';base-uri 'self';script-src 'nonce-TESTDATArztCZXDJBcDaS7euQg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.encryptedClientHello",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.serverSignatureAlgorithm",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1027
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.logId",
+                    "data_type": "string",
+                    "example_values": [
+                        "TESTDATAD064D5DB1ACEC55CB79DB4CD13A23287467CBCECDEC351485946711FB59B"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.origin",
+                    "data_type": "string",
+                    "example_values": [
+                        "Embedded in certificate"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "Verified"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.timestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1719214546918
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.hashAlgorithm",
+                    "data_type": "string",
+                    "example_values": [
+                        "SHA-256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.signatureData",
+                    "data_type": "string",
+                    "example_values": [
+                        "TESTDATA02206F7183644269E6018A0FE1BC87492E448A594771A85180714B04E90ECF74CA29022100C46AC8249C2FBC02BC77162BCDA0D4C36A1F7D2210A8FA10F182A0D981E533E3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.logDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "Google 'Argon2024' log"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.securityDetails.signedCertificateTimestampList.*.signatureAlgorithm",
+                    "data_type": "string",
+                    "example_values": [
+                        "ECDSA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.timing.receiveHeadersStart",
+                    "data_type": "numeric",
+                    "example_values": [
+                        557.51
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.charset",
+                    "data_type": "string",
+                    "example_values": [
+                        "utf-8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.accept-ch",
+                    "data_type": "string",
+                    "example_values": [
+                        "Sec-CH-UA-Platform Sec-CH-UA-Platform-Version Sec-CH-UA-Full-Version Sec-CH-UA-Arch Sec-CH-UA-Model Sec-CH-UA-Bitness Sec-CH-UA-Full-Version-List Sec-CH-UA-WoW64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.permissions-policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "unload=()"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cross-origin-opener-policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "same-origin-allow-popups; report-to=\"gws\""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.securityDetails.encryptedClientHello",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.securityDetails.serverSignatureAlgorithm",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1027
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.alternateProtocolUsage",
+                    "data_type": "string",
+                    "example_values": [
+                        "testdatadnsnH3JobWonRace"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.hasExtraInfo",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.isLinkPreload",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.version",
+                    "data_type": "string",
+                    "example_values": [
+                        "652602471"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.Accept",
+                    "data_type": "string",
+                    "example_values": [
+                        "*/*"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.Sec-Fetch-Mode",
+                    "data_type": "string",
+                    "example_values": [
+                        "cors"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.Access-Control-Request-Method",
+                    "data_type": "string",
+                    "example_values": [
+                        "POST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.Access-Control-Request-Headers",
+                    "data_type": "string",
+                    "example_values": [
+                        "content-type,x-goog-api-key,x-user-agent"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.initiator.requestId",
+                    "data_type": "string",
+                    "example_values": [
+                        "360549.24"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.server-timing",
+                    "data_type": "string",
+                    "example_values": [
+                        "gfet4t7; dur=12"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.access-control-max-age",
+                    "data_type": "string",
+                    "example_values": [
+                        "3600"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.X-User-Agent",
+                    "data_type": "string",
+                    "example_values": [
+                        "grpc-web-javascript/0.1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.X-Goog-Api-Key",
+                    "data_type": "string",
+                    "example_values": [
+                        "TESTDATAyCbsbvGCe7C9mCtdaTycZB2eUFuzsYKG_E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.umbrella.data.*.rank",
+                    "data_type": "numeric",
+                    "example_values": [
+                        10
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.umbrella.data.*.hostname",
+                    "data_type": "string",
+                    "example_values": [
+                        "www.google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "Google"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "200"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.mimeType",
+                    "data_type": "string",
+                    "example_values": [
+                        "text/html"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.tlsIssuer",
+                    "data_type": "string",
+                    "example_values": [
+                        "WR2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.apexDomain",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.redirected",
+                    "data_type": "string",
+                    "example_values": [
+                        "sub-domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.tlsAgeDays",
+                    "data_type": "numeric",
+                    "example_values": [
+                        28
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.tlsValidDays",
+                    "data_type": "numeric",
+                    "example_values": [
+                        83
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.tlsValidFrom",
+                    "data_type": "string",
+                    "example_values": [
+                        "2024-06-24T06:35:44.000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.page.umbrellaRank",
+                    "data_type": "numeric",
+                    "example_values": [
+                        10
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.task.domain",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.task.apexDomain",
+                    "data_type": "string",
+                    "example_values": [
+                        "google.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.scanner.country",
+                    "data_type": "string",
+                    "example_values": [
+                        "us"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.verdicts.engines.malicious",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.verdicts.urlscan.hasVerdicts",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.verdicts.community.malicious",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.verdicts.community.hasVerdicts",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.added_tags_num",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.data.cookies.*.partitionKey",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://watermelongame.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.nel",
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cf-ray",
+                    "data_type": "string",
+                    "example_values": [
+                        "8a73b0909a9e975f-FRA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-robots-tag",
+                    "data_type": "string",
+                    "example_values": [
+                        "noindex"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cf-cache-status",
+                    "data_type": "string",
+                    "example_values": [
+                        "HIT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-middleton-display",
+                    "data_type": "string",
+                    "example_values": [
+                        "sol-js"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.urlFragment",
+                    "data_type": "string",
+                    "example_values": [
+                        "#property=65a4000db492fb00132dcf7e&product=sop"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.edge-control",
+                    "data_type": "string",
+                    "example_values": [
+                        "cache-maxage=60m,downstream-ttl=60m"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-sol",
+                    "data_type": "string",
+                    "example_values": [
+                        "middleton"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.display",
+                    "data_type": "string",
+                    "example_values": [
+                        "staticcontent_sol"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-amz-version-id",
+                    "data_type": "string",
+                    "example_values": [
+                        "r5.lR.LJ66XEXzxUUVo7iMemjL_F_GoE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.X-PINGBACK",
+                    "data_type": "string",
+                    "example_values": [
+                        "pingpong"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.vary",
+                    "data_type": "string",
+                    "example_values": [
+                        "Accept-Encoding"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.cf-ray",
+                    "data_type": "string",
+                    "example_values": [
+                        "8a73b0aa69498dd7-HEL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.vary",
+                    "data_type": "string",
+                    "example_values": [
+                        "Accept-Encoding"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.cf-ray",
+                    "data_type": "string",
+                    "example_values": [
+                        "8a73b0aa69498dd7-HEL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cf-bgj",
+                    "data_type": "string",
+                    "example_values": [
+                        "minify"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.apigw-requestid",
+                    "data_type": "string",
+                    "example_values": [
+                        "bUMp6iOMoAMEbPQ="
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.server-processing-duration-in-ticks",
+                    "data_type": "string",
+                    "example_values": [
+                        "154170"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.request.headers.content-type",
+                    "data_type": "string",
+                    "example_values": [
+                        "text/plain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.allow",
+                    "data_type": "string",
+                    "example_values": [
+                        "POST, OPTIONS, GET"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.failed.corsErrorStatus.corsError",
+                    "data_type": "string",
+                    "example_values": [
+                        "MissingAllowOriginHeader"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.failed.corsErrorStatus.failedParameter",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-server",
+                    "data_type": "string",
+                    "example_values": [
+                        "10.45.18.91"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.debug",
+                    "data_type": "string",
+                    "example_values": [
+                        "NON-OPTIONS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "crc32c=cpEfJQ==, md5=rUsPYG4PhGW8TEwXCzfhow=="
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-generation",
+                    "data_type": "string",
+                    "example_values": [
+                        "1620242732037093"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-storage-class",
+                    "data_type": "string",
+                    "example_values": [
+                        "MULTI_REGIONAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-guploader-uploadid",
+                    "data_type": "string",
+                    "example_values": [
+                        "ABPtcPovIz6nZtqULu9hGQBSVbC6_z8lEyamrIA64gM0CArHcTLURzj7EtelAkaCkOXM4KyL70M"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-metageneration",
+                    "data_type": "string",
+                    "example_values": [
+                        "5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-stored-content-length",
+                    "data_type": "string",
+                    "example_values": [
+                        "43"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-goog-stored-content-encoding",
+                    "data_type": "string",
+                    "example_values": [
+                        "identity"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.X-Robots-Tag",
+                    "data_type": "string",
+                    "example_values": [
+                        "noindex"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.Permissions-Policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "browsing-topics=()"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-nbr",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-envoy-upstream-service-time",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.observe-browsing-topics",
+                    "data_type": "string",
+                    "example_values": [
+                        "?1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.google-creative-id",
+                    "data_type": "string",
+                    "example_values": [
+                        "-2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.google-lineitem-id",
+                    "data_type": "string",
+                    "example_values": [
+                        "-2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.google-mediationtag-id",
+                    "data_type": "string",
+                    "example_values": [
+                        "-2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.google-mediationgroup-id",
+                    "data_type": "string",
+                    "example_values": [
+                        "-2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-cache-status",
+                    "data_type": "string",
+                    "example_values": [
+                        "HIT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-rgw-object-type",
+                    "data_type": "string",
+                    "example_values": [
+                        "Normal"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.request.redirectResponse.headers.x-mnet-hl2",
+                    "data_type": "string",
+                    "example_values": [
+                        "E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.requests.*.redirectResponse.headers.x-mnet-hl2",
+                    "data_type": "string",
+                    "example_values": [
+                        "E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.x-mnet-hl2",
+                    "data_type": "string",
+                    "example_values": [
+                        "E"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cross-origin-embedder-policy",
+                    "data_type": "string",
+                    "example_values": [
+                        "require-corp"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.data.requests.*.response.response.headers.cf-polished",
+                    "data_type": "string",
+                    "example_values": [
+                        "origSize=1018"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.app",
+                    "data_type": "string",
+                    "example_values": [
+                        "Bootstrap"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.icon",
+                    "data_type": "string",
+                    "example_values": [
+                        "Bootstrap.png"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.website",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://getbootstrap.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.categories.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Web Frameworks"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.categories.*.priority",
+                    "data_type": "numeric",
+                    "example_values": [
+                        7
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.confidence.*.pattern",
+                    "data_type": "string",
+                    "example_values": [
+                        "bootstrap(?:[^>]*?([0-9a-fA-F]{7,40}|[\\d]+(?:.[\\d]+(?:.[\\d]+)?)?)|)[^>]*?(?:\\.min)?\\.js"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.confidence.*.confidence",
+                    "data_type": "numeric",
+                    "example_values": [
+                        100
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.meta.processors.wappa.data.*.confidenceTotal",
+                    "data_type": "numeric",
+                    "example_values": [
+                        100
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.stats.tlsStats.*.protocols.TLS 1.2 / ECDHE_RSA / CHACHA20_POLY1305",
+                    "data_type": "numeric",
+                    "example_values": [
+                        127
+                    ]
+                },
+                {
                     "data_path": "action_result.summary",
                     "data_type": "string"
                 },
@@ -10572,12 +11514,9 @@
                     ],
                     "order": 0
                 },
-                "container": {
-                    "description": "Event to add file to, will default to current container",
-                    "data_type": "string",
-                    "required": false,
-                    "primary": false,
-                    "contains": [],
+                "container_id": {
+                    "description": "Event to add file to, will default to current container id",
+                    "data_type": "numeric",
                     "order": 1
                 }
             },
@@ -10595,9 +11534,49 @@
                     "data_type": "string",
                     "contains": [
                         "urlscan submission id"
-                    ],
-                    "column_name": "report id",
-                    "column_order": 1
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        722
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "cf9412df-963e-46a2-849b-de693d055b7b.png"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.size",
+                    "data_type": "numeric",
+                    "example_values": [
+                        13841
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.vault_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "0599692c5298dd88f731960c55299f8de3331cf1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.file_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "image/png"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.container_id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2390
+                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -10622,33 +11601,17 @@
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "custom",
+                "title": "Get Screenshot",
+                "view": "urlscan_view.display_view"
             },
             "versions": "EQ(*)"
         }
     ],
     "pip_dependencies": {
-        "wheel": [
-            {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
-            }
-        ]
+        "wheel": []
     },
     "pip39_dependencies": {
-        "wheel": [
-            {
-                "module": "beautifulsoup4",
-                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
-            },
-            {
-                "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
-            }
-        ]
+        "wheel": []
     }
 }

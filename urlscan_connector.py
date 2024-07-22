@@ -16,14 +16,13 @@
 #
 import ipaddress
 import json
+import mimetypes
+import os
+import tempfile
 import time
 import traceback
-import uuid
-import os
-import magic
-import shutil
-import re
 
+import magic
 import phantom.app as phantom
 import phantom.rules as ph_rules
 import requests
@@ -31,6 +30,7 @@ from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from phantom.vault import Vault as Vault
+from phantom_common import paths
 
 from urlscan_consts import *
 
@@ -41,15 +41,6 @@ class RetVal(tuple):
 
 
 class UrlscanConnector(BaseConnector):
-
-    MAGIC_FORMATS = [
-        (re.compile('^PE.* Windows'), ['pe file'], '.exe'),
-        (re.compile('^MS-DOS executable'), ['pe file'], '.exe'),
-        (re.compile('^PDF '), ['pdf'], '.pdf'),
-        (re.compile('^MDMP crash'), ['process dump'], '.dmp'),
-        (re.compile('^Macromedia Flash'), ['flash'], '.flv'),
-        (re.compile('^tcpdump capture'), ['pcap'], '.pcap'),
-    ]
 
     def __init__(self):
 
@@ -92,10 +83,13 @@ class UrlscanConnector(BaseConnector):
     def _process_empty_response(self, response, action_result):
 
         if response.status_code == 200:
-            if response.headers.get('Content-Type') == 'application/octet-stream':
-                return RetVal(phantom.APP_SUCCESS, "Response likely includes a file")
-            return RetVal(phantom.APP_SUCCESS, None)
+            return RetVal(phantom.APP_SUCCESS, {})
         return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_EMPTY_RESPONSE_ERROR.format(response.status_code)), None)
+
+    def _process_file_response(self, response, action_result):
+        if response.status_code == 200:
+            return RetVal(phantom.APP_SUCCESS, response)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
 
@@ -147,11 +141,6 @@ class UrlscanConnector(BaseConnector):
 
     def _process_response(self, r, action_result):
 
-        if r.headers.get('Content-Type', '') == 'application/octet-stream':
-            r_text = ""
-        else:
-            r_text = r.text
-
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
@@ -171,9 +160,10 @@ class UrlscanConnector(BaseConnector):
         if "html" in r.headers.get("Content-Type", ""):
             return self._process_html_response(r, action_result)
 
+        if "image" in r.headers.get("Content-Type", "") or "octet-stream" in r.headers.get("Content-Type", ""):
+            return self._process_file_response(r, action_result)
+
         # it's not content-type that is to be parsed, handle an empty response
-        if not r_text:
-            return self._process_empty_response(r, action_result)
         if not r.text:
             return self._process_empty_response(r, action_result)
 
@@ -202,10 +192,6 @@ class UrlscanConnector(BaseConnector):
         except Exception as e:
             error_message = self._get_error_message_from_exception(e)
             return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_SERVER_CONNECTIVITY_ERROR.format(error_message)), resp_json)
-
-        if self.get_action_identifier() == "get_screenshot":
-            ret_val = self._process_response(r, action_result)
-            return ret_val, r
 
         return self._process_response(r, action_result)
 
@@ -390,79 +376,75 @@ class UrlscanConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         report_id = param["report_id"]
-        container = param.get("container", False)
-
-        if not container:
-            container = self.get_container_id()
 
         ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id), action_result, params=None, headers=None)
 
         if phantom.is_fail(ret_val):
-            if not action_result.get_message():
-                error_msg = response.get("message") or URLSCAN_NO_DATA_ERROR
-                self.debug_print(error_msg)
-                return action_result.set_status(phantom.APP_ERROR, error_msg)
             return action_result.get_status()
 
-        if response.status_code == 200:
-            return self._add_file_to_vault(action_result, response, report_id + ".png")
-            # return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
-        else:
-            self.debug_print("else")
-            return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERROR)
+        return self._add_file_to_vault(action_result, param, response)
 
-    def _add_file_to_vault(self, action_result, response, file_name):
-        
-        self.debug_print("adding to vault")
-        guid = uuid.uuid4()
-        if hasattr(Vault, 'get_vault_tmp_dir'):
+    def _add_file_to_vault(self, action_result, param, response):
+
+        file_name = param["report_id"]
+        ret_val, container_id = self._validate_integer(action_result, param.get("container_id", self.get_container_id()), "container_id")
+
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+
+        if not hasattr(Vault, 'get_vault_tmp_dir'):
             temp_dir = Vault.get_vault_tmp_dir()
         else:
-            temp_dir = '/vault/tmp'
+            temp_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
 
-        local_dir = temp_dir + '/{}'.format(guid)
-        self.save_progress("Using temp directory: {0}".format(guid))
         try:
-            os.makedirs(local_dir)
+            file_type = magic.Magic(mime=True).from_buffer(response.content)
+            extension = mimetypes.guess_extension(file_type)
+        except Exception as e:
+            self.save_progress(f"Error determining file types: {e}")
+            extension = None
+
+        file_path = tempfile.NamedTemporaryFile(dir=temp_dir, suffix=extension, prefix="tmp_", delete=False).name
+
+        try:
+            # open and download the file
+            with open(file_path, 'wb') as f:
+                f.write(response.content)
+
+            file_name = file_name + extension
+
+            # move the file to the vault
+            success, msg, vault_id = ph_rules.vault_add(
+                container=container_id,
+                file_location=file_path,
+                file_name=file_name,
+            )
+            if not success:
+                return action_result.set_status(phantom.APP_ERROR,
+                                                      f'Error adding file to the vault, Error: {msg}')
+
+            _, _, vault_meta_info = ph_rules.vault_info(container_id=container_id, vault_id=vault_id)
+
+            if not vault_meta_info:
+                return action_result.set_status(phantom.APP_ERROR,
+                                                      "Could not find meta information of the downloaded screenshot's Vault")
+
+            summary = {
+                phantom.APP_JSON_VAULT_ID: vault_id,
+                phantom.APP_JSON_NAME: file_name,
+                "file_type": file_type,
+                "id": vault_meta_info[0]['id'],
+                "container_id": vault_meta_info[0]['container_id'],
+                phantom.APP_JSON_SIZE: vault_meta_info[0][phantom.APP_JSON_SIZE]
+            }
+            action_result.update_summary(summary)
+
+            return action_result.set_status(phantom.APP_SUCCESS,
+                                              f"Screenshot downloaded successfully in container : {container_id}")
+
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR,
-                                            "Unable to create temporary folder {0}.".format(temp_dir), e)
-        file_path = "{0}/{1}".format(local_dir, file_name)
-        # open and download the file
-        with open(file_path, 'wb') as f:
-            f.write(response.content)
-        contains = []
-        file_ext = ''
-        magic_str = magic.from_file(file_path)
-        for regex, cur_contains, extension in self.MAGIC_FORMATS:
-            if regex.match(magic_str):
-                contains.extend(cur_contains)
-                if not file_ext:
-                    file_ext = extension
-        file_name = '{}{}'.format(file_name, file_ext)
-
-        # move the file to the vault
-        status, vault_ret_message, vault_id = ph_rules.vault_add(file_location=file_path,
-                                                                 container=self.get_container_id(), file_name=file_name,
-                                                                 metadata={'contains': contains})
-        curr_data = {}
-
-        if status:
-            curr_data[phantom.APP_JSON_VAULT_ID] = vault_id
-            curr_data[phantom.APP_JSON_NAME] = file_name
-            if contains:
-                curr_data['file_type'] = ','.join(contains)
-            action_result.add_data(curr_data)
-            action_result.update_summary(curr_data)
-            action_result.set_status(phantom.APP_SUCCESS, "File successfully retrieved and added to vault")
-        else:
-            action_result.set_status(phantom.APP_ERROR, phantom.APP_ERR_FILE_ADD_TO_VAULT)
-            action_result.append_to_message(vault_ret_message)
-
-        # remove the /tmp/<> temporary directory
-        shutil.rmtree(local_dir)
-
-        return action_result.get_status()
+                                                  f"Failed to download screenshot in Vault. Error : {e}")
 
     def handle_action(self, param):
 
@@ -492,6 +474,35 @@ class UrlscanConnector(BaseConnector):
             ret_val = self._handle_get_screenshot(param)
 
         return ret_val
+
+    def _validate_integer(self, action_result, parameter, key, allow_zero=False, allow_negative=False):
+        """Check if the provided input parameter value is valid.
+
+        :param action_result: Action result or BaseConnector object
+        :param parameter: Input parameter value
+        :param key: Input parameter key
+        :param allow_zero: Zero is allowed or not (default True)
+        :param allow_negative: Negative values are allowed or not (default False)
+        :returns: phantom.APP_SUCCESS/phantom.APP_ERROR and parameter value itself.
+        """
+        try:
+            if not float(parameter).is_integer():
+                return action_result.set_status(phantom.APP_ERROR,
+                                                ERROR_INVALID_INT_PARAM.format(key=key)), None
+
+            parameter = int(parameter)
+        except Exception:
+            return action_result.set_status(phantom.APP_ERROR,
+                                            ERROR_INVALID_INT_PARAM.format(key=key)), None
+
+        if not allow_zero and parameter == 0:
+            return action_result.set_status(phantom.APP_ERROR,
+                                            ERROR_ZERO_INT_PARAM.format(key=key)), None
+        if not allow_negative and parameter < 0:
+            return action_result.set_status(phantom.APP_ERROR,
+                                            ERROR_NEG_INT_PARAM.format(key=key)), None
+
+        return phantom.APP_SUCCESS, parameter
 
     def _is_ip(self, input_ip_address):
         """Function that checks given address and return True if address is valid IPv4 or IPV6 address.

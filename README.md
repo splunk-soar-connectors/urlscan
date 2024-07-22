@@ -84,7 +84,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
-action_result.parameter.id | string |  `urlscan submission id`  |   86b7f70a-5039-419f-9aeb-8cba09404e92 
+action_result.parameter.id | string |  `urlscan submission id`  |   test-5039-419f-9aeb-8cba09404e92 
 action_result.data.\*.data.console.\*.message.column | numeric |  |   552 
 action_result.data.\*.data.console.\*.message.level | string |  |   log 
 action_result.data.\*.data.console.\*.message.line | numeric |  |   2 
@@ -398,7 +398,7 @@ action_result.data.\*.data.requests.\*.response.response.headers.Content-Securit
 action_result.data.\*.data.requests.\*.response.response.headers.Content-Type | string |  |   image/png 
 action_result.data.\*.data.requests.\*.response.response.headers.Date | string |  |   Tue, 08 Aug 2017 15:04:49 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.ETag | string |  |   "52613b8-643f-5449ffc1d1aee" 
-action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "b4491705564909da7f9eaf749dbbfbb1" 
+action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "test1705564909da7f9eaf749dbbfbb1" 
 action_result.data.\*.data.requests.\*.response.response.headers.Expect-CT | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=test-expect-ct-report-only" 
 action_result.data.\*.data.requests.\*.response.response.headers.Expires | string |  |   0 
 action_result.data.\*.data.requests.\*.response.response.headers.Keep-Alive | string |  |   timeout=5, max=300 
@@ -823,7 +823,7 @@ If the get_result parameter is set to true, then the action may take up to 2-3 m
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **url** |  required  | URL to detonate | string |  `url`  `domain` 
-**tags** |  optional  | Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted. | string | 
+**tags** |  optional  | Comma-separated list of tags to annotate this scan. Limited to 10 tags. Tags with lengths longer than 29 will be omitted | string | 
 **private** |  optional  | Run a private scan | boolean | 
 **custom_agent** |  optional  | Override User-Agent for this scan | string | 
 **get_result** |  optional  | Get scan result in same call | boolean | 
@@ -1213,14 +1213,14 @@ action_result.data.\*.data.requests.\*.response.response.headers.Content-Securit
 action_result.data.\*.data.requests.\*.response.response.headers.Content-Type | string |  |   text/html 
 action_result.data.\*.data.requests.\*.response.response.headers.Date | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.ETag | string |  |   "5c17f0-1bf5-4bc7627477580" 
-action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "b4491705564909da7f9eaf749dbbfbb1" 
+action_result.data.\*.data.requests.\*.response.response.headers.Etag | string |  |   "test91705564909da7f9eaf749dbbfbb1" 
 action_result.data.\*.data.requests.\*.response.response.headers.Expect-CT | string |  |   max-age=31536000, report-uri="http://abc.test.test/beacon/csp?src=test-expect-ct-report-only" 
 action_result.data.\*.data.requests.\*.response.response.headers.Expires | string |  |   0 
 action_result.data.\*.data.requests.\*.response.response.headers.Keep-Alive | string |  |   timeout=1, max=99 
 action_result.data.\*.data.requests.\*.response.response.headers.Last-Modified | string |  |   Fri, 30 Mar 2012 13:52:38 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.P3P | string |  |   CP="NON DSP COR ADMa OUR IND UNI COM NAV INT" 
 action_result.data.\*.data.requests.\*.response.response.headers.Pragma | string |  |   no-cache 
-action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |   max-age=2592000; pin-sha256="2fRAUXyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY="; pin-sha256="I/Lt/z7ekCWanjCvj5EqXls2lOaThEA0H2Bg4BT/o="; pin-sha256="K87oWBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q="; pin-sha256="Wd8xe/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw="; pin-sha256="WoiWRyIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18="; pin-sha256="cGuxAXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A="; pin-sha256="dolnbtzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A="; pin-sha256="i7WTqTvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY="; pin-sha256="r/mIkG3eEpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E="; pin-sha256="uUwZgwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc="; includeSubdomains; report-uri="http://abc.test.test/beacon/csp?src=test-hpkp-report-only" 
+action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |   max-age=2592000; pin-sha256="testyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY="; pin-sha256="I/Lt/testanjCvj5EqXls2lOaThEA0H2Bg4BT/o="; pin-sha256="testBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q="; pin-sha256="test/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw="; pin-sha256="testIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18="; pin-sha256="testXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A="; pin-sha256="testzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A="; pin-sha256="testvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY="; pin-sha256="r/testpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E="; pin-sha256="testwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc="; includeSubdomains; report-uri="http://abc.test.test/beacon/csp?src=test-hpkp-report-only"  # pragma: allowlist secret
 action_result.data.\*.data.requests.\*.response.response.headers.Referrer-Policy | string |  |   strict-origin-when-cross-origin 
 action_result.data.\*.data.requests.\*.response.response.headers.Server | string |  |   TestServer/1.4 
 action_result.data.\*.data.requests.\*.response.response.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
@@ -1258,14 +1258,14 @@ action_result.data.\*.data.requests.\*.response.response.headers.content-type | 
 action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-opener-policy-report-only | string |  |   unsafe-none; report-to="ConsentUi" 
 action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-resource-policy | string |  |   same-site 
 action_result.data.\*.data.requests.\*.response.response.headers.date | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
-action_result.data.\*.data.requests.\*.response.response.headers.etag | string |  |   "7eb07c4c7de07fe8def6029af1192b2d" 
+action_result.data.\*.data.requests.\*.response.response.headers.etag | string |  |   "test4c7de07fe8def6029af1192b2d" 
 action_result.data.\*.data.requests.\*.response.response.headers.expect-ct | string |  |   max-age=31536000, report-uri="http://cabc.test.test/beacon/csp?src=test-expect-ct-report-only" 
 action_result.data.\*.data.requests.\*.response.response.headers.expires | string |  |   Mon, 07 Aug 2017 19:13:18 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.last-modified | string |  |   Tue, 01 Aug 2017 03:25:32 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.link | string |  |   <https://abc.test.test>; rel=preconnect; crossorigin 
 action_result.data.\*.data.requests.\*.response.response.headers.p3p | string |  |   CP="This is not a P3P policy! See https://support.test.test for more info." 
 action_result.data.\*.data.requests.\*.response.response.headers.pragma | string |  |   no-cache 
-action_result.data.\*.data.requests.\*.response.response.headers.public-key-pins-report-only | string |  |   max-age=500; pin-sha256="WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E="; pin-sha256="q4PO2G2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ="; report-uri="http://abc.test.test/" 
+action_result.data.\*.data.requests.\*.response.response.headers.public-key-pins-report-only | string |  |   max-age=500; pin-sha256="testIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="r/testeEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E="; pin-sha256="test2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ="; report-uri="http://abc.test.test/"  # pragma: allowlist secret
 action_result.data.\*.data.requests.\*.response.response.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
 action_result.data.\*.data.requests.\*.response.response.headers.report-to | string |  |   {"group":"ConsentUi","max_age":2592000,"endpoints":[{"url":"https://abc.test.test/csp/external"}]} 
 action_result.data.\*.data.requests.\*.response.response.headers.server | string |  |   ESF 
@@ -1566,6 +1566,147 @@ action_result.data.\*.verdicts.overall.score | numeric |  |   0
 action_result.data.\*.verdicts.urlscan.malicious | boolean |  |   False 
 action_result.data.\*.verdicts.urlscan.score | numeric |  |   0 
 action_result.data.\*.visibility | string |  |   public 
+action_result.data.\*.data.console.\*.message.timestamp | numeric |  |   1721648282157.842 
+action_result.data.\*.data.requests.\*.request.request.isSameSite | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.request.redirectResponse.timing.receiveHeadersStart | numeric |  |   431.852 
+action_result.data.\*.data.requests.\*.request.redirectResponse.charset | string |  |   utf-8 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.report-to | string |  |   {"group":"gws","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/gws/other"}]} 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.cross-origin-opener-policy | string |  |   same-origin-allow-popups; report-to="gws" 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.content-security-policy-report-only | string |  |   object-src 'none';base-uri 'self';script-src 'nonce-testtCZXDJBcDaS7euQg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.encryptedClientHello | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.serverSignatureAlgorithm | numeric |  |   1027 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.logId | string |  |   TEST9994D5DB1ACEC55CB79DB4CD13A23287467CBCECDEC351485946711FB59B 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.origin | string |  |   Embedded in certificate 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.status | string |  |   Verified 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.timestamp | numeric |  |   1719214546918 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.hashAlgorithm | string |  |   SHA-256 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.signatureData | string |  |   TEST9999206F7183644269E6018A0FE1BC87492E448A594771A85180714B04E90ECF74CA29022100C46AC8249C2FBC02BC77162BCDA0D4C36A1F7D2210A8FA10F182A0D981E533E3 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.logDescription | string |  |   Google 'Argon2024' log 
+action_result.data.\*.data.requests.\*.request.redirectResponse.securityDetails.signedCertificateTimestampList.\*.signatureAlgorithm | string |  |   ECDSA 
+action_result.data.\*.data.requests.\*.request.redirectResponse.alternateProtocolUsage | string |  |   dnsTESTJobWonRace 
+action_result.data.\*.data.requests.\*.request.redirectHasExtraInfo | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.requests.\*.request.isSameSite | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.requests.\*.redirectHasExtraInfo | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.charset | string |  |  
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.alternateProtocolUsage | string |  |   TESTalternativeJobWonWithoutRace 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.timing.receiveHeadersStart | numeric |  |   431.852 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.report-to | string |  |   {"group":"gws","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/gws/other"}]} 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.cross-origin-opener-policy | string |  |   same-origin-allow-popups; report-to="gws" 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.content-security-policy-report-only | string |  |   object-src 'none';base-uri 'self';script-src 'nonce-TESTDATArztCZXDJBcDaS7euQg' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.encryptedClientHello | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.serverSignatureAlgorithm | numeric |  |   1027 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.logId | string |  |   TESTDATAD064D5DB1ACEC55CB79DB4CD13A23287467CBCECDEC351485946711FB59B 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.origin | string |  |   Embedded in certificate 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.status | string |  |   Verified 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.timestamp | numeric |  |   1719214546918 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.hashAlgorithm | string |  |   SHA-256 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.signatureData | string |  |   TESTDATA02206F7183644269E6018A0FE1BC87492E448A594771A85180714B04E90ECF74CA29022100C46AC8249C2FBC02BC77162BCDA0D4C36A1F7D2210A8FA10F182A0D981E533E3 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.logDescription | string |  |   Google 'Argon2024' log 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.signatureAlgorithm | string |  |   ECDSA 
+action_result.data.\*.data.requests.\*.response.response.timing.receiveHeadersStart | numeric |  |   557.51 
+action_result.data.\*.data.requests.\*.response.response.charset | string |  |   utf-8 
+action_result.data.\*.data.requests.\*.response.response.headers.accept-ch | string |  |   Sec-CH-UA-Platform
+Sec-CH-UA-Platform-Version
+Sec-CH-UA-Full-Version
+Sec-CH-UA-Arch
+Sec-CH-UA-Model
+Sec-CH-UA-Bitness
+Sec-CH-UA-Full-Version-List
+Sec-CH-UA-WoW64 
+action_result.data.\*.data.requests.\*.response.response.headers.permissions-policy | string |  |   unload=() 
+action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-opener-policy | string |  |   same-origin-allow-popups; report-to="gws" 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.encryptedClientHello | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.response.response.securityDetails.serverSignatureAlgorithm | numeric |  |   1027 
+action_result.data.\*.data.requests.\*.response.response.alternateProtocolUsage | string |  |   testdatadnsnH3JobWonRace 
+action_result.data.\*.data.requests.\*.response.hasExtraInfo | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.request.request.isLinkPreload | boolean |  |   True  False 
+action_result.data.\*.data.requests.\*.response.response.headers.version | string |  |   652602471 
+action_result.data.\*.data.requests.\*.request.request.headers.Accept | string |  |   \*/\* 
+action_result.data.\*.data.requests.\*.request.request.headers.Sec-Fetch-Mode | string |  |   cors 
+action_result.data.\*.data.requests.\*.request.request.headers.Access-Control-Request-Method | string |  |   POST 
+action_result.data.\*.data.requests.\*.request.request.headers.Access-Control-Request-Headers | string |  |   content-type,x-goog-api-key,x-user-agent 
+action_result.data.\*.data.requests.\*.request.initiator.requestId | string |  |   360549.24 
+action_result.data.\*.data.requests.\*.response.response.headers.server-timing | string |  |   gfet4t7; dur=12 
+action_result.data.\*.data.requests.\*.response.response.headers.access-control-max-age | string |  |   3600 
+action_result.data.\*.data.requests.\*.request.request.headers.X-User-Agent | string |  |   grpc-web-javascript/0.1 
+action_result.data.\*.data.requests.\*.request.request.headers.X-Goog-Api-Key | string |  |   TESTDATAyCbsbvGCe7C9mCtdaTycZB2eUFuzsYKG_E 
+action_result.data.\*.meta.processors.umbrella.data.\*.rank | numeric |  |   10 
+action_result.data.\*.meta.processors.umbrella.data.\*.hostname | string |  |   www.google.com 
+action_result.data.\*.page.title | string |  |   Google 
+action_result.data.\*.page.status | string |  |   200 
+action_result.data.\*.page.mimeType | string |  |   text/html 
+action_result.data.\*.page.tlsIssuer | string |  |   WR2 
+action_result.data.\*.page.apexDomain | string |  |   google.com 
+action_result.data.\*.page.redirected | string |  |   sub-domain 
+action_result.data.\*.page.tlsAgeDays | numeric |  |   28 
+action_result.data.\*.page.tlsValidDays | numeric |  |   83 
+action_result.data.\*.page.tlsValidFrom | string |  |   2024-06-24T06:35:44.000Z 
+action_result.data.\*.page.umbrellaRank | numeric |  |   10 
+action_result.data.\*.task.domain | string |  |   google.com 
+action_result.data.\*.task.apexDomain | string |  |   google.com 
+action_result.data.\*.scanner.country | string |  |   us 
+action_result.data.\*.verdicts.engines.malicious | boolean |  |   True  False 
+action_result.data.\*.verdicts.urlscan.hasVerdicts | boolean |  |   True  False 
+action_result.data.\*.verdicts.community.malicious | boolean |  |   True  False 
+action_result.data.\*.verdicts.community.hasVerdicts | boolean |  |   True  False 
+action_result.summary.added_tags_num | numeric |  |  
+action_result.data.\*.data.cookies.\*.partitionKey | string |  |   https://watermelongame.com 
+action_result.data.\*.data.requests.\*.response.response.headers.nel | string |  |   {"success_fraction":0,"report_to":"cf-nel","max_age":604800} 
+action_result.data.\*.data.requests.\*.response.response.headers.cf-ray | string |  |   8a73b0909a9e975f-FRA 
+action_result.data.\*.data.requests.\*.response.response.headers.x-robots-tag | string |  |   noindex 
+action_result.data.\*.data.requests.\*.response.response.headers.cf-cache-status | string |  |   HIT 
+action_result.data.\*.data.requests.\*.response.response.headers.x-middleton-display | string |  |   sol-js 
+action_result.data.\*.data.requests.\*.request.request.urlFragment | string |  |   #property=65a4000db492fb00132dcf7e&product=sop 
+action_result.data.\*.data.requests.\*.response.response.headers.edge-control | string |  |   cache-maxage=60m,downstream-ttl=60m 
+action_result.data.\*.data.requests.\*.response.response.headers.x-sol | string |  |   middleton 
+action_result.data.\*.data.requests.\*.response.response.headers.display | string |  |   staticcontent_sol 
+action_result.data.\*.data.requests.\*.response.response.headers.x-amz-version-id | string |  |   r5.lR.LJ66XEXzxUUVo7iMemjL_F_GoE 
+action_result.data.\*.data.requests.\*.request.request.headers.X-PINGBACK | string |  |   pingpong 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.vary | string |  |   Accept-Encoding 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.cf-ray | string |  |   8a73b0aa69498dd7-HEL 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.vary | string |  |   Accept-Encoding 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.cf-ray | string |  |   8a73b0aa69498dd7-HEL 
+action_result.data.\*.data.requests.\*.response.response.headers.cf-bgj | string |  |   minify 
+action_result.data.\*.data.requests.\*.response.response.headers.apigw-requestid | string |  |   bUMp6iOMoAMEbPQ= 
+action_result.data.\*.data.requests.\*.response.response.headers.server-processing-duration-in-ticks | string |  |   154170 
+action_result.data.\*.data.requests.\*.request.request.headers.content-type | string |  |   text/plain 
+action_result.data.\*.data.requests.\*.response.response.headers.allow | string |  |   POST, OPTIONS, GET 
+action_result.data.\*.data.requests.\*.response.failed.corsErrorStatus.corsError | string |  |   MissingAllowOriginHeader 
+action_result.data.\*.data.requests.\*.response.failed.corsErrorStatus.failedParameter | string |  |  
+action_result.data.\*.data.requests.\*.response.response.headers.x-server | string |  |   10.45.18.91 
+action_result.data.\*.data.requests.\*.response.response.headers.debug | string |  |   NON-OPTIONS 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-hash | string |  |   crc32c=cpEfJQ==, md5=rUsPYG4PhGW8TEwXCzfhow== 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-generation | string |  |   1620242732037093 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-storage-class | string |  |   MULTI_REGIONAL 
+action_result.data.\*.data.requests.\*.response.response.headers.x-guploader-uploadid | string |  |   ABPtcPovIz6nZtqULu9hGQBSVbC6_z8lEyamrIA64gM0CArHcTLURzj7EtelAkaCkOXM4KyL70M 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-metageneration | string |  |   5 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-stored-content-length | string |  |   43 
+action_result.data.\*.data.requests.\*.response.response.headers.x-goog-stored-content-encoding | string |  |   identity 
+action_result.data.\*.data.requests.\*.response.response.headers.X-Robots-Tag | string |  |   noindex 
+action_result.data.\*.data.requests.\*.response.response.headers.Permissions-Policy | string |  |   browsing-topics=() 
+action_result.data.\*.data.requests.\*.response.response.headers.x-nbr | string |  |   1 
+action_result.data.\*.data.requests.\*.response.response.headers.x-envoy-upstream-service-time | string |  |   0 
+action_result.data.\*.data.requests.\*.response.response.headers.observe-browsing-topics | string |  |   ?1 
+action_result.data.\*.data.requests.\*.response.response.headers.google-creative-id | string |  |   -2 
+action_result.data.\*.data.requests.\*.response.response.headers.google-lineitem-id | string |  |   -2 
+action_result.data.\*.data.requests.\*.response.response.headers.google-mediationtag-id | string |  |   -2 
+action_result.data.\*.data.requests.\*.response.response.headers.google-mediationgroup-id | string |  |   -2 
+action_result.data.\*.data.requests.\*.response.response.headers.x-cache-status | string |  |   HIT 
+action_result.data.\*.data.requests.\*.response.response.headers.x-rgw-object-type | string |  |   Normal 
+action_result.data.\*.data.requests.\*.request.redirectResponse.headers.x-mnet-hl2 | string |  |   E 
+action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.headers.x-mnet-hl2 | string |  |   E 
+action_result.data.\*.data.requests.\*.response.response.headers.x-mnet-hl2 | string |  |   E 
+action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-embedder-policy | string |  |   require-corp 
+action_result.data.\*.data.requests.\*.response.response.headers.cf-polished | string |  |   origSize=1018 
+action_result.data.\*.meta.processors.wappa.data.\*.app | string |  |   Bootstrap 
+action_result.data.\*.meta.processors.wappa.data.\*.icon | string |  |   Bootstrap.png 
+action_result.data.\*.meta.processors.wappa.data.\*.website | string |  |   https://getbootstrap.com 
+action_result.data.\*.meta.processors.wappa.data.\*.categories.\*.name | string |  |   Web Frameworks 
+action_result.data.\*.meta.processors.wappa.data.\*.categories.\*.priority | numeric |  |   7 
+action_result.data.\*.meta.processors.wappa.data.\*.confidence.\*.pattern | string |  |   bootstrap(?:[^>]\*?([0-9a-fA-F]{7,40}|[\\d]+(?:.[\\d]+(?:.[\\d]+)?)?)|)[^>]\*?(?:\\.min)?\\.js 
+action_result.data.\*.meta.processors.wappa.data.\*.confidence.\*.confidence | numeric |  |   100 
+action_result.data.\*.meta.processors.wappa.data.\*.confidenceTotal | numeric |  |   100 
+action_result.data.\*.stats.tlsStats.\*.protocols.TLS 1.2 / ECDHE_RSA / CHACHA20_POLY1305 | numeric |  |   127 
 action_result.summary | string |  |  
 action_result.message | string |  |   Successfully retrieved information 
 summary.total_objects | numeric |  |   1 
@@ -1581,13 +1722,19 @@ Read only: **True**
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **report_id** |  required  | UUID of report | string |  `urlscan submission id` 
-**container** |  optional  | Event to add file to, will default to current container | string | 
+**container_id** |  optional  | Event to add file to, will default to current container id | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
 action_result.parameter.report_id | string |  `urlscan submission id`  |  
+action_result.summary.id | numeric |  |   722 
+action_result.summary.name | string |  |   cf9412df-963e-46a2-849b-de693d055b7b.png 
+action_result.summary.size | numeric |  |   13841 
+action_result.summary.vault_id | string |  |   0599692c5298dd88f731960c55299f8de3331cf1 
+action_result.summary.file_type | string |  |   image/png 
+action_result.summary.container_id | numeric |  |   2390 
 action_result.message | string |  |   Successfully retrieved information 
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1 
