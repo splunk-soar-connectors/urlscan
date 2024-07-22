@@ -1220,7 +1220,7 @@ action_result.data.\*.data.requests.\*.response.response.headers.Keep-Alive | st
 action_result.data.\*.data.requests.\*.response.response.headers.Last-Modified | string |  |   Fri, 30 Mar 2012 13:52:38 GMT 
 action_result.data.\*.data.requests.\*.response.response.headers.P3P | string |  |   CP="NON DSP COR ADMa OUR IND UNI COM NAV INT" 
 action_result.data.\*.data.requests.\*.response.response.headers.Pragma | string |  |   no-cache 
-action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |   max-age=2592000; pin-sha256="testyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY="; pin-sha256="I/Lt/testanjCvj5EqXls2lOaThEA0H2Bg4BT/o="; pin-sha256="testBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q="; pin-sha256="test/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw="; pin-sha256="testIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18="; pin-sha256="testXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A="; pin-sha256="testzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A="; pin-sha256="testvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY="; pin-sha256="r/testpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E="; pin-sha256="testwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc="; includeSubdomains; report-uri="http://abc.test.test/beacon/csp?src=test-hpkp-report-only"  # pragma: allowlist secret
+action_result.data.\*.data.requests.\*.response.response.headers.Public-Key-Pins-Report-Only | string |  |   max-age=2592000; pin-sha256="testyxl4A1/XHrKNBmc8bTk7y4FB/GLJuNAzCqY="; pin-sha256="I/Lt/testanjCvj5EqXls2lOaThEA0H2Bg4BT/o="; pin-sha256="testBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q="; pin-sha256="test/qfTwq3lFNd3IpaqLHZbh2ZNCLluVzmeNkcpw="; pin-sha256="testIOVNa9ihaBciRC7XHjliYS9VwUGOIud4PB18="; pin-sha256="testXyFXFkWm61cF4HPW8S0srS9j0aSqN0k4AP+4A="; pin-sha256="testzEBnELx/9lOEQ2e6OZO/QNb6VSSX2XHA3E7A="; pin-sha256="testvh0OioIruIfF4kMPnBqrS2rdiVPl/s2uC/CY="; pin-sha256="r/testpVdm+u/ko/xzOMo1bk4TyHIlByibiA5E="; pin-sha256="testwDOxcBXrQcntwu+kYFiVkOaezL0WYEZ3anJc="; includeSubdomains; report-uri="http://abc.test.test/beacon/csp?src=test-hpkp-report-only" 
 action_result.data.\*.data.requests.\*.response.response.headers.Referrer-Policy | string |  |   strict-origin-when-cross-origin 
 action_result.data.\*.data.requests.\*.response.response.headers.Server | string |  |   TestServer/1.4 
 action_result.data.\*.data.requests.\*.response.response.headers.Strict-Transport-Security | string |  |   max-age=31536000; includeSubDomains 
@@ -1265,13 +1265,11 @@ action_result.data.\*.data.requests.\*.response.response.headers.last-modified |
 action_result.data.\*.data.requests.\*.response.response.headers.link | string |  |   <https://abc.test.test>; rel=preconnect; crossorigin 
 action_result.data.\*.data.requests.\*.response.response.headers.p3p | string |  |   CP="This is not a P3P policy! See https://support.test.test for more info." 
 action_result.data.\*.data.requests.\*.response.response.headers.pragma | string |  |   no-cache 
-action_result.data.\*.data.requests.\*.response.response.headers.public-key-pins-report-only | string |  |   max-age=500; pin-sha256="testIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="r/testeEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E="; pin-sha256="test2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ="; report-uri="http://abc.test.test/"  # pragma: allowlist secret
+action_result.data.\*.data.requests.\*.response.response.headers.public-key-pins-report-only | string |  |   max-age=500; pin-sha256="testIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="r/testeEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E="; pin-sha256="test2cbkZhZ82+JgmRUyGMoAeozA+BSXVXQWB8XWQ="; report-uri="http://abc.test.test/" 
 action_result.data.\*.data.requests.\*.response.response.headers.referrer-policy | string |  |   no-referrer-when-downgrade 
 action_result.data.\*.data.requests.\*.response.response.headers.report-to | string |  |   {"group":"ConsentUi","max_age":2592000,"endpoints":[{"url":"https://abc.test.test/csp/external"}]} 
 action_result.data.\*.data.requests.\*.response.response.headers.server | string |  |   ESF 
-action_result.data.\*.data.requests.\*.response.response.headers.set-cookie | string |  |   YSC=a-rkoUxJ3S4; Domain=.test.test; Path=/; Secure; HttpOnly; SameSite=none
-VISITOR_INFO1_LIVE=gH7gS_3ehDQ; Domain=.test.test; Expires=Wed, 25-Aug-2021 05:33:56 GMT; Path=/; Secure; HttpOnly; SameSite=none
-CONSENT=PENDING+007; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test 
+action_result.data.\*.data.requests.\*.response.response.headers.set-cookie | string |  |   YSC=a-rkoUxJ3S4; Domain=.test.test; Path=/; Secure; HttpOnly; SameSite=none VISITOR_INFO1_LIVE=gH7gS_3ehDQ; Domain=.test.test; Expires=Wed, 25-Aug-2021 05:33:56 GMT; Path=/; Secure; HttpOnly; SameSite=none CONSENT=PENDING+007; expires=Fri, 01-Jan-2038 00:00:00 GMT; path=/; domain=.test.test 
 action_result.data.\*.data.requests.\*.response.response.headers.status | string |  |   200 
 action_result.data.\*.data.requests.\*.response.response.headers.strict-transport-security | string |  |   max-age=31536000 
 action_result.data.\*.data.requests.\*.response.response.headers.timing-allow-origin | string |  |   \* 
@@ -1605,14 +1603,7 @@ action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDeta
 action_result.data.\*.data.requests.\*.requests.\*.redirectResponse.securityDetails.signedCertificateTimestampList.\*.signatureAlgorithm | string |  |   ECDSA 
 action_result.data.\*.data.requests.\*.response.response.timing.receiveHeadersStart | numeric |  |   557.51 
 action_result.data.\*.data.requests.\*.response.response.charset | string |  |   utf-8 
-action_result.data.\*.data.requests.\*.response.response.headers.accept-ch | string |  |   Sec-CH-UA-Platform
-Sec-CH-UA-Platform-Version
-Sec-CH-UA-Full-Version
-Sec-CH-UA-Arch
-Sec-CH-UA-Model
-Sec-CH-UA-Bitness
-Sec-CH-UA-Full-Version-List
-Sec-CH-UA-WoW64 
+action_result.data.\*.data.requests.\*.response.response.headers.accept-ch | string |  |   Sec-CH-UA-Platform Sec-CH-UA-Platform-Version Sec-CH-UA-Full-Version Sec-CH-UA-Arch Sec-CH-UA-Model Sec-CH-UA-Bitness Sec-CH-UA-Full-Version-List Sec-CH-UA-WoW64 
 action_result.data.\*.data.requests.\*.response.response.headers.permissions-policy | string |  |   unload=() 
 action_result.data.\*.data.requests.\*.response.response.headers.cross-origin-opener-policy | string |  |   same-origin-allow-popups; report-to="gws" 
 action_result.data.\*.data.requests.\*.response.response.securityDetails.encryptedClientHello | boolean |  |   True  False 
