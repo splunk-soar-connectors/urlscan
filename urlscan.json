@@ -5205,6 +5205,12 @@
                     "data_type": "boolean",
                     "default": true,
                     "order": 4
+                },
+                "addto_vault": {
+                    "description": "Add url screenshot to vault",
+                    "data_type": "boolean",
+                    "default": true,
+                    "order": 4
                 }
             },
             "output": [
@@ -5233,6 +5239,14 @@
                 },
                 {
                     "data_path": "action_result.parameter.private",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.addto_vault",
                     "data_type": "boolean",
                     "example_values": [
                         true,

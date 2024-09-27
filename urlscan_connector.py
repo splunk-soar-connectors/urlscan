@@ -279,7 +279,7 @@ class UrlscanConnector(BaseConnector):
     def replace_null_values(self, data):
         return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
-    def _poll_submission(self, report_uuid, action_result):
+    def _poll_submission(self, report_uuid, action_result, get_result=True):
 
         polling_attempt = 0
         resp_json = None
@@ -306,6 +306,9 @@ class UrlscanConnector(BaseConnector):
             if resp_json.get("status", 0) == URLSCAN_NOT_FOUND_CODE or resp_json.get("message") == "notdone":
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
+            
+            if not get_result:
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
             resp_json_task = resp_json.get("task", {})
             action_result.update_summary({"added_tags_num": len(resp_json_task.get("tags", []))})
@@ -329,6 +332,7 @@ class UrlscanConnector(BaseConnector):
         private = param.get("private", False)
         custom_agent = param.get("custom_agent")
         get_result = param.get("get_result", True)
+        addto_vault = param.get("addto_vault", True)
 
         # Parse tags
         tags = param.get("tags", "")
@@ -360,34 +364,52 @@ class UrlscanConnector(BaseConnector):
         if not report_uuid:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERROR)
 
-        if get_result:
-            self.debug_print("Fetch the results in the same call")
-            return self._poll_submission(report_uuid, action_result)
+        if get_result or addto_vault:
+            submission = self._poll_submission(report_uuid, action_result, get_result)
+            if phantom.is_fail(submission):
+                return action_result.get_status()
 
+            if addto_vault:
+                param['report_id'] = report_uuid
+                screenshot = self._get_screenshot(action_result, param)
+                if phantom.is_fail(screenshot):
+                    return action_result.get_status()
+            
+            if (get_result):
+                return submission 
+ 
         action_result.add_data(response)
         action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
         action_result.update_summary({})
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
-    def _handle_get_screenshot(self, param):
+    def _get_screenshot(self, action_result, param):
 
+        try:
+            ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(param['report_id']), action_result, params=None, headers=None)
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to grab screenshot Error : {e} Response : {response}")
+
+        container_id = param.get("container_id", self.get_container_id())
+        
+        vault_add = self._add_file_to_vault(action_result=action_result, report_id=param['report_id'], container_id=container_id, response=response)
+        
+        if phantom.is_fail(vault_add):
+            return action_result.get_status()
+        
+        return vault_add
+
+    def _handle_get_screenshot(self, param):
         self.debug_print("In action handler for {}".format(self.get_action_identifier()))
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        report_id = param["report_id"]
+        return self._get_screenshot(action_result=action_result, param=param)
 
-        ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id), action_result, params=None, headers=None)
+    def _add_file_to_vault(self, action_result, report_id, container_id, response):
 
-        if phantom.is_fail(ret_val):
-            return action_result.get_status()
-
-        return self._add_file_to_vault(action_result, param, response)
-
-    def _add_file_to_vault(self, action_result, param, response):
-
-        file_name = param["report_id"]
-        ret_val, container_id = self._validate_integer(action_result, param.get("container_id", self.get_container_id()), "container_id")
+        file_name = report_id
+        ret_val, container_id = self._validate_integer(action_result, container_id, "container_id")
 
         if phantom.is_fail(ret_val):
             return action_result.get_status()
