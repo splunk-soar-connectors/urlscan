@@ -827,6 +827,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **private** |  optional  | Run a private scan | boolean | 
 **custom_agent** |  optional  | Override User-Agent for this scan | string | 
 **get_result** |  optional  | Get scan result in same call | boolean | 
+**addto_vault** |  optional  | Add url screenshot to vault | boolean | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
@@ -835,6 +836,7 @@ action_result.status | string |  |   success  failed
 action_result.parameter.custom_agent | string |  |   TestBrowser/7.0 
 action_result.parameter.get_result | boolean |  |   True  False 
 action_result.parameter.private | boolean |  |   True  False 
+action_result.parameter.addto_vault | boolean |  |   True  False 
 action_result.parameter.tags | string |  |   demotag1,demotag2 
 action_result.parameter.url | string |  `url`  `domain`  |   http://test.test 
 action_result.data.\*.api | string |  `url`  |   https://urlscan.io/api/v1/result/f04f2a29-d455-4830-874a-88191fb79352/ 
