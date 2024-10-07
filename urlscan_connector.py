@@ -306,7 +306,7 @@ class UrlscanConnector(BaseConnector):
             if resp_json.get("status", 0) == URLSCAN_NOT_FOUND_CODE or resp_json.get("message") == "notdone":
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
-            
+
             if not get_result:
                 return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
@@ -370,14 +370,14 @@ class UrlscanConnector(BaseConnector):
                 return action_result.get_status()
 
             if addto_vault:
-                param['report_id'] = report_uuid
+                param["report_id"] = report_uuid
                 screenshot = self._get_screenshot(action_result, param)
                 if phantom.is_fail(screenshot):
                     return action_result.get_status()
-            
-            if (get_result):
-                return submission 
- 
+
+            if get_result:
+                return submission
+
         action_result.add_data(response)
         action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
         action_result.update_summary({})
@@ -386,17 +386,21 @@ class UrlscanConnector(BaseConnector):
     def _get_screenshot(self, action_result, param):
 
         try:
-            ret_val, response = self._make_rest_call(URLSCAN_SCREENSHOT_ENDPOINT.format(param['report_id']), action_result, params=None, headers=None)
+            ret_val, response = self._make_rest_call(
+                URLSCAN_SCREENSHOT_ENDPOINT.format(param["report_id"]), action_result, params=None, headers=None
+            )
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, f"Failed to grab screenshot Error : {e} Response : {response}")
 
         container_id = param.get("container_id", self.get_container_id())
-        
-        vault_add = self._add_file_to_vault(action_result=action_result, report_id=param['report_id'], container_id=container_id, response=response)
-        
+
+        vault_add = self._add_file_to_vault(
+            action_result=action_result, report_id=param["report_id"], container_id=container_id, response=response
+        )
+
         if phantom.is_fail(vault_add):
             return action_result.get_status()
-        
+
         return vault_add
 
     def _handle_get_screenshot(self, param):
@@ -414,7 +418,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        if not hasattr(Vault, 'get_vault_tmp_dir'):
+        if not hasattr(Vault, "get_vault_tmp_dir"):
             temp_dir = Vault.get_vault_tmp_dir()
         else:
             temp_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
@@ -430,7 +434,7 @@ class UrlscanConnector(BaseConnector):
 
         try:
             # open and download the file
-            with open(file_path, 'wb') as f:
+            with open(file_path, "wb") as f:
                 f.write(response.content)
 
             file_name = file_name + extension
@@ -442,31 +446,27 @@ class UrlscanConnector(BaseConnector):
                 file_name=file_name,
             )
             if not success:
-                return action_result.set_status(phantom.APP_ERROR,
-                                                      f'Error adding file to the vault, Error: {msg}')
+                return action_result.set_status(phantom.APP_ERROR, f"Error adding file to the vault, Error: {msg}")
 
             _, _, vault_meta_info = ph_rules.vault_info(container_id=container_id, vault_id=vault_id)
 
             if not vault_meta_info:
-                return action_result.set_status(phantom.APP_ERROR,
-                                                      "Could not find meta information of the downloaded screenshot's Vault")
+                return action_result.set_status(phantom.APP_ERROR, "Could not find meta information of the downloaded screenshot's Vault")
 
             summary = {
                 phantom.APP_JSON_VAULT_ID: vault_id,
                 phantom.APP_JSON_NAME: file_name,
                 "file_type": file_type,
-                "id": vault_meta_info[0]['id'],
-                "container_id": vault_meta_info[0]['container_id'],
-                phantom.APP_JSON_SIZE: vault_meta_info[0][phantom.APP_JSON_SIZE]
+                "id": vault_meta_info[0]["id"],
+                "container_id": vault_meta_info[0]["container_id"],
+                phantom.APP_JSON_SIZE: vault_meta_info[0][phantom.APP_JSON_SIZE],
             }
             action_result.update_summary(summary)
 
-            return action_result.set_status(phantom.APP_SUCCESS,
-                                              f"Screenshot downloaded successfully in container : {container_id}")
+            return action_result.set_status(phantom.APP_SUCCESS, f"Screenshot downloaded successfully in container : {container_id}")
 
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR,
-                                                  f"Failed to download screenshot in Vault. Error : {e}")
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to download screenshot in Vault. Error : {e}")
 
     def handle_action(self, param):
 
@@ -509,20 +509,16 @@ class UrlscanConnector(BaseConnector):
         """
         try:
             if not float(parameter).is_integer():
-                return action_result.set_status(phantom.APP_ERROR,
-                                                ERROR_INVALID_INT_PARAM.format(key=key)), None
+                return action_result.set_status(phantom.APP_ERROR, ERROR_INVALID_INT_PARAM.format(key=key)), None
 
             parameter = int(parameter)
         except Exception:
-            return action_result.set_status(phantom.APP_ERROR,
-                                            ERROR_INVALID_INT_PARAM.format(key=key)), None
+            return action_result.set_status(phantom.APP_ERROR, ERROR_INVALID_INT_PARAM.format(key=key)), None
 
         if not allow_zero and parameter == 0:
-            return action_result.set_status(phantom.APP_ERROR,
-                                            ERROR_ZERO_INT_PARAM.format(key=key)), None
+            return action_result.set_status(phantom.APP_ERROR, ERROR_ZERO_INT_PARAM.format(key=key)), None
         if not allow_negative and parameter < 0:
-            return action_result.set_status(phantom.APP_ERROR,
-                                            ERROR_NEG_INT_PARAM.format(key=key)), None
+            return action_result.set_status(phantom.APP_ERROR, ERROR_NEG_INT_PARAM.format(key=key)), None
 
         return phantom.APP_SUCCESS, parameter
 
