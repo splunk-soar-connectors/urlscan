@@ -16,14 +16,21 @@
 #
 import ipaddress
 import json
+import mimetypes
+import os
+import tempfile
 import time
 import traceback
 
+import magic
 import phantom.app as phantom
+import phantom.rules as ph_rules
 import requests
 from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
+from phantom.vault import Vault as Vault
+from phantom_common import paths
 
 from urlscan_consts import *
 
@@ -34,6 +41,7 @@ class RetVal(tuple):
 
 
 class UrlscanConnector(BaseConnector):
+
     def __init__(self):
 
         # Call the BaseConnectors init first
@@ -76,8 +84,12 @@ class UrlscanConnector(BaseConnector):
 
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
-
         return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_EMPTY_RESPONSE_ERROR.format(response.status_code)), None)
+
+    def _process_file_response(self, response, action_result):
+        if response.status_code == 200:
+            return RetVal(phantom.APP_SUCCESS, response)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
 
@@ -147,6 +159,9 @@ class UrlscanConnector(BaseConnector):
         # the error and adds it to the action_result.
         if "html" in r.headers.get("Content-Type", ""):
             return self._process_html_response(r, action_result)
+
+        if "image" in r.headers.get("Content-Type", "") or "octet-stream" in r.headers.get("Content-Type", ""):
+            return self._process_file_response(r, action_result)
 
         # it's not content-type that is to be parsed, handle an empty response
         if not r.text:
@@ -264,7 +279,7 @@ class UrlscanConnector(BaseConnector):
     def replace_null_values(self, data):
         return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
-    def _poll_submission(self, report_uuid, action_result):
+    def _poll_submission(self, report_uuid, action_result, get_result=True):
 
         polling_attempt = 0
         resp_json = None
@@ -292,6 +307,9 @@ class UrlscanConnector(BaseConnector):
                 time.sleep(URLSCAN_POLLING_INTERVAL)
                 continue
 
+            if not get_result:
+                return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
+
             resp_json_task = resp_json.get("task", {})
             action_result.update_summary({"added_tags_num": len(resp_json_task.get("tags", []))})
             action_result.add_data(resp_json)
@@ -314,6 +332,7 @@ class UrlscanConnector(BaseConnector):
         private = param.get("private", False)
         custom_agent = param.get("custom_agent")
         get_result = param.get("get_result", True)
+        addto_vault = param.get("addto_vault", False)  # Add screenshot to vault (default False to keep original behavior)
 
         # Parse tags
         tags = param.get("tags", "")
@@ -345,14 +364,109 @@ class UrlscanConnector(BaseConnector):
         if not report_uuid:
             return action_result.set_status(phantom.APP_ERROR, URLSCAN_REPORT_UUID_MISSING_ERROR)
 
-        if get_result:
-            self.debug_print("Fetch the results in the same call")
-            return self._poll_submission(report_uuid, action_result)
+        if get_result or addto_vault:
+            submission = self._poll_submission(report_uuid, action_result, get_result)
+            if phantom.is_fail(submission):
+                return action_result.get_status()
+
+            if addto_vault:
+                param["report_id"] = report_uuid
+                screenshot = self._get_screenshot(action_result, param)
+                if phantom.is_fail(screenshot):
+                    return action_result.get_status()
+
+            if get_result:
+                return submission
 
         action_result.add_data(response)
         action_result._ActionResult__data = self.replace_null_values(action_result._ActionResult__data)
         action_result.update_summary({})
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
+
+    def _get_screenshot(self, action_result, param):
+
+        try:
+            ret_val, response = self._make_rest_call(
+                URLSCAN_SCREENSHOT_ENDPOINT.format(param["report_id"]), action_result, params=None, headers=None
+            )
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to grab screenshot Error : {e} Response : {response}")
+
+        container_id = param.get("container_id", self.get_container_id())
+
+        vault_add = self._add_file_to_vault(
+            action_result=action_result, report_id=param["report_id"], container_id=container_id, response=response
+        )
+
+        if phantom.is_fail(vault_add):
+            return action_result.get_status()
+
+        return vault_add
+
+    def _handle_get_screenshot(self, param):
+        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        return self._get_screenshot(action_result=action_result, param=param)
+
+    def _add_file_to_vault(self, action_result, report_id, container_id, response):
+
+        file_name = report_id
+        ret_val, container_id = self._validate_integer(action_result, container_id, "container_id")
+
+        if phantom.is_fail(ret_val):
+            return action_result.get_status()
+
+        if not hasattr(Vault, "get_vault_tmp_dir"):
+            temp_dir = Vault.get_vault_tmp_dir()
+        else:
+            temp_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
+
+        try:
+            file_type = magic.Magic(mime=True).from_buffer(response.content)
+            extension = mimetypes.guess_extension(file_type)
+        except Exception as e:
+            self.save_progress(f"Error determining file types: {e}")
+            extension = None
+
+        file_path = tempfile.NamedTemporaryFile(dir=temp_dir, suffix=extension, prefix="tmp_", delete=False).name
+
+        try:
+            # open and download the file
+            with open(file_path, "wb") as f:
+                f.write(response.content)
+
+            file_name = file_name + extension
+
+            # move the file to the vault
+            success, msg, vault_id = ph_rules.vault_add(
+                container=container_id,
+                file_location=file_path,
+                file_name=file_name,
+            )
+            if not success:
+                return action_result.set_status(phantom.APP_ERROR, f"Error adding file to the vault, Error: {msg}")
+
+            _, _, vault_meta_info = ph_rules.vault_info(container_id=container_id, vault_id=vault_id)
+
+            if not vault_meta_info:
+                return action_result.set_status(phantom.APP_ERROR, "Could not find meta information of the downloaded screenshot's Vault")
+
+            summary = {
+                phantom.APP_JSON_VAULT_ID: vault_id,
+                phantom.APP_JSON_NAME: file_name,
+                "file_type": file_type,
+                "id": vault_meta_info[0]["id"],
+                "container_id": vault_meta_info[0]["container_id"],
+                phantom.APP_JSON_SIZE: vault_meta_info[0][phantom.APP_JSON_SIZE],
+            }
+            action_result.update_summary(summary)
+
+            return action_result.set_status(phantom.APP_SUCCESS, f"Screenshot downloaded successfully in container : {container_id}")
+
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to download screenshot in Vault. Error : {e}")
 
     def handle_action(self, param):
 
@@ -378,7 +492,35 @@ class UrlscanConnector(BaseConnector):
         elif action_id == URLSCAN_DETONATE_URL_ACTION:
             ret_val = self._handle_detonate_url(param)
 
+        elif action_id == URLSCAN_GET_SCREENSHOT_ACTION:
+            ret_val = self._handle_get_screenshot(param)
+
         return ret_val
+
+    def _validate_integer(self, action_result, parameter, key, allow_zero=False, allow_negative=False):
+        """Check if the provided input parameter value is valid.
+
+        :param action_result: Action result or BaseConnector object
+        :param parameter: Input parameter value
+        :param key: Input parameter key
+        :param allow_zero: Zero is allowed or not (default True)
+        :param allow_negative: Negative values are allowed or not (default False)
+        :returns: phantom.APP_SUCCESS/phantom.APP_ERROR and parameter value itself.
+        """
+        try:
+            if not float(parameter).is_integer():
+                return action_result.set_status(phantom.APP_ERROR, ERROR_INVALID_INT_PARAM.format(key=key)), None
+
+            parameter = int(parameter)
+        except Exception:
+            return action_result.set_status(phantom.APP_ERROR, ERROR_INVALID_INT_PARAM.format(key=key)), None
+
+        if not allow_zero and parameter == 0:
+            return action_result.set_status(phantom.APP_ERROR, ERROR_ZERO_INT_PARAM.format(key=key)), None
+        if not allow_negative and parameter < 0:
+            return action_result.set_status(phantom.APP_ERROR, ERROR_NEG_INT_PARAM.format(key=key)), None
+
+        return phantom.APP_SUCCESS, parameter
 
     def _is_ip(self, input_ip_address):
         """Function that checks given address and return True if address is valid IPv4 or IPV6 address.
