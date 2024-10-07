@@ -5209,7 +5209,7 @@
                 "addto_vault": {
                     "description": "Add url screenshot to vault",
                     "data_type": "boolean",
-                    "default": true,
+                    "default": false,
                     "order": 5
                 }
             },

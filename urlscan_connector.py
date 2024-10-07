@@ -332,7 +332,7 @@ class UrlscanConnector(BaseConnector):
         private = param.get("private", False)
         custom_agent = param.get("custom_agent")
         get_result = param.get("get_result", True)
-        addto_vault = param.get("addto_vault", True)
+        addto_vault = param.get("addto_vault", False)  # Add screenshot to vault (default False to keep original behavior)
 
         # Parse tags
         tags = param.get("tags", "")
