@@ -2,7 +2,7 @@
 # urlscan.io
 
 Publisher: Splunk  
-Connector Version: 2.6.0  
+Connector Version: 2.6.1  
 Product Vendor: urlscan.io  
 Product Name: urlscan.io  
 Product Version Supported (regex): ".\*"  
