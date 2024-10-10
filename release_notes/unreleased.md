@@ -1,4 +1,1 @@
 **Unreleased**
-
-* Added `get screenshot` action to save screenshot to vault from report
-* Added `addto_vault` param to `detonate url` action to directly store screenshot in vault after detonation
