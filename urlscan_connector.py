@@ -1,6 +1,6 @@
 # File: urlscan_connector.py
 #
-# Copyright (c) 2017-2024 Splunk Inc.
+# Copyright (c) 2017-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,11 +41,9 @@ class RetVal(tuple):
 
 
 class UrlscanConnector(BaseConnector):
-
     def __init__(self):
-
         # Call the BaseConnectors init first
-        super(UrlscanConnector, self).__init__()
+        super().__init__()
 
         self._state = None
 
@@ -67,7 +65,7 @@ class UrlscanConnector(BaseConnector):
 
         error_code = URLSCAN_ERROR_CODE_UNAVAILABLE
         error_message = URLSCAN_ERROR_MESSAGE_UNAVAILABLE
-        self.error_print("Traceback: {}".format(traceback.format_stack()))
+        self.error_print(f"Traceback: {traceback.format_stack()}")
         try:
             if e.args:
                 if len(e.args) > 1:
@@ -78,10 +76,9 @@ class UrlscanConnector(BaseConnector):
         except Exception as ex:
             self._dump_error_log(ex, "Error occurred while fetching exception information")
 
-        return "Error Code: {0}. Error Message: {1}".format(error_code, error_message)
+        return f"Error Code: {error_code}. Error Message: {error_message}"
 
     def _process_empty_response(self, response, action_result):
-
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
         return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_EMPTY_RESPONSE_ERROR.format(response.status_code)), None)
@@ -92,7 +89,6 @@ class UrlscanConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)), None)
 
     def _process_html_response(self, response, action_result):
-
         # A html response, treat it like an error
         status_code = response.status_code
 
@@ -115,7 +111,6 @@ class UrlscanConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _process_json_response(self, r, action_result):
-
         # Try a json parse
         try:
             resp_json = r.json()
@@ -140,7 +135,6 @@ class UrlscanConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), resp_json)
 
     def _process_response(self, r, action_result):
-
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
@@ -173,17 +167,16 @@ class UrlscanConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
     def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
-
         config = self.get_config()
 
         resp_json = None
         request_func = getattr(requests, method)
 
         if not request_func:
-            action_result.set_status(phantom.APP_ERROR, "Invalid method: {0}".format(method))
+            action_result.set_status(phantom.APP_ERROR, f"Invalid method: {method}")
 
         # Create a URL to connect to
-        url = "{}{}".format(self._base_url, endpoint)
+        url = f"{self._base_url}{endpoint}"
 
         try:
             r = request_func(
@@ -196,7 +189,6 @@ class UrlscanConnector(BaseConnector):
         return self._process_response(r, action_result)
 
     def _handle_test_connectivity(self, param):
-
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -217,8 +209,7 @@ class UrlscanConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_report(self, param):
-
-        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+        self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -229,8 +220,7 @@ class UrlscanConnector(BaseConnector):
         return self._poll_submission(result_id, action_result)
 
     def _handle_hunt_domain(self, param):
-
-        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+        self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -253,8 +243,7 @@ class UrlscanConnector(BaseConnector):
             return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_NO_DATA_ERROR)
 
     def _handle_hunt_ip(self, param):
-
-        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+        self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
@@ -280,17 +269,15 @@ class UrlscanConnector(BaseConnector):
         return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
     def _poll_submission(self, report_uuid, action_result, get_result=True):
-
         polling_attempt = 0
         resp_json = None
         headers = {"Content-Type": "application/json", "API-Key": self._api_key}
 
         while polling_attempt < URLSCAN_MAX_POLLING_ATTEMPTS:
-
             polling_attempt += 1
 
-            self.send_progress("Polling attempt {0} of {1}".format(polling_attempt, URLSCAN_MAX_POLLING_ATTEMPTS))
-            self.debug_print("Polling attempt {0} of {1}".format(polling_attempt, URLSCAN_MAX_POLLING_ATTEMPTS))
+            self.send_progress(f"Polling attempt {polling_attempt} of {URLSCAN_MAX_POLLING_ATTEMPTS}")
+            self.debug_print(f"Polling attempt {polling_attempt} of {URLSCAN_MAX_POLLING_ATTEMPTS}")
 
             ret_val, resp_json = self._make_rest_call(URLSCAN_POLL_SUBMISSION_ENDPOINT.format(report_uuid), action_result, headers=headers)
 
@@ -319,8 +306,7 @@ class UrlscanConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid))
 
     def _handle_detonate_url(self, param):
-
-        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+        self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -384,7 +370,6 @@ class UrlscanConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, URLSCAN_ACTION_SUCCESS)
 
     def _get_screenshot(self, action_result, param):
-
         try:
             ret_val, response = self._make_rest_call(
                 URLSCAN_SCREENSHOT_ENDPOINT.format(param["report_id"]), action_result, params=None, headers=None
@@ -404,14 +389,13 @@ class UrlscanConnector(BaseConnector):
         return vault_add
 
     def _handle_get_screenshot(self, param):
-        self.debug_print("In action handler for {}".format(self.get_action_identifier()))
+        self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         return self._get_screenshot(action_result=action_result, param=param)
 
     def _add_file_to_vault(self, action_result, report_id, container_id, response):
-
         file_name = report_id
         ret_val, container_id = self._validate_integer(action_result, container_id, "container_id")
 
@@ -469,7 +453,6 @@ class UrlscanConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, f"Failed to download screenshot in Vault. Error : {e}")
 
     def handle_action(self, param):
-
         ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
@@ -537,7 +520,6 @@ class UrlscanConnector(BaseConnector):
         return True
 
     def initialize(self):
-
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
@@ -554,14 +536,12 @@ class UrlscanConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
     def finalize(self):
-
         # Save the state, this data is saved across actions and app upgrades
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
 
 if __name__ == "__main__":
-
     from sys import argv, exit
 
     import pudb
