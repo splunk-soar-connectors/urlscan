@@ -1,9 +1,9 @@
 # urlscan.io
 
-Publisher: Splunk \
-Connector Version: 2.6.1 \
-Product Vendor: urlscan.io \
-Product Name: urlscan.io \
+Publisher: Splunk <br>
+Connector Version: 2.6.1 <br>
+Product Vendor: urlscan.io <br>
+Product Name: urlscan.io <br>
 Minimum Product Version: 6.2.1
 
 This app supports investigative actions on urlscan.io
@@ -33,18 +33,18 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[get report](#action-get-report) - Query for results of an already completed detonation \
-[lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io \
-[lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io \
-[detonate url](#action-detonate-url) - Detonate a URL at urlscan.io \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[get report](#action-get-report) - Query for results of an already completed detonation <br>
+[lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io <br>
+[lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io <br>
+[detonate url](#action-detonate-url) - Detonate a URL at urlscan.io <br>
 [get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 This will attempt to connect by running an action which would require usage of the API key. If there is no API key set, it will still run a query to make sure the <b>urlscan.io</b> API can be queried.
@@ -61,7 +61,7 @@ No Output
 
 Query for results of an already completed detonation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -700,7 +700,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Find information about a domain at urlscan.io
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -756,7 +756,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Find information about an IP address at urlscan.io
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -812,7 +812,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Detonate a URL at urlscan.io
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **False**
 
 If the get_result parameter is set to true, then the action may take up to 2-3 minutes to execute because the action will poll for the results in the same call.
@@ -1709,7 +1709,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve copy of screenshot file
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **True**
 
 #### Action Parameters

@@ -375,7 +375,7 @@ class UrlscanConnector(BaseConnector):
                 URLSCAN_SCREENSHOT_ENDPOINT.format(param["report_id"]), action_result, params=None, headers=None
             )
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, f"Failed to grab screenshot Error : {e} Response : {response}")
+            return action_result.set_status(phantom.APP_ERROR, f"Failed to grab screenshot Error : {e}")
 
         container_id = param.get("container_id", self.get_container_id())
 
