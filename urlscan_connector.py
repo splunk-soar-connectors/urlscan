@@ -223,10 +223,10 @@ class UrlscanConnector(BaseConnector):
         self.debug_print(f"In action handler for {self.get_action_identifier()}")
 
         action_result = self.add_action_result(ActionResult(dict(param)))
-
+        headers = {"API-Key": self._api_key}
         domain = param["domain"]
 
-        ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format(domain), action_result, params=None, headers=None)
+        ret_val, response = self._make_rest_call(URLSCAN_HUNT_DOMAIN_ENDPOINT.format(domain), action_result, params=None, headers=headers)
 
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
@@ -248,8 +248,8 @@ class UrlscanConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         ip = param["ip"]
-
-        ret_val, response = self._make_rest_call(URLSCAN_HUNT_IP_ENDPOINT.format(ip), action_result, params=None, headers=None)
+        headers = {"API-Key": self._api_key}
+        ret_val, response = self._make_rest_call(URLSCAN_HUNT_IP_ENDPOINT.format(ip), action_result, params=None, headers=headers)
 
         if phantom.is_fail(ret_val):
             if not action_result.get_message():
