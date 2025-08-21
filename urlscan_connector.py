@@ -529,9 +529,13 @@ class UrlscanConnector(BaseConnector):
             self._state = {"app_version": self.get_app_json().get("app_version")}
 
         config = self.get_config()
-        self._api_key = config.get("api_key")
+        self._api_key = config.get("api_key", "")
         self.timeout = config.get("timeout", 120)
         self.set_validator("ipv6", self._is_ip)
+
+        if self._api_key is None:
+            self.debug_print("No API key found, setting to empty string")
+            self._api_key = ""
 
         return phantom.APP_SUCCESS
 
