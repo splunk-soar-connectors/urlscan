@@ -1,2 +1,3 @@
 **Unreleased**
 * Update Python version for 3.13
+* Fixed hunt domain and hunt IP actions to use configured API key
