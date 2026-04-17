@@ -28,12 +28,12 @@ This table lists the configuration variables required to operate urlscan.io. The
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**api_key** | optional | string | API key for urlscan.io |
+**api_key** | optional | password | API key for urlscan.io |
 **timeout** | optional | numeric | Timeout period for action (seconds) |
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - test connectivity <br>
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration. <br>
 [get report](#action-get-report) - Query for results of an already completed detonation <br>
 [lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io <br>
 [lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io <br>
@@ -42,7 +42,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ## action: 'test connectivity'
 
-test connectivity
+Validate the asset configuration for connectivity using supplied configuration.
 
 Type: **test** <br>
 Read only: **True**
@@ -93,6 +93,8 @@ action_result.data.\*.task.domain | string | | yahoo.com |
 action_result.data.\*.stats.requests | numeric | | 69 |
 action_result.data.\*.stats.took | numeric | | 25 |
 action_result.data.\*.stats.total | numeric | | 1 |
+action_result.summary.scan_uuid | string | | f04f2a29-d455-4830-874a-88191fb79352 |
+action_result.summary.page_domain | string | | yahoo.com |
 action_result.summary.added_tags_num | numeric | | 1 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
@@ -228,6 +230,12 @@ action_result.data.\*.task.url | string | `url` | https://www.yahoo.com |
 action_result.data.\*.task.domain | string | | yahoo.com |
 action_result.summary.added_tags_num | numeric | | 1 |
 action_result.summary.omitted_tags_num | numeric | | 1 |
+action_result.summary.vault_id | string | | 0599692c5298dd88f731960c55299f8de3331cf1 |
+action_result.summary.name | string | | cf9412df-963e-46a2-849b-de693d055b7b.png |
+action_result.summary.file_type | string | | image/png |
+action_result.summary.id | numeric | | 722 |
+action_result.summary.container_id | numeric | | 2390 |
+action_result.summary.size | numeric | | 13841 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 

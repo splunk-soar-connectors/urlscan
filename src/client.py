@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
-import logging
 from dataclasses import dataclass
 from typing import Any
 
 import httpx
 from bs4 import BeautifulSoup
+from soar_sdk.logging import getLogger
 
-logger = logging.getLogger(__name__)
+logger = getLogger()
 
 try:
     from .constants import (
@@ -60,9 +60,11 @@ class UrlscanResponse:
 
 
 class UrlscanClient:
+    DEFAULT_TIMEOUT = 120.0
+
     def __init__(self, api_key: str | None, timeout: float | None) -> None:
         self.api_key = api_key or ""
-        self.timeout = timeout or 120.0
+        self.timeout = timeout if timeout else self.DEFAULT_TIMEOUT
 
     def _get_error_message_from_exception(self, exc: Exception) -> str:
         error_code = URLSCAN_ERROR_CODE_UNAVAILABLE
@@ -161,11 +163,8 @@ class UrlscanClient:
         *,
         method: str = "get",
         headers: dict[str, str] | None = None,
-        params: dict[str, Any] | None = None,
         json_data: dict[str, Any] | None = None,
     ) -> UrlscanResponse:
-        request_headers = headers.copy() if headers else {}
-
         try:
             with httpx.Client(
                 base_url=URLSCAN_BASE_URL,
@@ -175,8 +174,7 @@ class UrlscanClient:
                 response = client.request(
                     method.upper(),
                     endpoint,
-                    headers=request_headers or None,
-                    params=params,
+                    headers=headers,
                     json=json_data,
                 )
         except httpx.HTTPError as exc:

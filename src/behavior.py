@@ -82,6 +82,10 @@ logger = getLogger()
 
 
 def replace_null_values(data: Any) -> Any:
+    # SOAR's PostgreSQL backend cannot store raw NUL bytes in JSONB columns and
+    # rejects payloads containing them. Round-tripping through JSON lets us escape
+    # any literal "\u0000" sequences in the serialized form so the data survives
+    # persistence without losing the original (now double-escaped) marker.
     return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
 
@@ -107,10 +111,7 @@ def _set_result(
 
 
 def _client(asset: BaseAsset) -> UrlscanClient:
-    return UrlscanClient(
-        api_key=getattr(asset, "api_key", ""),
-        timeout=getattr(asset, "timeout", 120.0),
-    )
+    return UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
 
 
 def run_test_connectivity(asset: BaseAsset) -> None:
@@ -135,7 +136,8 @@ def run_test_connectivity(asset: BaseAsset) -> None:
 def _run_lookup(params: Any, asset: BaseAsset, endpoint: str) -> ActionResult:
     result = _build_action_result(params)
     client = _client(asset)
-    response = client.request(endpoint, headers={"API-Key": client.api_key})
+    headers = {"API-Key": client.api_key} if client.api_key else None
+    response = client.request(endpoint, headers=headers)
 
     if not response.ok:
         message = (
@@ -158,7 +160,9 @@ def _run_lookup(params: Any, asset: BaseAsset, endpoint: str) -> ActionResult:
 
 def run_hunt_domain(params: Any, asset: BaseAsset) -> ActionResult:
     return _run_lookup(
-        params, asset, URLSCAN_HUNT_DOMAIN_ENDPOINT.format(params.domain)
+        params,
+        asset,
+        URLSCAN_HUNT_DOMAIN_ENDPOINT.format(params.domain),
     )
 
 
@@ -206,7 +210,7 @@ def _poll_submission(
         if not get_result:
             return _set_result(result, True, URLSCAN_ACTION_SUCCESS)
 
-        tags = response_data.get("task", {}).get("tags", [])
+        tags = (response_data.get("task", {}) or {}).get("tags", []) or []
         return _set_result(
             result,
             True,
@@ -215,12 +219,29 @@ def _poll_submission(
             summary={"added_tags_num": len(tags)},
         )
 
-    return _set_result(result, True, URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid))
+    # Polling exhausted; report never became available. The legacy connector
+    # returned success here, but treating a timeout as success causes playbooks
+    # to follow the wrong branch — surface it as a failure instead.
+    return _set_result(
+        result, False, URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid)
+    )
 
 
 def run_get_report(params: Any, asset: BaseAsset) -> ActionResult:
     result = _build_action_result(params)
-    return _poll_submission(report_uuid=params.id, result=result, asset=asset)
+    polled = _poll_submission(report_uuid=params.id, result=result, asset=asset)
+    if polled.get_status():
+        report = (polled.get_data() or [{}])[0]
+        task = report.get("task", {}) or {}
+        page = report.get("page", {}) or {}
+        polled.set_summary(
+            {
+                **polled.get_summary(),
+                "scan_uuid": task.get("uuid"),
+                "page_domain": page.get("domain"),
+            }
+        )
+    return polled
 
 
 def _validate_integer(parameter: Any, key: str) -> int:
@@ -378,6 +399,10 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
                     omitted_tags,
                 ),
                 data=response_data,
+                summary={
+                    "added_tags_num": len(tags),
+                    "omitted_tags_num": len(omitted_tags),
+                },
             )
         return _set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
 
@@ -441,11 +466,12 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
                 }
             )
 
-        if params.get_result:
-            return submission
+        return submission
 
     response_data = {**response_data, **request_context}
-    summary = {"omitted_tags_num": len(omitted_tags)} if omitted_tags else None
+    summary: dict[str, Any] = {"added_tags_num": len(tags)}
+    if omitted_tags:
+        summary["omitted_tags_num"] = len(omitted_tags)
     return _set_result(
         result,
         True,

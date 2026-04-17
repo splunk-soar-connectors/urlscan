@@ -50,36 +50,54 @@ except ImportError:
 
 
 class Asset(BaseAsset):
-    api_key: str | None = AssetField(description="API key for urlscan.io")
+    api_key: str | None = AssetField(
+        description="API key for urlscan.io", sensitive=True
+    )
     timeout: float | None = AssetField(
         description="Timeout period for action (seconds)", default=120.0
     )
 
 
-class AddedTagsSummary(ActionOutput):
-    added_tags_num: float = OutputField(example_values=[1])
-    omitted_tags_num: float | None = OutputField(example_values=[1])
+class DetonateSummary(ActionOutput):
+    added_tags_num: int = OutputField(example_values=[1])
+    omitted_tags_num: int | None = OutputField(example_values=[1])
+    vault_id: str | None = OutputField(
+        example_values=[
+            "0599692c5298dd88f731960c55299f8de3331cf1"  # pragma: allowlist secret
+        ]
+    )
+    name: str | None = OutputField(
+        example_values=["cf9412df-963e-46a2-849b-de693d055b7b.png"]
+    )
+    file_type: str | None = OutputField(example_values=["image/png"])
+    id: int | None = OutputField(example_values=[722])
+    container_id: int | None = OutputField(example_values=[2390])
+    size: int | None = OutputField(example_values=[13841])
 
 
 class ReportSummary(ActionOutput):
-    added_tags_num: float = OutputField(example_values=[1])
+    scan_uuid: str | None = OutputField(
+        example_values=["f04f2a29-d455-4830-874a-88191fb79352"]
+    )
+    page_domain: str | None = OutputField(example_values=["yahoo.com"])
+    added_tags_num: int = OutputField(example_values=[1])
 
 
 class LookupSummary(ActionOutput):
-    total: float = OutputField(example_values=[1])
+    total: int = OutputField(example_values=[1])
 
 
 class ScreenshotSummary(ActionOutput):
-    id: float = OutputField(example_values=[722])
+    id: int = OutputField(example_values=[722])
     name: str = OutputField(example_values=["cf9412df-963e-46a2-849b-de693d055b7b.png"])
-    size: float = OutputField(example_values=[13841])
+    size: int = OutputField(example_values=[13841])
     vault_id: str = OutputField(
         example_values=[
             "0599692c5298dd88f731960c55299f8de3331cf1"  # pragma: allowlist secret
         ]
     )
     file_type: str = OutputField(example_values=["image/png"])
-    container_id: float = OutputField(example_values=[2390])
+    container_id: int = OutputField(example_values=[2390])
 
 
 class SimplePageOutput(ActionOutput):
@@ -104,9 +122,9 @@ class SimpleTaskOutput(ActionOutput):
 
 
 class SimpleStatsOutput(ActionOutput):
-    requests: float | None = OutputField(example_values=[69])
-    took: float | None = OutputField(example_values=[25])
-    total: float | None = OutputField(example_values=[1])
+    requests: int | None = OutputField(example_values=[69])
+    took: int | None = OutputField(example_values=[25])
+    total: int | None = OutputField(example_values=[1])
 
 
 class SearchResultItemOutput(ActionOutput):
@@ -130,8 +148,8 @@ class SearchResultItemOutput(ActionOutput):
 class LookupActionOutput(ActionOutput):
     has_more: bool | None = OutputField(example_values=[False])
     results: list[SearchResultItemOutput] | None
-    took: float | None = OutputField(example_values=[25])
-    total: float | None = OutputField(example_values=[1])
+    took: int | None = OutputField(example_values=[25])
+    total: int | None = OutputField(example_values=[1])
 
 
 class ReportActionOutput(ActionOutput):
@@ -149,18 +167,18 @@ class DetonateActionOutput(ActionOutput):
     description: str | None = OutputField(
         example_values=["The submitted URL was blocked from scanning."]
     )
-    status: float | None = OutputField(example_values=[400])
+    status: int | None = OutputField(example_values=[400])
     requested_url: str | None = OutputField(
         cef_types=["url"], example_values=["https://www.yahoo.com"]
     )
-    requested_get_result: bool | None
+    requested_get_result: bool | None = OutputField(example_values=[True])
     submitted_tags: list[str] | None = OutputField(
         example_values=[["test_tag1", "test_tag2"]]
     )
     omitted_tags: list[str] | None = OutputField(
         example_values=[["this_tag_is_longer_than_twenty_nine_chars"]]
     )
-    omitted_tags_num: float | None = OutputField(example_values=[1])
+    omitted_tags_num: int | None = OutputField(example_values=[1])
     page: SimplePageOutput | None
     task: SimpleTaskOutput | None
 
@@ -179,9 +197,9 @@ class ScreenshotActionOutput(ActionOutput):
         example_values=["cf9412df-963e-46a2-849b-de693d055b7b.png"]
     )
     file_type: str | None = OutputField(example_values=["image/png"])
-    id: float | None = OutputField(example_values=[722])
-    container_id: float | None = OutputField(example_values=[2390])
-    size: float | None = OutputField(example_values=[13841])
+    id: int | None = OutputField(example_values=[722])
+    container_id: int | None = OutputField(example_values=[2390])
+    size: int | None = OutputField(example_values=[13841])
 
 
 app = App(
@@ -214,6 +232,7 @@ get_screenshot_view_handler = views_module.render_get_screenshot
 
 @app.test_connectivity()
 def test_connectivity(soar: SOARClient, asset: Asset):
+    """Validate the asset configuration for connectivity using supplied configuration."""
     run_test_connectivity(asset)
 
 
@@ -311,7 +330,7 @@ class DetonateUrlParams(Params):
     verbose="If the get_result parameter is set to true, then the action may take up to 2-3 minutes to execute because the action will poll for the results in the same call.",
     params_class=DetonateUrlParams,
     output_class=DetonateActionOutput,
-    summary_type=AddedTagsSummary,
+    summary_type=DetonateSummary,
     view_handler=detonate_url_view_handler,
 )
 def detonate_url(params: DetonateUrlParams, soar: SOARClient, asset: Asset):

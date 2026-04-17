@@ -21,6 +21,8 @@ URLSCAN_NOT_FOUND_CODE = 404
 
 URLSCAN_HUNT_DOMAIN_ENDPOINT = "/api/v1/search/?q=domain:{}"
 URLSCAN_HUNT_IP_ENDPOINT = '/api/v1/search/?q=ip:"{}"'
+# Interpolation happens via behavior._build_lookup_url() which percent-encodes
+# the user-supplied value to prevent search-query operator injection.
 URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
 URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
 URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
@@ -49,7 +51,9 @@ URLSCAN_API_KEY_MISSING_ERROR = (
 URLSCAN_REPORT_UUID_MISSING_ERROR = "Unable to get report UUID from scan"
 URLSCAN_BAD_REQUEST_ERROR = "Error: {0}. Description: {1}"
 URLSCAN_NO_DATA_ERROR = "No data found"
-URLSCAN_REPORT_NOT_FOUND_ERROR = "Report not found, report uuid: {}"
+URLSCAN_REPORT_NOT_FOUND_ERROR = (
+    "Report not available within the polling threshold for report uuid: {}"
+)
 URLSCAN_TAGS_EXCEED_MAX_ERROR = (
     "The number of tags attached to the scan has exceeded the max limit {}"
 )

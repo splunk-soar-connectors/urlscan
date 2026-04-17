@@ -2,7 +2,7 @@
 name = "urlscan"
 version = "2.6.3"
 description = "This app supports investigative actions on urlscan.io"
-license = "Copyright (c) 2017-2025 Splunk Inc."
+license = "Copyright (c) 2017-2026 Splunk Inc."
 requires-python = ">=3.13, <3.14"
 authors = [
     { name = "Jaime Park" },
@@ -87,9 +87,6 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 ]
 "src/**/*" = [
     "PT",  # Disable pytest rules for src files
-]
-"src/app.py" = [
-    "F811",  # SDK-generated output schemas reuse class names across actions
 ]
 
 [tool.ruff.lint.pyupgrade]

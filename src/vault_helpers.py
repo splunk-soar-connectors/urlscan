@@ -49,5 +49,4 @@ def add_screenshot_to_vault(
         "id": attachment.id,
         "container_id": attachment.container_id,
         "size": attachment.size,
-        "path": attachment.path,
     }
