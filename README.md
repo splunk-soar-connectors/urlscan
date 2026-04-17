@@ -133,6 +133,7 @@ action_result.data.\*.results.\*.stats.took | numeric | | 25 |
 action_result.data.\*.results.\*.stats.total | numeric | | 1 |
 action_result.data.\*.took | numeric | | 25 |
 action_result.data.\*.total | numeric | | 1 |
+action_result.summary.total | numeric | | 1 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 
@@ -172,6 +173,7 @@ action_result.data.\*.results.\*.stats.took | numeric | | 25 |
 action_result.data.\*.results.\*.stats.total | numeric | | 1 |
 action_result.data.\*.took | numeric | | 25 |
 action_result.data.\*.total | numeric | | 1 |
+action_result.summary.total | numeric | | 1 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 
@@ -213,6 +215,9 @@ action_result.data.\*.description | string | | The submitted URL was blocked fro
 action_result.data.\*.status | numeric | | 400 |
 action_result.data.\*.requested_url | string | `url` | https://www.yahoo.com |
 action_result.data.\*.requested_get_result | boolean | | True False |
+action_result.data.\*.submitted_tags.\* | string | | ['test_tag1', 'test_tag2'] |
+action_result.data.\*.omitted_tags.\* | string | | ['this_tag_is_longer_than_twenty_nine_chars'] |
+action_result.data.\*.omitted_tags_num | numeric | | 1 |
 action_result.data.\*.page.ip | string | `ip` `ipv6` | 8.8.8.8 |
 action_result.data.\*.page.city | string | | Bursa |
 action_result.data.\*.page.country | string | | TR |
@@ -222,6 +227,7 @@ action_result.data.\*.task.uuid | string | `urlscan submission id` | f04f2a29-d4
 action_result.data.\*.task.url | string | `url` | https://www.yahoo.com |
 action_result.data.\*.task.domain | string | | yahoo.com |
 action_result.summary.added_tags_num | numeric | | 1 |
+action_result.summary.omitted_tags_num | numeric | | 1 |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 

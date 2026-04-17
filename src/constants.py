@@ -15,6 +15,7 @@ URLSCAN_BASE_URL = "https://urlscan.io"
 URLSCAN_MAX_POLLING_ATTEMPTS = 10
 URLSCAN_POLLING_INTERVAL = 15
 URLSCAN_MAX_TAGS_NUM = 10
+URLSCAN_MAX_TAG_LENGTH = 29
 URLSCAN_BAD_REQUEST_CODE = 400
 URLSCAN_NOT_FOUND_CODE = 404
 
@@ -31,7 +32,7 @@ URLSCAN_EMPTY_RESPONSE_ERROR = (
     "Status code: {}. Empty response and no information in the header"
 )
 URLSCAN_HTML_RESPONSE_ERROR = "Status Code: {0}. Data from server: {1}"
-URLSCAN_FILE_RESPONSE_ERROR = "Status Code: {0}. No Screeenshot Available"
+URLSCAN_FILE_RESPONSE_ERROR = "Status Code: {0}. No Screenshot Available"
 URLSCAN_JSON_RESPONSE_PARSE_ERROR = "Unable to parse JSON response. Error: {}"
 URLSCAN_JSON_RESPONSE_SERVER_ERROR = (
     "Error from server. Status Code: {0}. Data from server: {1}"
@@ -52,6 +53,7 @@ URLSCAN_REPORT_NOT_FOUND_ERROR = "Report not found, report uuid: {}"
 URLSCAN_TAGS_EXCEED_MAX_ERROR = (
     "The number of tags attached to the scan has exceeded the max limit {}"
 )
+URLSCAN_TAGS_OMITTED_NOTICE = "Omitted {0} tag(s) longer than {1} characters"
 URLSCAN_ACTION_SUCCESS = "Successfully retrieved information"
 ERROR_INVALID_INT_PARAM = (
     "Please provide a valid integer value in the '{key}' parameter"

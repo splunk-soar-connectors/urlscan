@@ -11,11 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
+import logging
 from dataclasses import dataclass
 from typing import Any
 
 import httpx
 from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 try:
     from .constants import (
@@ -82,7 +86,7 @@ class UrlscanClient:
 
     def _process_file_response(self, response: httpx.Response) -> UrlscanResponse:
         if response.status_code == 200:
-            return UrlscanResponse(True, response, response=response)
+            return UrlscanResponse(True, None, response=response)
         return UrlscanResponse(
             False, None, URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)
         )
@@ -95,7 +99,8 @@ class UrlscanClient:
             error_text = "\n".join(
                 line.strip() for line in soup.text.splitlines() if line.strip()
             )
-        except Exception:
+        except (TypeError, ValueError, AttributeError):
+            logger.warning("Failed to parse HTML error response", exc_info=True)
             error_text = "Cannot parse error details"
 
         return UrlscanResponse(
@@ -107,7 +112,7 @@ class UrlscanClient:
     def _process_json_response(self, response: httpx.Response) -> UrlscanResponse:
         try:
             response_json = response.json()
-        except Exception as exc:
+        except (json.JSONDecodeError, ValueError) as exc:
             error_message = self._get_error_message_from_exception(exc)
             return UrlscanResponse(
                 False, None, URLSCAN_JSON_RESPONSE_PARSE_ERROR.format(error_message)
@@ -174,7 +179,7 @@ class UrlscanClient:
                     params=params,
                     json=json_data,
                 )
-        except Exception as exc:
+        except httpx.HTTPError as exc:
             error_message = self._get_error_message_from_exception(exc)
             return UrlscanResponse(
                 False, None, URLSCAN_SERVER_CONNECTIVITY_ERROR.format(error_message)

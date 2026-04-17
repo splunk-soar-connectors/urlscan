@@ -18,7 +18,7 @@ from typing import Any
 from soar_sdk.abstract import SOARClient
 from soar_sdk.action_results import ActionResult
 from soar_sdk.asset import BaseAsset
-from soar_sdk.exceptions import ActionFailure
+from soar_sdk.exceptions import ActionFailure, SoarAPIError
 from soar_sdk.logging import getLogger
 
 try:
@@ -34,6 +34,7 @@ try:
         URLSCAN_DETONATE_URL_ENDPOINT,
         URLSCAN_HUNT_DOMAIN_ENDPOINT,
         URLSCAN_HUNT_IP_ENDPOINT,
+        URLSCAN_MAX_TAG_LENGTH,
         URLSCAN_MAX_POLLING_ATTEMPTS,
         URLSCAN_MAX_TAGS_NUM,
         URLSCAN_NO_DATA_ERROR,
@@ -44,6 +45,7 @@ try:
         URLSCAN_REPORT_UUID_MISSING_ERROR,
         URLSCAN_SCREENSHOT_ENDPOINT,
         URLSCAN_TAGS_EXCEED_MAX_ERROR,
+        URLSCAN_TAGS_OMITTED_NOTICE,
         URLSCAN_TEST_CONNECTIVITY_ENDPOINT,
     )
     from .vault_helpers import add_screenshot_to_vault
@@ -60,6 +62,7 @@ except ImportError:
         URLSCAN_DETONATE_URL_ENDPOINT,
         URLSCAN_HUNT_DOMAIN_ENDPOINT,
         URLSCAN_HUNT_IP_ENDPOINT,
+        URLSCAN_MAX_TAG_LENGTH,
         URLSCAN_MAX_POLLING_ATTEMPTS,
         URLSCAN_MAX_TAGS_NUM,
         URLSCAN_NO_DATA_ERROR,
@@ -70,6 +73,7 @@ except ImportError:
         URLSCAN_REPORT_UUID_MISSING_ERROR,
         URLSCAN_SCREENSHOT_ENDPOINT,
         URLSCAN_TAGS_EXCEED_MAX_ERROR,
+        URLSCAN_TAGS_OMITTED_NOTICE,
         URLSCAN_TEST_CONNECTIVITY_ENDPOINT,
     )
     from vault_helpers import add_screenshot_to_vault
@@ -77,18 +81,13 @@ except ImportError:
 logger = getLogger()
 
 
-def _param_dict(params: Any) -> dict[str, Any]:
-    if hasattr(params, "model_dump"):
-        return params.model_dump()
-    return dict(params)
-
-
 def replace_null_values(data: Any) -> Any:
     return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
 
 
 def _build_action_result(params: Any) -> ActionResult:
-    return ActionResult(status=True, message="", param=_param_dict(params))
+    param = params.model_dump() if hasattr(params, "model_dump") else dict(params)
+    return ActionResult(status=True, message="", param=param)
 
 
 def _set_result(
@@ -133,13 +132,10 @@ def run_test_connectivity(asset: BaseAsset) -> None:
     logger.info("Test Connectivity Passed")
 
 
-def run_hunt_domain(params: Any, asset: BaseAsset) -> ActionResult:
+def _run_lookup(params: Any, asset: BaseAsset, endpoint: str) -> ActionResult:
     result = _build_action_result(params)
     client = _client(asset)
-    response = client.request(
-        URLSCAN_HUNT_DOMAIN_ENDPOINT.format(params.domain),
-        headers={"API-Key": client.api_key},
-    )
+    response = client.request(endpoint, headers={"API-Key": client.api_key})
 
     if not response.ok:
         message = (
@@ -149,36 +145,25 @@ def run_hunt_domain(params: Any, asset: BaseAsset) -> ActionResult:
         )
         return _set_result(result, False, message)
 
-    message = (
-        URLSCAN_ACTION_SUCCESS
-        if response.data.get("results")
-        else URLSCAN_NO_DATA_ERROR
+    results = response.data.get("results")
+    message = URLSCAN_ACTION_SUCCESS if results else URLSCAN_NO_DATA_ERROR
+    return _set_result(
+        result,
+        True,
+        message,
+        data=response.data,
+        summary={"total": response.data.get("total", 0)},
     )
-    return _set_result(result, True, message, data=response.data)
+
+
+def run_hunt_domain(params: Any, asset: BaseAsset) -> ActionResult:
+    return _run_lookup(
+        params, asset, URLSCAN_HUNT_DOMAIN_ENDPOINT.format(params.domain)
+    )
 
 
 def run_hunt_ip(params: Any, asset: BaseAsset) -> ActionResult:
-    result = _build_action_result(params)
-    client = _client(asset)
-    response = client.request(
-        URLSCAN_HUNT_IP_ENDPOINT.format(params.ip),
-        headers={"API-Key": client.api_key},
-    )
-
-    if not response.ok:
-        message = (
-            response.message
-            or (response.data or {}).get("message")
-            or URLSCAN_NO_DATA_ERROR
-        )
-        return _set_result(result, False, message)
-
-    message = (
-        URLSCAN_ACTION_SUCCESS
-        if response.data.get("results")
-        else URLSCAN_NO_DATA_ERROR
-    )
-    return _set_result(result, True, message, data=response.data)
+    return _run_lookup(params, asset, URLSCAN_HUNT_IP_ENDPOINT.format(params.ip))
 
 
 def _poll_submission(
@@ -243,9 +228,7 @@ def _validate_integer(parameter: Any, key: str) -> int:
         if not float(parameter).is_integer():
             raise ActionFailure(ERROR_INVALID_INT_PARAM.format(key=key))
         value = int(parameter)
-    except Exception as exc:
-        if isinstance(exc, ActionFailure):
-            raise
+    except (ValueError, TypeError) as exc:
         raise ActionFailure(ERROR_INVALID_INT_PARAM.format(key=key)) from exc
 
     if value == 0:
@@ -255,35 +238,74 @@ def _validate_integer(parameter: Any, key: str) -> int:
     return value
 
 
-def run_get_screenshot(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionResult:
+def _prepare_tags(raw_tags: str | None) -> tuple[list[str], list[str]]:
+    tags: list[str] = []
+    omitted_tags: list[str] = []
+    seen_tags: set[str] = set()
+
+    for raw_tag in (raw_tags or "").split(","):
+        tag = raw_tag.strip()
+        if not tag or tag in seen_tags:
+            continue
+        seen_tags.add(tag)
+
+        if len(tag) > URLSCAN_MAX_TAG_LENGTH:
+            omitted_tags.append(tag)
+            continue
+
+        tags.append(tag)
+
+    return tags, omitted_tags
+
+
+def _with_tag_feedback(message: str, omitted_tags: list[str]) -> str:
+    if not omitted_tags:
+        return message
+    return (
+        f"{message}. "
+        f"{URLSCAN_TAGS_OMITTED_NOTICE.format(len(omitted_tags), URLSCAN_MAX_TAG_LENGTH)}"
+    )
+
+
+def run_get_screenshot(
+    params: Any,
+    soar: SOARClient,
+    asset: BaseAsset,
+    *,
+    report_id: str | None = None,
+    container_id: int | None = None,
+) -> ActionResult:
+    report_id = report_id or params.report_id
+    if container_id is None:
+        container_id = getattr(params, "container_id", None)
+
     result = _build_action_result(params)
     client = _client(asset)
-    response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(params.report_id))
+    response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
 
     if not response.ok or response.response is None:
         return _set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
 
+    if container_id is None:
+        container_id = soar.get_executing_container_id()
+    container_id = _validate_integer(container_id, "container_id")
+
+    file_type = response.response.headers.get(
+        "Content-Type", "application/octet-stream"
+    )
+    extension = response.response.url.path.rsplit(".", 1)[-1]
+    file_name = f"{report_id}.{extension}" if extension else report_id
+
     try:
-        container_id = getattr(params, "container_id", None)
-        if container_id is None:
-            container_id = soar.get_executing_container_id()
-        container_id = _validate_integer(container_id, "container_id")
-
-        file_type = response.response.headers.get(
-            "Content-Type", "application/octet-stream"
-        )
-        extension = response.response.url.path.rsplit(".", 1)[-1]
-        file_name = f"{params.report_id}.{extension}" if extension else params.report_id
-
         screenshot_data = add_screenshot_to_vault(
             soar=soar,
-            report_id=params.report_id,
+            report_id=report_id,
             container_id=container_id,
             file_name=file_name,
             response_content=response.response.content,
             file_type=file_type,
         )
-    except Exception as exc:
+    except SoarAPIError as exc:
         return _set_result(
             result,
             False,
@@ -313,8 +335,7 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
     if not client.api_key:
         return _set_result(result, False, URLSCAN_API_KEY_MISSING_ERROR)
 
-    tags = [tag.strip() for tag in (params.tags or "").split(",")]
-    tags = list(set(filter(None, tags)))
+    tags, omitted_tags = _prepare_tags(params.tags)
     if len(tags) > URLSCAN_MAX_TAGS_NUM:
         return _set_result(
             result,
@@ -340,12 +361,21 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
     if not response.ok:
         response_data = response.data or {}
         if response_data.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
+            response_data = {
+                **response_data,
+                "submitted_tags": tags,
+                "omitted_tags": omitted_tags,
+                "omitted_tags_num": len(omitted_tags),
+            }
             return _set_result(
                 result,
                 True,
-                URLSCAN_BAD_REQUEST_ERROR.format(
-                    response_data.get("message", "None"),
-                    response_data.get("description", "None"),
+                _with_tag_feedback(
+                    URLSCAN_BAD_REQUEST_ERROR.format(
+                        response_data.get("message", "None"),
+                        response_data.get("description", "None"),
+                    ),
+                    omitted_tags,
                 ),
                 data=response_data,
             )
@@ -359,6 +389,9 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
     request_context = {
         "requested_url": params.url,
         "requested_get_result": params.get_result,
+        "submitted_tags": tags,
+        "omitted_tags": omitted_tags,
+        "omitted_tags_num": len(omitted_tags),
     }
 
     if params.get_result or params.addto_vault:
@@ -372,27 +405,34 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
         if not submission.get_status():
             return submission
 
-        if params.addto_vault:
-            screenshot_params = type(
-                "ScreenshotParams",
-                (),
+        if omitted_tags:
+            submission.set_status(
+                submission.get_status(),
+                _with_tag_feedback(submission.get_message(), omitted_tags),
+            )
+            submission.set_summary(
                 {
-                    "report_id": report_uuid,
-                    "container_id": getattr(params, "container_id", None),
-                    "model_dump": lambda self: {
-                        "report_id": report_uuid,
-                        "container_id": getattr(params, "container_id", None),
-                    },
-                },
-            )()
-            screenshot_result = run_get_screenshot(screenshot_params, soar, asset)
+                    **submission.get_summary(),
+                    "omitted_tags_num": len(omitted_tags),
+                }
+            )
+
+        if params.addto_vault:
+            screenshot_result = run_get_screenshot(
+                params,
+                soar,
+                asset,
+                report_id=report_uuid,
+                container_id=getattr(params, "container_id", None),
+            )
             if not screenshot_result.get_status():
                 return screenshot_result
 
             # The legacy connector re-used the same ActionResult for both polling
             # and vault upload, so the final message reflected the screenshot step.
             submission.set_status(
-                screenshot_result.get_status(), screenshot_result.get_message()
+                screenshot_result.get_status(),
+                _with_tag_feedback(screenshot_result.get_message(), omitted_tags),
             )
             submission.set_summary(
                 {
@@ -405,4 +445,11 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
             return submission
 
     response_data = {**response_data, **request_context}
-    return _set_result(result, True, URLSCAN_ACTION_SUCCESS, data=response_data)
+    summary = {"omitted_tags_num": len(omitted_tags)} if omitted_tags else None
+    return _set_result(
+        result,
+        True,
+        _with_tag_feedback(URLSCAN_ACTION_SUCCESS, omitted_tags),
+        data=response_data,
+        summary=summary,
+    )
