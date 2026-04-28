@@ -38,7 +38,8 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io <br>
 [lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io <br>
 [detonate url](#action-detonate-url) - Detonate a URL at urlscan.io <br>
-[get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file
+[get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file <br>
+[make request](#action-make-request) - Make an HTTP request to any urlscan.io API endpoint using the configured asset credentials.
 
 ## action: 'test connectivity'
 
@@ -274,6 +275,45 @@ action_result.summary.size | numeric | | 13841 |
 action_result.summary.vault_id | string | | 0599692c5298dd88f731960c55299f8de3331cf1 |
 action_result.summary.file_type | string | | image/png |
 action_result.summary.container_id | numeric | | 2390 |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+
+## action: 'make request'
+
+Make an HTTP request to any urlscan.io API endpoint using the configured asset credentials.
+
+Type: **generic** <br>
+Read only: **False**
+
+'make request' action for the app. Used to handle arbitrary HTTP requests with the app's asset
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**http_method** | required | The HTTP method to use for the request. | string | |
+**endpoint** | required | urlscan.io endpoint path, relative to https://urlscan.io. For example: 'api/v1/search/?q=domain:example.com' or 'api/v1/result/{uuid}'. | string | |
+**headers** | optional | The headers to send with the request (JSON object). An example is {'Content-Type': 'application/json'} | string | |
+**query_parameters** | optional | Parameters to append to the URL (JSON object or query string). An example is ?key=value&key2=value2 | string | |
+**body** | optional | The body to send with the request (JSON object). An example is {'key': 'value', 'key2': 'value2'} | string | |
+**timeout** | optional | The timeout for the request in seconds. | numeric | |
+**verify_ssl** | optional | Whether to verify the SSL certificate. Default is False. | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success failure |
+action_result.message | string | | |
+action_result.parameter.http_method | string | | |
+action_result.parameter.endpoint | string | | |
+action_result.parameter.headers | string | | |
+action_result.parameter.query_parameters | string | | |
+action_result.parameter.body | string | | |
+action_result.parameter.timeout | numeric | | |
+action_result.parameter.verify_ssl | boolean | | |
+action_result.data.\*.status_code | numeric | | 200 |
+action_result.data.\*.response_body | string | | {"results": [], "total": 0} |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 

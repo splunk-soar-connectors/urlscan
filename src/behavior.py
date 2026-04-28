@@ -15,6 +15,7 @@ import json
 import time
 from typing import Any
 
+import httpx
 from soar_sdk.abstract import SOARClient
 from soar_sdk.action_results import ActionResult
 from soar_sdk.asset import BaseAsset
@@ -31,6 +32,7 @@ try:
         URLSCAN_API_KEY_MISSING_ERROR,
         URLSCAN_BAD_REQUEST_CODE,
         URLSCAN_BAD_REQUEST_ERROR,
+        URLSCAN_BASE_URL,
         URLSCAN_DETONATE_URL_ENDPOINT,
         URLSCAN_HUNT_DOMAIN_ENDPOINT,
         URLSCAN_HUNT_IP_ENDPOINT,
@@ -59,6 +61,7 @@ except ImportError:
         URLSCAN_API_KEY_MISSING_ERROR,
         URLSCAN_BAD_REQUEST_CODE,
         URLSCAN_BAD_REQUEST_ERROR,
+        URLSCAN_BASE_URL,
         URLSCAN_DETONATE_URL_ENDPOINT,
         URLSCAN_HUNT_DOMAIN_ENDPOINT,
         URLSCAN_HUNT_IP_ENDPOINT,
@@ -479,3 +482,83 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset) -> ActionR
         data=response_data,
         summary=summary,
     )
+
+
+def run_make_request(params: Any, asset: BaseAsset) -> dict[str, Any]:
+    """Execute an arbitrary HTTP request against the urlscan.io API."""
+    endpoint = params.endpoint.lstrip("/")
+
+    if endpoint.startswith(("http://", "https://")):
+        raise ActionFailure(
+            "Do not include the base URL in the endpoint. "
+            "Only the path is needed, e.g. 'api/v1/search/?q=domain:example.com'."
+        )
+
+    client_obj = _client(asset)
+    timeout = params.timeout if params.timeout else client_obj.timeout
+
+    # Auth header is injected automatically from the asset; operator headers are merged on top.
+    request_headers: dict[str, str] = {}
+    if client_obj.api_key:
+        request_headers["API-Key"] = client_obj.api_key
+
+    if params.headers:
+        try:
+            extra_headers = json.loads(params.headers)
+            if not isinstance(extra_headers, dict):
+                raise ActionFailure("The headers parameter must be a JSON object.")
+            request_headers.update(extra_headers)
+        except (json.JSONDecodeError, TypeError) as exc:
+            raise ActionFailure(
+                f"Invalid JSON in the headers parameter: {params.headers}"
+            ) from exc
+
+    request_url = f"{URLSCAN_BASE_URL}/{endpoint}"
+    request_kwargs: dict[str, Any] = {
+        "method": params.http_method,
+        "url": request_url,
+        "headers": request_headers,
+        "timeout": timeout,
+        "follow_redirects": True,
+    }
+
+    if params.query_parameters:
+        try:
+            parsed_params = json.loads(params.query_parameters)
+            if not isinstance(parsed_params, dict):
+                raise ActionFailure(
+                    "The query_parameters parameter must be a JSON object."
+                )
+            request_kwargs["params"] = parsed_params
+        except (json.JSONDecodeError, TypeError):
+            # Fall back to treating it as a raw query string (key=value&key2=value2)
+            query_string = params.query_parameters.lstrip("?")
+            sep = "&" if "?" in endpoint else "?"
+            request_kwargs["url"] = f"{request_url}{sep}{query_string}"
+
+    if params.body:
+        try:
+            parsed_body = json.loads(params.body)
+            request_kwargs["json"] = parsed_body
+        except (json.JSONDecodeError, TypeError) as exc:
+            raise ActionFailure(
+                f"Invalid JSON in the body parameter: {params.body}"
+            ) from exc
+
+    verify_ssl = bool(params.verify_ssl) if params.verify_ssl is not None else True
+
+    try:
+        with httpx.Client(verify=verify_ssl) as http_client:
+            response = http_client.request(**request_kwargs)
+        response.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+        raise ActionFailure(
+            f"Request failed with status {exc.response.status_code}: {exc.response.text}"
+        ) from exc
+    except httpx.HTTPError as exc:
+        raise ActionFailure(f"HTTP request failed: {exc}") from exc
+
+    return {
+        "status_code": response.status_code,
+        "response_body": response.text,
+    }

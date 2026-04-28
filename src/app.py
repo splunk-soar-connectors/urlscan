@@ -11,13 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import annotations
-
 import ipaddress
 from pydantic import field_validator
 from soar_sdk.abstract import SOARClient
 from soar_sdk.app import App
-from soar_sdk.params import Param, Params
+from soar_sdk.params import MakeRequestParams, Param, Params
 from soar_sdk.action_results import ActionOutput, OutputField
 from soar_sdk.asset import BaseAsset, AssetField
 
@@ -28,6 +26,7 @@ try:
         run_get_screenshot,
         run_hunt_domain,
         run_hunt_ip,
+        run_make_request,
         run_test_connectivity,
     )
     from . import views as views_module
@@ -43,6 +42,7 @@ except ImportError:
         run_get_screenshot,
         run_hunt_domain,
         run_hunt_ip,
+        run_make_request,
         run_test_connectivity,
     )
     import views as views_module
@@ -356,6 +356,28 @@ class GetScreenshotParams(Params):
 )
 def get_screenshot(params: GetScreenshotParams, soar: SOARClient, asset: Asset):
     return run_get_screenshot(params, soar, asset)
+
+
+class MakeRequestOutput(ActionOutput):
+    status_code: int = OutputField(example_values=[200])
+    response_body: str = OutputField(example_values=['{"results": [], "total": 0}'])
+
+
+class UrlscanMakeRequestParams(MakeRequestParams):
+    endpoint: str = Param(
+        description=(
+            "urlscan.io endpoint path, relative to https://urlscan.io. "
+            "For example: 'api/v1/search/?q=domain:example.com' or 'api/v1/result/{uuid}'."
+        ),
+        required=True,
+    )
+
+
+@app.make_request()
+def make_request(params: UrlscanMakeRequestParams, asset: Asset) -> MakeRequestOutput:
+    """Make an HTTP request to any urlscan.io API endpoint using the configured asset credentials."""
+    result = run_make_request(params, asset)
+    return MakeRequestOutput(**result)
 
 
 for _name, _obj in list(globals().items()):
