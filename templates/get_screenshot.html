@@ -1,0 +1,49 @@
+<!--
+ Copyright (c) 2026 Splunk Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<div class="urlscan">
+  {% if not rows %}
+    <h4>No data found</h4>
+  {% else %}
+    {% for row in rows %}
+      <div class="results">
+        <h4>Screenshot Info</h4>
+        <table class="wf-table-horizontal datatable">
+          <thead>
+            <tr>
+              <th>Report ID</th>
+              <th>Vault ID</th>
+              <th>File Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ row.report_id or "None" }}</td>
+              <td>{{ row.vault_id or "None" }}</td>
+              <td>{{ row.name or "None" }}</td>
+            </tr>
+          </tbody>
+        </table>
+        {% if row.file_type and "image" in row.file_type and row.id and row.container_id %}
+          <br />
+          <h4>Screenshot</h4>
+          <img src="/download?id={{ row.id }}&container_id={{ row.container_id }}"
+               alt="screenshot"
+               style="width: 100%" />
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
