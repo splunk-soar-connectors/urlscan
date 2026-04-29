@@ -545,10 +545,8 @@ def run_make_request(params: Any, asset: BaseAsset) -> dict[str, Any]:
                 f"Invalid JSON in the body parameter: {params.body}"
             ) from exc
 
-    verify_ssl = bool(params.verify_ssl) if params.verify_ssl is not None else True
-
     try:
-        with httpx.Client(verify=verify_ssl) as http_client:
+        with httpx.Client(verify=params.verify_ssl) as http_client:
             response = http_client.request(**request_kwargs)
         response.raise_for_status()
     except httpx.HTTPStatusError as exc:
