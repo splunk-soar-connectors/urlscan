@@ -1,6 +1,6 @@
 # File: urlscan_connector.py
 #
-# Copyright (c) 2017-2025 Splunk Inc.
+# Copyright (c) 2017-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -402,7 +402,7 @@ class UrlscanConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        if not hasattr(Vault, "get_vault_tmp_dir"):
+        if hasattr(Vault, "get_vault_tmp_dir"):
             temp_dir = Vault.get_vault_tmp_dir()
         else:
             temp_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
