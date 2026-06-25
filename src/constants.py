@@ -19,17 +19,14 @@ URLSCAN_MAX_TAG_LENGTH = 29
 URLSCAN_BAD_REQUEST_CODE = 400
 URLSCAN_NOT_FOUND_CODE = 404
 
-URLSCAN_HUNT_DOMAIN_ENDPOINT = "/api/v1/search/?q=domain:{}"
-URLSCAN_HUNT_IP_ENDPOINT = '/api/v1/search/?q=ip:"{}"'
-# Interpolation happens via behavior._build_lookup_url() which percent-encodes
-# the user-supplied value to prevent search-query operator injection.
+URLSCAN_SEARCH_ENDPOINT = "/api/v1/search/"
 URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
 URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
 URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
 URLSCAN_SCREENSHOT_ENDPOINT = "/screenshots/{}.png"
 
 URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"
-URLSCAN_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and|or the action parameters."
+URLSCAN_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and/or the action parameters."
 URLSCAN_EMPTY_RESPONSE_ERROR = (
     "Status code: {}. Empty response and no information in the header"
 )
@@ -39,12 +36,15 @@ URLSCAN_JSON_RESPONSE_PARSE_ERROR = "Unable to parse JSON response. Error: {}"
 URLSCAN_JSON_RESPONSE_SERVER_ERROR = (
     "Error from server. Status Code: {0}. Data from server: {1}"
 )
+URLSCAN_RATE_LIMIT_ERROR = (
+    "Rate limit exceeded. X-Rate-Limit-Limit: {0}. "
+    "X-Rate-Limit-Remaining: {1}. X-Rate-Limit-Reset: {2}. "
+    "Data from server: {3}"
+)
 URLSCAN_PROCESS_RESPONSE_ERROR = (
     "Can't process response from server. Status Code: {0} Data from server: {1}"
 )
 URLSCAN_SERVER_CONNECTIVITY_ERROR = "Error Connecting to server. Details: {}"
-URLSCAN_TEST_CONNECTIVITY_ERROR = "Test Connectivity Failed"
-URLSCAN_TEST_CONNECTIVITY_SUCCESS = "Test Connectivity Passed"
 URLSCAN_API_KEY_MISSING_ERROR = (
     "API Key is required to run detonate url"  # pragma: allowlist secret
 )

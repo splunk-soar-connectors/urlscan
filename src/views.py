@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from soar_sdk.action_results import ActionOutput, OutputField
-from soar_sdk.models.view import ViewContext
 
 
 class ViewTaskOutput(ActionOutput):
@@ -62,12 +61,9 @@ class GetScreenshotViewOutput(ActionOutput):
     file_type: str | None = OutputField(example_values=["image/png"])
     id: int | None = OutputField(example_values=[722])
     container_id: int | None = OutputField(example_values=[2390])
-    size: int | None = OutputField(example_values=[13841])
 
 
-def render_detonate_url(
-    _context: ViewContext, outputs: list[DetonateViewOutput]
-) -> dict:
+def render_detonate_url(outputs: list[DetonateViewOutput]) -> dict:
     rows = []
     for output in outputs:
         rows.append(
@@ -85,9 +81,7 @@ def render_detonate_url(
     return {"rows": rows}
 
 
-def render_get_report(
-    _context: ViewContext, outputs: list[GetReportViewOutput]
-) -> dict:
+def render_get_report(outputs: list[GetReportViewOutput]) -> dict:
     rows = []
     for output in outputs:
         rows.append(
@@ -101,9 +95,7 @@ def render_get_report(
     return {"rows": rows}
 
 
-def render_get_screenshot(
-    _context: ViewContext, outputs: list[GetScreenshotViewOutput]
-) -> dict:
+def render_get_screenshot(outputs: list[GetScreenshotViewOutput]) -> dict:
     rows = []
     for output in outputs:
         rows.append(

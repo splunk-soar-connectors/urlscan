@@ -1,0 +1,100 @@
+# Copyright (c) 2026 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+from typing import Any
+
+from soar_sdk.abstract import SOARClient
+from soar_sdk.asset import BaseAsset
+from soar_sdk.exceptions import ActionFailure, SoarAPIError
+
+from ..constants import (
+    ERROR_INVALID_INT_PARAM,
+    ERROR_NEG_INT_PARAM,
+    ERROR_ZERO_INT_PARAM,
+    URLSCAN_NO_DATA_ERROR,
+    URLSCAN_SCREENSHOT_ENDPOINT,
+)
+from ..vault_helpers import add_screenshot_to_vault
+from .action_utils import build_action_result, make_client, set_result
+
+
+def run_get_screenshot(
+    params: Any,
+    soar: SOARClient,
+    asset: BaseAsset,
+    *,
+    report_id: str | None = None,
+    container_id: int | None = None,
+):
+    report_id = report_id or params.report_id
+    if container_id is None:
+        container_id = getattr(params, "container_id", None)
+
+    result = build_action_result(params)
+    client = make_client(asset)
+    response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
+
+    if not response.ok or response.response is None:
+        return set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
+
+    if container_id is None:
+        container_id = soar.get_executing_container_id()
+
+    try:
+        if not float(container_id).is_integer():
+            raise ActionFailure(ERROR_INVALID_INT_PARAM.format(key="container_id"))
+        container_id = int(container_id)
+    except (ValueError, TypeError) as exc:
+        raise ActionFailure(ERROR_INVALID_INT_PARAM.format(key="container_id")) from exc
+
+    if container_id == 0:
+        raise ActionFailure(ERROR_ZERO_INT_PARAM.format(key="container_id"))
+    if container_id < 0:
+        raise ActionFailure(ERROR_NEG_INT_PARAM.format(key="container_id"))
+
+    file_type = response.response.headers.get(
+        "Content-Type", "application/octet-stream"
+    )
+    extension = response.response.url.path.rsplit(".", 1)[-1]
+    file_name = f"{report_id}.{extension}" if extension else report_id
+
+    try:
+        screenshot_data = add_screenshot_to_vault(
+            soar=soar,
+            report_id=report_id,
+            container_id=container_id,
+            file_name=file_name,
+            response_content=response.response.content,
+            file_type=file_type,
+        )
+    except SoarAPIError as exc:
+        return set_result(
+            result,
+            False,
+            f"Failed to download screenshot in Vault. Error : {exc}",
+        )
+
+    return set_result(
+        result,
+        True,
+        f"Screenshot downloaded successfully in container : {container_id}",
+        data=screenshot_data,
+        summary={
+            "vault_id": screenshot_data["vault_id"],
+            "name": screenshot_data["name"],
+            "file_type": screenshot_data["file_type"],
+            "id": screenshot_data["id"],
+            "container_id": screenshot_data["container_id"],
+            "size": screenshot_data["size"],
+        },
+    )

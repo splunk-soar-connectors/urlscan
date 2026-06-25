@@ -19,36 +19,22 @@ import httpx
 from bs4 import BeautifulSoup
 from soar_sdk.logging import getLogger
 
-logger = getLogger()
+from .constants import (
+    URLSCAN_BASE_URL,
+    URLSCAN_EMPTY_RESPONSE_ERROR,
+    URLSCAN_ERROR_CODE_UNAVAILABLE,
+    URLSCAN_ERROR_MESSAGE_UNAVAILABLE,
+    URLSCAN_FILE_RESPONSE_ERROR,
+    URLSCAN_HTML_RESPONSE_ERROR,
+    URLSCAN_JSON_RESPONSE_PARSE_ERROR,
+    URLSCAN_JSON_RESPONSE_SERVER_ERROR,
+    URLSCAN_NOT_FOUND_CODE,
+    URLSCAN_PROCESS_RESPONSE_ERROR,
+    URLSCAN_RATE_LIMIT_ERROR,
+    URLSCAN_SERVER_CONNECTIVITY_ERROR,
+)
 
-try:
-    from .constants import (
-        URLSCAN_BASE_URL,
-        URLSCAN_EMPTY_RESPONSE_ERROR,
-        URLSCAN_ERROR_CODE_UNAVAILABLE,
-        URLSCAN_ERROR_MESSAGE_UNAVAILABLE,
-        URLSCAN_FILE_RESPONSE_ERROR,
-        URLSCAN_HTML_RESPONSE_ERROR,
-        URLSCAN_JSON_RESPONSE_PARSE_ERROR,
-        URLSCAN_JSON_RESPONSE_SERVER_ERROR,
-        URLSCAN_NOT_FOUND_CODE,
-        URLSCAN_PROCESS_RESPONSE_ERROR,
-        URLSCAN_SERVER_CONNECTIVITY_ERROR,
-    )
-except ImportError:
-    from constants import (
-        URLSCAN_BASE_URL,
-        URLSCAN_EMPTY_RESPONSE_ERROR,
-        URLSCAN_ERROR_CODE_UNAVAILABLE,
-        URLSCAN_ERROR_MESSAGE_UNAVAILABLE,
-        URLSCAN_FILE_RESPONSE_ERROR,
-        URLSCAN_HTML_RESPONSE_ERROR,
-        URLSCAN_JSON_RESPONSE_PARSE_ERROR,
-        URLSCAN_JSON_RESPONSE_SERVER_ERROR,
-        URLSCAN_NOT_FOUND_CODE,
-        URLSCAN_PROCESS_RESPONSE_ERROR,
-        URLSCAN_SERVER_CONNECTIVITY_ERROR,
-    )
+logger = getLogger()
 
 
 @dataclass
@@ -123,8 +109,24 @@ class UrlscanClient:
         if 200 <= response.status_code < 399:
             return UrlscanResponse(True, response_json, response=response)
 
-        if response_json.get("status") == URLSCAN_NOT_FOUND_CODE:
+        if (
+            isinstance(response_json, dict)
+            and response_json.get("status") == URLSCAN_NOT_FOUND_CODE
+        ):
             return UrlscanResponse(True, response_json, response=response)
+
+        if response.status_code == 429:
+            return UrlscanResponse(
+                False,
+                response_json,
+                URLSCAN_RATE_LIMIT_ERROR.format(
+                    response.headers.get("X-Rate-Limit-Limit", "unavailable"),
+                    response.headers.get("X-Rate-Limit-Remaining", "unavailable"),
+                    response.headers.get("X-Rate-Limit-Reset", "unavailable"),
+                    response.text,
+                ),
+                response=response,
+            )
 
         return UrlscanResponse(
             False,
@@ -164,6 +166,7 @@ class UrlscanClient:
         method: str = "get",
         headers: dict[str, str] | None = None,
         json_data: dict[str, Any] | None = None,
+        params: dict[str, str] | None = None,
     ) -> UrlscanResponse:
         try:
             with httpx.Client(
@@ -176,6 +179,7 @@ class UrlscanClient:
                     endpoint,
                     headers=headers,
                     json=json_data,
+                    params=params,
                 )
         except httpx.HTTPError as exc:
             error_message = self._get_error_message_from_exception(exc)
