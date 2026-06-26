@@ -17,6 +17,7 @@ from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
 
+from ..client import UrlscanClient
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
     URLSCAN_API_KEY_MISSING_ERROR,
@@ -32,7 +33,7 @@ from ..constants import (
     URLSCAN_TAGS_OMITTED_NOTICE,
 )
 from ..outputs import DetonateActionOutput, DetonateSummary
-from .action_utils import clean_output_data, make_client
+from ..output_utils import clean_output_data
 from .report import poll_submission
 from .screenshot import run_get_screenshot
 
@@ -49,7 +50,7 @@ def _with_tag_feedback(message: str, omitted_tags: list[str]) -> str:
 def run_detonate_url(
     params: Any, soar: SOARClient, asset: BaseAsset
 ) -> DetonateActionOutput:
-    client = make_client(asset)
+    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
 
     if not client.api_key:
         raise ActionFailure(URLSCAN_API_KEY_MISSING_ERROR)

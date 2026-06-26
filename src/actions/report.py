@@ -19,6 +19,7 @@ from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
 from soar_sdk.logging import getLogger
 
+from ..client import UrlscanClient
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
     URLSCAN_BAD_REQUEST_CODE,
@@ -30,7 +31,7 @@ from ..constants import (
     URLSCAN_REPORT_NOT_FOUND_ERROR,
 )
 from ..outputs import ReportSummary, UrlscanReportOutput
-from .action_utils import clean_output_data, make_client
+from ..output_utils import clean_output_data
 
 logger = getLogger()
 
@@ -42,7 +43,7 @@ def poll_submission(
     get_result: bool = True,
     request_context: dict[str, Any] | None = None,
 ) -> tuple[str, dict[str, Any] | None, int]:
-    client = make_client(asset)
+    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
     headers = {"Content-Type": "application/json"}
     if client.api_key:
         headers["API-Key"] = client.api_key

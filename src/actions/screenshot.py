@@ -17,6 +17,7 @@ from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure, SoarAPIError
 
+from ..client import UrlscanClient
 from ..constants import (
     ERROR_INVALID_INT_PARAM,
     ERROR_NEG_INT_PARAM,
@@ -26,7 +27,7 @@ from ..constants import (
     URLSCAN_SCREENSHOT_SUCCESS_MESSAGE,
 )
 from ..outputs import ScreenshotActionOutput, ScreenshotSummary
-from .action_utils import clean_output_data, make_client
+from ..output_utils import clean_output_data
 
 
 def run_get_screenshot(
@@ -41,7 +42,7 @@ def run_get_screenshot(
     if container_id is None:
         container_id = getattr(params, "container_id", None)
 
-    client = make_client(asset)
+    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
     response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
 
     if not response.ok or response.response is None:

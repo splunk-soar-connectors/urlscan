@@ -33,17 +33,17 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration. <br>
+[test connectivity](#action-test-connectivity) - Test connectivity to urlscan.io and validate the configured API key if present. <br>
 [get report](#action-get-report) - Query for results of an already completed detonation <br>
 [lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io <br>
 [lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io <br>
 [detonate url](#action-detonate-url) - Detonate a URL at urlscan.io <br>
 [get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file <br>
-[make request](#action-make-request) - Execute an arbitrary HTTP request against the urlscan.io API.
+[make request](#action-make-request) - Execute an arbitrary HTTP request against a urlscan.io API endpoint.
 
 ## action: 'test connectivity'
 
-Validate the asset configuration for connectivity using supplied configuration.
+Test connectivity to urlscan.io and validate the configured API key if present.
 
 Type: **test** <br>
 Read only: **True**
@@ -1664,7 +1664,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 ## action: 'make request'
 
-Execute an arbitrary HTTP request against the urlscan.io API.
+Execute an arbitrary HTTP request against a urlscan.io API endpoint.
 
 Type: **generic** <br>
 Read only: **False**

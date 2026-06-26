@@ -14,21 +14,13 @@
 import json
 from typing import Any
 
-from soar_sdk.asset import BaseAsset
-
-from ..client import UrlscanClient
-
 
 def clean_output_data(data: dict[str, Any]) -> dict[str, Any]:
     def clean(value: Any) -> Any:
         if isinstance(value, dict):
             return {key: clean(item) for key, item in value.items() if item is not None}
         if isinstance(value, list):
-            return [clean(item) for item in value if item is not None]
+            return [clean(item) for item in value]
         return value
 
     return clean(json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000")))
-
-
-def make_client(asset: BaseAsset) -> UrlscanClient:
-    return UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)

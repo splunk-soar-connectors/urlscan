@@ -17,13 +17,14 @@ from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
 
+from ..client import UrlscanClient
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
     URLSCAN_NO_DATA_ERROR,
     URLSCAN_SEARCH_ENDPOINT,
 )
 from ..outputs import LookupActionOutput, LookupSummary
-from .action_utils import clean_output_data, make_client
+from ..output_utils import clean_output_data
 
 URLSCAN_SEARCH_RESERVED_CHARS = frozenset('+-=&|><!(){}[]^"~*?:\\/')
 
@@ -36,7 +37,7 @@ def _escape_search_value(value: str) -> str:
 
 
 def _run_lookup(asset: BaseAsset, soar: SOARClient, query: str) -> LookupActionOutput:
-    client = make_client(asset)
+    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
     headers = {"API-Key": client.api_key} if client.api_key else None
     response = client.request(
         URLSCAN_SEARCH_ENDPOINT,

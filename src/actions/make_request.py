@@ -18,26 +18,16 @@ import httpx
 from soar_sdk.action_results import MakeRequestOutput
 from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
-from soar_sdk.params import MakeRequestParams, Param
 
+from ..client import UrlscanClient
 from ..constants import URLSCAN_BASE_URL
-from .action_utils import make_client
-
-
-class UrlscanMakeRequestParams(MakeRequestParams):
-    endpoint: str = Param(
-        description=(
-            "urlscan.io endpoint path, relative to https://urlscan.io. "
-            "For example: 'api/v1/search/?q=domain:example.com' or 'api/v1/result/{uuid}'."
-        ),
-        required=True,
-    )
+from ..params import UrlscanMakeRequestParams
 
 
 def run_make_request(
     params: UrlscanMakeRequestParams, asset: BaseAsset
 ) -> MakeRequestOutput:
-    """Execute an arbitrary HTTP request against the urlscan.io API."""
+    """Execute an arbitrary HTTP request against a urlscan.io API endpoint."""
     endpoint = params.endpoint.strip().lstrip("/")
     if not endpoint:
         raise ActionFailure("The endpoint parameter is required.")
@@ -48,7 +38,7 @@ def run_make_request(
             "Only the path is needed, e.g. 'api/v1/search/?q=domain:example.com'."
         )
 
-    client_obj = make_client(asset)
+    client_obj = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
     timeout = params.timeout if params.timeout else client_obj.timeout
 
     request_headers: dict[str, str] = {}

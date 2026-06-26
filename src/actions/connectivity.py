@@ -15,15 +15,15 @@ from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
 from soar_sdk.logging import getLogger
 
+from ..client import UrlscanClient
 from ..constants import URLSCAN_TEST_CONNECTIVITY_ENDPOINT
-from .action_utils import make_client
 
 logger = getLogger()
 
 
 def run_test_connectivity(asset: BaseAsset) -> None:
-    """Validate the asset configuration for connectivity using supplied configuration."""
-    client = make_client(asset)
+    """Test connectivity to urlscan.io and validate the configured API key if present."""
+    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
 
     if client.api_key:
         logger.info("Validating API Key")
@@ -36,6 +36,9 @@ def run_test_connectivity(asset: BaseAsset) -> None:
         response = client.request(URLSCAN_TEST_CONNECTIVITY_ENDPOINT)
 
     if not response.ok:
-        raise ActionFailure(response.message)
+        raise ActionFailure(
+            response.message
+            or "Test connectivity failed. Check the asset configuration and urlscan.io availability."
+        )
 
     logger.info("Test Connectivity Passed")
