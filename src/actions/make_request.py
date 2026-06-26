@@ -15,18 +15,13 @@ import json
 from typing import Any
 
 import httpx
-from soar_sdk.action_results import ActionOutput, OutputField
+from soar_sdk.action_results import MakeRequestOutput
 from soar_sdk.asset import BaseAsset
 from soar_sdk.exceptions import ActionFailure
 from soar_sdk.params import MakeRequestParams, Param
 
 from ..constants import URLSCAN_BASE_URL
 from .action_utils import make_client
-
-
-class UrlscanMakeRequestOutput(ActionOutput):
-    status_code: int = OutputField(example_values=[200])
-    response_body: str = OutputField(example_values=['{"results": [], "total": 0}'])
 
 
 class UrlscanMakeRequestParams(MakeRequestParams):
@@ -41,7 +36,7 @@ class UrlscanMakeRequestParams(MakeRequestParams):
 
 def run_make_request(
     params: UrlscanMakeRequestParams, asset: BaseAsset
-) -> UrlscanMakeRequestOutput:
+) -> MakeRequestOutput:
     """Execute an arbitrary HTTP request against the urlscan.io API."""
     endpoint = params.endpoint.strip().lstrip("/")
     if not endpoint:
@@ -113,7 +108,7 @@ def run_make_request(
     except httpx.HTTPError as exc:
         raise ActionFailure(f"HTTP request failed: {exc}") from exc
 
-    return UrlscanMakeRequestOutput(
+    return MakeRequestOutput(
         status_code=response.status_code,
         response_body=response.text,
     )

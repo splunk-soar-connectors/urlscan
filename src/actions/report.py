@@ -14,8 +14,9 @@
 import time
 from typing import Any
 
-from soar_sdk.action_results import ActionResult
+from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
+from soar_sdk.exceptions import ActionFailure
 from soar_sdk.logging import getLogger
 
 from ..constants import (
@@ -28,7 +29,8 @@ from ..constants import (
     URLSCAN_POLLING_INTERVAL,
     URLSCAN_REPORT_NOT_FOUND_ERROR,
 )
-from .action_utils import build_action_result, make_client, set_result
+from ..outputs import ReportSummary, UrlscanReportOutput
+from .action_utils import clean_output_data, make_client
 
 logger = getLogger()
 
@@ -36,11 +38,10 @@ logger = getLogger()
 def poll_submission(
     *,
     report_uuid: str,
-    result: ActionResult,
     asset: BaseAsset,
     get_result: bool = True,
     request_context: dict[str, Any] | None = None,
-) -> ActionResult:
+) -> tuple[str, dict[str, Any] | None, int]:
     client = make_client(asset)
     headers = {"Content-Type": "application/json"}
     if client.api_key:
@@ -59,8 +60,8 @@ def poll_submission(
         if not response.ok:
             response_data = response.data if isinstance(response.data, dict) else {}
             if response_data.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
-                return set_result(result, False, response.message)
-            return set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
+                raise ActionFailure(response.message)
+            raise ActionFailure(response.message or URLSCAN_NO_DATA_ERROR)
 
         response_data = response.data if isinstance(response.data, dict) else {}
         if (
@@ -74,32 +75,31 @@ def poll_submission(
             response_data = {**response_data, **request_context}
 
         if not get_result:
-            return set_result(result, True, URLSCAN_ACTION_SUCCESS)
+            return URLSCAN_ACTION_SUCCESS, None, 0
 
         tags = (response_data.get("task", {}) or {}).get("tags", []) or []
-        return set_result(
-            result,
-            True,
-            URLSCAN_ACTION_SUCCESS,
-            data=response_data,
-            summary={"added_tags_num": len(tags)},
+        return URLSCAN_ACTION_SUCCESS, response_data, len(tags)
+
+    return URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid), None, 0
+
+
+def run_get_report(
+    params: Any, soar: SOARClient, asset: BaseAsset
+) -> UrlscanReportOutput:
+    message, report, added_tags_num = poll_submission(
+        report_uuid=params.id,
+        asset=asset,
+    )
+    report = report or {}
+    task = report.get("task", {}) or {}
+    page = report.get("page", {}) or {}
+
+    soar.set_message(message)
+    soar.set_summary(
+        ReportSummary(
+            added_tags_num=added_tags_num,
+            scan_uuid=task.get("uuid"),
+            page_domain=page.get("domain"),
         )
-
-    return set_result(result, True, URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid))
-
-
-def run_get_report(params: Any, asset: BaseAsset):
-    result = build_action_result(params)
-    polled = poll_submission(report_uuid=params.id, result=result, asset=asset)
-    if polled.get_status():
-        report = (polled.get_data() or [{}])[0]
-        task = report.get("task", {}) or {}
-        page = report.get("page", {}) or {}
-        polled.set_summary(
-            {
-                **polled.get_summary(),
-                "scan_uuid": task.get("uuid"),
-                "page_domain": page.get("domain"),
-            }
-        )
-    return polled
+    )
+    return UrlscanReportOutput(**clean_output_data(report))

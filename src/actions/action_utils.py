@@ -14,34 +14,20 @@
 import json
 from typing import Any
 
-from soar_sdk.action_results import ActionResult
 from soar_sdk.asset import BaseAsset
 
 from ..client import UrlscanClient
 
 
-def build_action_result(params: Any) -> ActionResult:
-    param = params.model_dump() if hasattr(params, "model_dump") else dict(params)
-    return ActionResult(status=True, message="", param=param)
+def clean_output_data(data: dict[str, Any]) -> dict[str, Any]:
+    def clean(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {key: clean(item) for key, item in value.items() if item is not None}
+        if isinstance(value, list):
+            return [clean(item) for item in value if item is not None]
+        return value
 
-
-def set_result(
-    result: ActionResult,
-    status: bool,
-    message: str,
-    *,
-    data: dict[str, Any] | None = None,
-    summary: dict[str, Any] | None = None,
-) -> ActionResult:
-    result.set_status(status, message)
-    if data is not None:
-        # SOAR's PostgreSQL backend rejects JSONB payloads containing raw NUL
-        # bytes. Round-tripping through JSON escapes literal "\u0000" markers.
-        cleaned_data = json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
-        result.add_data(cleaned_data)
-    if summary is not None:
-        result.set_summary(summary)
-    return result
+    return clean(json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000")))
 
 
 def make_client(asset: BaseAsset) -> UrlscanClient:

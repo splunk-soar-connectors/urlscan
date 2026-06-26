@@ -13,15 +13,17 @@
 # limitations under the License.
 from typing import Any
 
-from soar_sdk.action_results import ActionResult
+from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
+from soar_sdk.exceptions import ActionFailure
 
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
     URLSCAN_NO_DATA_ERROR,
     URLSCAN_SEARCH_ENDPOINT,
 )
-from .action_utils import build_action_result, make_client, set_result
+from ..outputs import LookupActionOutput, LookupSummary
+from .action_utils import clean_output_data, make_client
 
 URLSCAN_SEARCH_RESERVED_CHARS = frozenset('+-=&|><!(){}[]^"~*?:\\/')
 
@@ -33,8 +35,7 @@ def _escape_search_value(value: str) -> str:
     )
 
 
-def _run_lookup(action_params: Any, asset: BaseAsset, query: str) -> ActionResult:
-    result = build_action_result(action_params)
+def _run_lookup(asset: BaseAsset, soar: SOARClient, query: str) -> LookupActionOutput:
     client = make_client(asset)
     headers = {"API-Key": client.api_key} if client.api_key else None
     response = client.request(
@@ -48,23 +49,20 @@ def _run_lookup(action_params: Any, asset: BaseAsset, query: str) -> ActionResul
         message = (
             response.message or response_data.get("message") or URLSCAN_NO_DATA_ERROR
         )
-        return set_result(result, False, message)
+        raise ActionFailure(message)
 
     response_data = response.data if isinstance(response.data, dict) else {}
     results = response_data.get("results")
-    message = URLSCAN_ACTION_SUCCESS if results else URLSCAN_NO_DATA_ERROR
-    return set_result(
-        result,
-        True,
-        message,
-        data=response_data,
-        summary={"total": response_data.get("total", 0)},
-    )
+    soar.set_message(URLSCAN_ACTION_SUCCESS if results else URLSCAN_NO_DATA_ERROR)
+    soar.set_summary(LookupSummary(total=response_data.get("total", 0)))
+    return LookupActionOutput(**clean_output_data(response_data))
 
 
-def run_hunt_domain(params: Any, asset: BaseAsset):
-    return _run_lookup(params, asset, f"domain:{_escape_search_value(params.domain)}")
+def run_hunt_domain(
+    params: Any, soar: SOARClient, asset: BaseAsset
+) -> LookupActionOutput:
+    return _run_lookup(asset, soar, f"domain:{_escape_search_value(params.domain)}")
 
 
-def run_hunt_ip(params: Any, asset: BaseAsset):
-    return _run_lookup(params, asset, f'ip:"{_escape_search_value(params.ip)}"')
+def run_hunt_ip(params: Any, soar: SOARClient, asset: BaseAsset) -> LookupActionOutput:
+    return _run_lookup(asset, soar, f'ip:"{_escape_search_value(params.ip)}"')

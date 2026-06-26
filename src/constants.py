@@ -59,6 +59,9 @@ URLSCAN_TAGS_EXCEED_MAX_ERROR = (
 )
 URLSCAN_TAGS_OMITTED_NOTICE = "Omitted {0} tag(s) longer than {1} characters"
 URLSCAN_ACTION_SUCCESS = "Successfully retrieved information"
+URLSCAN_SCREENSHOT_SUCCESS_MESSAGE = (
+    "Screenshot downloaded successfully in container : {container_id}"
+)
 ERROR_INVALID_INT_PARAM = (
     "Please provide a valid integer value in the '{key}' parameter"
 )

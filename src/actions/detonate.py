@@ -15,6 +15,7 @@ from typing import Any
 
 from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
+from soar_sdk.exceptions import ActionFailure
 
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
@@ -26,10 +27,12 @@ from ..constants import (
     URLSCAN_MAX_TAGS_NUM,
     URLSCAN_NO_DATA_ERROR,
     URLSCAN_REPORT_UUID_MISSING_ERROR,
+    URLSCAN_SCREENSHOT_SUCCESS_MESSAGE,
     URLSCAN_TAGS_EXCEED_MAX_ERROR,
     URLSCAN_TAGS_OMITTED_NOTICE,
 )
-from .action_utils import build_action_result, make_client, set_result
+from ..outputs import DetonateActionOutput, DetonateSummary
+from .action_utils import clean_output_data, make_client
 from .report import poll_submission
 from .screenshot import run_get_screenshot
 
@@ -43,12 +46,13 @@ def _with_tag_feedback(message: str, omitted_tags: list[str]) -> str:
     )
 
 
-def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset):
-    result = build_action_result(params)
+def run_detonate_url(
+    params: Any, soar: SOARClient, asset: BaseAsset
+) -> DetonateActionOutput:
     client = make_client(asset)
 
     if not client.api_key:
-        return set_result(result, False, URLSCAN_API_KEY_MISSING_ERROR)
+        raise ActionFailure(URLSCAN_API_KEY_MISSING_ERROR)
 
     tags: list[str] = []
     omitted_tags: list[str] = []
@@ -67,11 +71,7 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset):
         tags.append(tag)
 
     if len(tags) > URLSCAN_MAX_TAGS_NUM:
-        return set_result(
-            result,
-            False,
-            URLSCAN_TAGS_EXCEED_MAX_ERROR.format(URLSCAN_MAX_TAGS_NUM),
-        )
+        raise ActionFailure(URLSCAN_TAGS_EXCEED_MAX_ERROR.format(URLSCAN_MAX_TAGS_NUM))
 
     payload: dict[str, Any] = {
         "url": params.url,
@@ -97,28 +97,28 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset):
                 "omitted_tags": omitted_tags,
                 "omitted_tags_num": len(omitted_tags),
             }
-            return set_result(
-                result,
-                True,
+            soar.set_message(
                 _with_tag_feedback(
                     URLSCAN_BAD_REQUEST_ERROR.format(
                         response_data.get("message", "None"),
                         response_data.get("description", "None"),
                     ),
                     omitted_tags,
-                ),
-                data=response_data,
-                summary={
-                    "added_tags_num": len(tags),
-                    "omitted_tags_num": len(omitted_tags),
-                },
+                )
             )
-        return set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
+            soar.set_summary(
+                DetonateSummary(
+                    added_tags_num=len(tags),
+                    omitted_tags_num=len(omitted_tags),
+                )
+            )
+            return DetonateActionOutput(**clean_output_data(response_data))
+        raise ActionFailure(response.message or URLSCAN_NO_DATA_ERROR)
 
     response_data = response.data if isinstance(response.data, dict) else {}
     report_uuid = response_data.get("uuid")
     if not report_uuid:
-        return set_result(result, False, URLSCAN_REPORT_UUID_MISSING_ERROR)
+        raise ActionFailure(URLSCAN_REPORT_UUID_MISSING_ERROR)
 
     request_context = {
         "requested_url": params.url,
@@ -129,27 +129,19 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset):
     }
 
     if params.get_result or params.addto_vault:
-        submission = poll_submission(
+        message, report_data, added_tags_num = poll_submission(
             report_uuid=report_uuid,
-            result=result,
             asset=asset,
             get_result=params.get_result,
             request_context=request_context,
         )
-        if not submission.get_status():
-            return submission
+
+        output_data = report_data or {**response_data, **request_context}
+        summary = {"added_tags_num": added_tags_num if params.get_result else len(tags)}
 
         if omitted_tags:
-            submission.set_status(
-                submission.get_status(),
-                _with_tag_feedback(submission.get_message(), omitted_tags),
-            )
-            submission.set_summary(
-                {
-                    **submission.get_summary(),
-                    "omitted_tags_num": len(omitted_tags),
-                }
-            )
+            message = _with_tag_feedback(message, omitted_tags)
+            summary["omitted_tags_num"] = len(omitted_tags)
 
         if params.addto_vault:
             screenshot_result = run_get_screenshot(
@@ -159,30 +151,33 @@ def run_detonate_url(params: Any, soar: SOARClient, asset: BaseAsset):
                 report_id=report_uuid,
                 container_id=getattr(params, "container_id", None),
             )
-            if not screenshot_result.get_status():
-                return screenshot_result
-
-            submission.set_status(
-                screenshot_result.get_status(),
-                _with_tag_feedback(screenshot_result.get_message(), omitted_tags),
+            screenshot_data = screenshot_result.model_dump(exclude_none=True)
+            message = _with_tag_feedback(
+                URLSCAN_SCREENSHOT_SUCCESS_MESSAGE.format(
+                    container_id=screenshot_data.get("container_id")
+                ),
+                omitted_tags,
             )
-            submission.set_summary(
+            summary.update(
                 {
-                    **submission.get_summary(),
-                    **screenshot_result.get_summary(),
+                    "vault_id": screenshot_data.get("vault_id"),
+                    "name": screenshot_data.get("name"),
+                    "file_type": screenshot_data.get("file_type"),
+                    "id": screenshot_data.get("id"),
+                    "container_id": screenshot_data.get("container_id"),
+                    "size": screenshot_data.get("size"),
                 }
             )
+            output_data = {**output_data, **screenshot_data}
 
-        return submission
+        soar.set_message(message)
+        soar.set_summary(DetonateSummary(**summary))
+        return DetonateActionOutput(**clean_output_data(output_data))
 
     response_data = {**response_data, **request_context}
-    summary: dict[str, Any] = {"added_tags_num": len(tags)}
+    summary = {"added_tags_num": len(tags)}
     if omitted_tags:
         summary["omitted_tags_num"] = len(omitted_tags)
-    return set_result(
-        result,
-        True,
-        _with_tag_feedback(URLSCAN_ACTION_SUCCESS, omitted_tags),
-        data=response_data,
-        summary=summary,
-    )
+    soar.set_message(_with_tag_feedback(URLSCAN_ACTION_SUCCESS, omitted_tags))
+    soar.set_summary(DetonateSummary(**summary))
+    return DetonateActionOutput(**clean_output_data(response_data))

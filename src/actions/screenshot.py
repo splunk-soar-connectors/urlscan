@@ -23,9 +23,10 @@ from ..constants import (
     ERROR_ZERO_INT_PARAM,
     URLSCAN_NO_DATA_ERROR,
     URLSCAN_SCREENSHOT_ENDPOINT,
+    URLSCAN_SCREENSHOT_SUCCESS_MESSAGE,
 )
-from ..vault_helpers import add_screenshot_to_vault
-from .action_utils import build_action_result, make_client, set_result
+from ..outputs import ScreenshotActionOutput, ScreenshotSummary
+from .action_utils import clean_output_data, make_client
 
 
 def run_get_screenshot(
@@ -35,17 +36,16 @@ def run_get_screenshot(
     *,
     report_id: str | None = None,
     container_id: int | None = None,
-):
+) -> ScreenshotActionOutput:
     report_id = report_id or params.report_id
     if container_id is None:
         container_id = getattr(params, "container_id", None)
 
-    result = build_action_result(params)
     client = make_client(asset)
     response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
 
     if not response.ok or response.response is None:
-        return set_result(result, False, response.message or URLSCAN_NO_DATA_ERROR)
+        raise ActionFailure(response.message or URLSCAN_NO_DATA_ERROR)
 
     if container_id is None:
         container_id = soar.get_executing_container_id()
@@ -69,32 +69,45 @@ def run_get_screenshot(
     file_name = f"{report_id}.{extension}" if extension else report_id
 
     try:
-        screenshot_data = add_screenshot_to_vault(
-            soar=soar,
-            report_id=report_id,
+        vault_id = soar.vault.create_attachment(
             container_id=container_id,
+            file_content=response.response.content,
             file_name=file_name,
-            response_content=response.response.content,
-            file_type=file_type,
         )
+        attachments = soar.vault.get_attachment(
+            vault_id=vault_id, container_id=container_id
+        )
+        if not attachments:
+            raise SoarAPIError(
+                "Could not find meta information of the downloaded screenshot's Vault"
+            )
     except SoarAPIError as exc:
-        return set_result(
-            result,
-            False,
-            f"Failed to download screenshot in Vault. Error : {exc}",
-        )
+        raise ActionFailure(
+            f"Failed to download screenshot in Vault. Error : {exc}"
+        ) from exc
 
-    return set_result(
-        result,
-        True,
-        f"Screenshot downloaded successfully in container : {container_id}",
-        data=screenshot_data,
-        summary={
-            "vault_id": screenshot_data["vault_id"],
-            "name": screenshot_data["name"],
-            "file_type": screenshot_data["file_type"],
-            "id": screenshot_data["id"],
-            "container_id": screenshot_data["container_id"],
-            "size": screenshot_data["size"],
-        },
+    attachment = attachments[0]
+    screenshot_data = {
+        "report_id": report_id,
+        "vault_id": attachment.vault_id,
+        "name": attachment.name,
+        "file_type": file_type,
+        "id": attachment.id,
+        "container_id": attachment.container_id,
+        "size": attachment.size,
+    }
+
+    soar.set_message(
+        URLSCAN_SCREENSHOT_SUCCESS_MESSAGE.format(container_id=container_id)
     )
+    soar.set_summary(
+        ScreenshotSummary(
+            vault_id=screenshot_data["vault_id"],
+            name=screenshot_data["name"],
+            file_type=screenshot_data["file_type"],
+            id=screenshot_data["id"],
+            container_id=screenshot_data["container_id"],
+            size=screenshot_data["size"],
+        )
+    )
+    return ScreenshotActionOutput(**clean_output_data(screenshot_data))
