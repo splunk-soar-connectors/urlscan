@@ -16,11 +16,4 @@ from typing import Any
 
 
 def clean_output_data(data: dict[str, Any]) -> dict[str, Any]:
-    def clean(value: Any) -> Any:
-        if isinstance(value, dict):
-            return {key: clean(item) for key, item in value.items() if item is not None}
-        if isinstance(value, list):
-            return [clean(item) for item in value]
-        return value
-
-    return clean(json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000")))
+    return json.loads(json.dumps(data).replace("\\u0000", "\\\\u0000"))
