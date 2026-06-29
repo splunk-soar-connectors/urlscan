@@ -13,13 +13,51 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+<style>
+  .urlscan {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .urlscan .wf-table-horizontal {
+    border: 1px solid;
+    border-collapse: collapse;
+    font-size: 12px;
+    width: auto;
+  }
+
+  .urlscan .wf-table-horizontal th,
+  .urlscan .wf-table-horizontal td {
+    border: 1px solid;
+    padding: 5px 8px;
+    vertical-align: top;
+  }
+
+  .urlscan .wf-table-horizontal th {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+
+  .urlscan .wrap-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .urlscan .wf-h4-style {
+    font-size: 16px;
+  }
+</style>
 <div class="urlscan">
   {% if not rows %}
-    <h4>No data found</h4>
+    <h4 class="wf-h4-style">No data found</h4>
   {% else %}
     {% for row in rows %}
       <div class="results">
-        <h4>URL Info</h4>
+        <h4 class="wf-h4-style">URL Info</h4>
         <table class="wf-table-horizontal datatable">
           <thead>
             <tr>
@@ -34,7 +72,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ row.url or "None" }}</td>
+              <td class="wrap-text">{{ row.url or "None" }}</td>
               <td>{{ row.uuid or "None" }}</td>
               {% if row.show_result_columns %}
                 <td>{{ row.ip or "None" }}</td>
