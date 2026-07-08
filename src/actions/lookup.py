@@ -37,7 +37,7 @@ def _escape_search_value(value: str) -> str:
 
 
 def _run_lookup(asset: BaseAsset, soar: SOARClient, query: str) -> LookupActionOutput:
-    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client = UrlscanClient.from_asset(asset)
     headers = {"API-Key": client.api_key} if client.api_key else None
     response = client.request(
         URLSCAN_SEARCH_ENDPOINT,

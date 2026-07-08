@@ -30,6 +30,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **api_key** | optional | password | API key for urlscan.io |
 **timeout** | optional | numeric | Timeout period for action (seconds) |
+**verify_server_cert** | optional | boolean | Verify server certificate |
 
 ### Supported Actions
 

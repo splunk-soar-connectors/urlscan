@@ -50,7 +50,7 @@ def _with_tag_feedback(message: str, omitted_tags: list[str]) -> str:
 def run_detonate_url(
     params: Any, soar: SOARClient, asset: BaseAsset
 ) -> DetonateActionOutput:
-    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client = UrlscanClient.from_asset(asset)
 
     if not client.api_key:
         raise ActionFailure(URLSCAN_API_KEY_MISSING_ERROR)

@@ -51,6 +51,9 @@ class Asset(BaseAsset):
     timeout: float | None = AssetField(
         description="Timeout period for action (seconds)", default=120.0
     )
+    verify_server_cert: bool | None = AssetField(
+        description="Verify server certificate", default=False
+    )
 
 
 app = App(

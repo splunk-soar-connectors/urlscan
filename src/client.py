@@ -17,6 +17,7 @@ from typing import Any
 
 import httpx
 from bs4 import BeautifulSoup
+from soar_sdk.asset import BaseAsset
 from soar_sdk.logging import getLogger
 
 from .constants import (
@@ -48,9 +49,23 @@ class UrlscanResponse:
 class UrlscanClient:
     DEFAULT_TIMEOUT = 120.0
 
-    def __init__(self, api_key: str | None, timeout: float | None) -> None:
+    def __init__(
+        self,
+        api_key: str | None,
+        timeout: float | None,
+        verify_server_cert: bool | None,
+    ) -> None:
         self.api_key = api_key or ""
         self.timeout = timeout if timeout else self.DEFAULT_TIMEOUT
+        self.verify_server_cert = bool(verify_server_cert)
+
+    @classmethod
+    def from_asset(cls, asset: BaseAsset) -> "UrlscanClient":
+        return cls(
+            api_key=getattr(asset, "api_key", None),
+            timeout=getattr(asset, "timeout", None),
+            verify_server_cert=getattr(asset, "verify_server_cert", False),
+        )
 
     def _get_error_message_from_exception(self, exc: Exception) -> str:
         error_code = URLSCAN_ERROR_CODE_UNAVAILABLE
@@ -173,6 +188,7 @@ class UrlscanClient:
                 base_url=URLSCAN_BASE_URL,
                 timeout=self.timeout,
                 follow_redirects=True,
+                verify=self.verify_server_cert,
             ) as client:
                 response = client.request(
                     method.upper(),

@@ -43,7 +43,7 @@ def poll_submission(
     get_result: bool = True,
     request_context: dict[str, Any] | None = None,
 ) -> tuple[str, dict[str, Any] | None, int]:
-    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client = UrlscanClient.from_asset(asset)
     headers = {"Content-Type": "application/json"}
     if client.api_key:
         headers["API-Key"] = client.api_key

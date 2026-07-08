@@ -38,7 +38,7 @@ def run_make_request(
             "Only the path is needed, e.g. 'api/v1/search/?q=domain:example.com'."
         )
 
-    client_obj = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client_obj = UrlscanClient.from_asset(asset)
     timeout = params.timeout if params.timeout else client_obj.timeout
 
     request_headers: dict[str, str] = {}

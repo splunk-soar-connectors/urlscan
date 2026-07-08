@@ -42,7 +42,7 @@ def run_get_screenshot(
     if container_id is None:
         container_id = getattr(params, "container_id", None)
 
-    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client = UrlscanClient.from_asset(asset)
     response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
 
     if not response.ok or response.response is None:

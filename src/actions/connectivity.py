@@ -23,7 +23,7 @@ logger = getLogger()
 
 def run_test_connectivity(asset: BaseAsset) -> None:
     """Test connectivity to urlscan.io and validate the configured API key if present."""
-    client = UrlscanClient(api_key=asset.api_key, timeout=asset.timeout)
+    client = UrlscanClient.from_asset(asset)
 
     if client.api_key:
         logger.info("Validating API Key")
