@@ -26,7 +26,8 @@
     border: 1px solid;
     border-collapse: collapse;
     font-size: 12px;
-    width: auto;
+    table-layout: fixed;
+    width: 100%;
   }
 
   .urlscan .wf-table-horizontal th,
@@ -57,31 +58,53 @@
   {% else %}
     {% for row in rows %}
       <div class="results">
-        <h4 class="wf-h4-style">URL Info</h4>
-        <table class="wf-table-horizontal datatable">
-          <thead>
-            <tr>
-              <th>URL</th>
-              <th>UUID</th>
-              {% if row.show_result_columns %}
-                <th>IP</th>
-                <th>CITY</th>
-                <th>COUNTRY</th>
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="wrap-text">{{ row.url or "None" }}</td>
-              <td>{{ row.uuid or "None" }}</td>
-              {% if row.show_result_columns %}
-                <td>{{ row.ip or "None" }}</td>
-                <td>{{ row.city or "None" }}</td>
-                <td>{{ row.country or "None" }}</td>
-              {% endif %}
-            </tr>
-          </tbody>
-        </table>
+        {% if row.status %}
+          <h4 class="wf-h4-style">Submission Info</h4>
+          <table class="wf-table-horizontal datatable">
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>STATUS</th>
+                <th>MESSAGE</th>
+                <th>DESCRIPTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="wrap-text">{{ row.url or "None" }}</td>
+                <td>{{ row.status }}</td>
+                <td class="wrap-text">{{ row.message or "None" }}</td>
+                <td class="wrap-text">{{ row.description or "None" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <h4 class="wf-h4-style">URL Info</h4>
+          <table class="wf-table-horizontal datatable">
+            <thead>
+              <tr>
+                <th>URL</th>
+                <th>UUID</th>
+                {% if row.show_result_columns %}
+                  <th>IP</th>
+                  <th>CITY</th>
+                  <th>COUNTRY</th>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="wrap-text">{{ row.url or "None" }}</td>
+                <td>{{ row.uuid or "None" }}</td>
+                {% if row.show_result_columns %}
+                  <td>{{ row.ip or "None" }}</td>
+                  <td>{{ row.city or "None" }}</td>
+                  <td>{{ row.country or "None" }}</td>
+                {% endif %}
+              </tr>
+            </tbody>
+          </table>
+        {% endif %}
       </div>
     {% endfor %}
   {% endif %}

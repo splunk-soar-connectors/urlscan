@@ -26,7 +26,8 @@
     border: 1px solid;
     border-collapse: collapse;
     font-size: 12px;
-    width: auto;
+    table-layout: fixed;
+    width: 100%;
   }
 
   .urlscan .wf-table-horizontal th,
@@ -68,8 +69,8 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ row.report_id or "None" }}</td>
-              <td>{{ row.vault_id or "None" }}</td>
+              <td class="wrap-text">{{ row.report_id or "None" }}</td>
+              <td class="wrap-text">{{ row.vault_id or "None" }}</td>
               <td class="wrap-text">{{ row.name or "None" }}</td>
             </tr>
           </tbody>

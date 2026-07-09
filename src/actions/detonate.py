@@ -89,14 +89,20 @@ def run_detonate_url(
         json_data=payload,
     )
 
+    request_context = {
+        "requested_url": params.url,
+        "requested_get_result": params.get_result,
+        "submitted_tags": tags,
+        "omitted_tags": omitted_tags,
+        "omitted_tags_num": len(omitted_tags),
+    }
+
     if not response.ok:
         response_data = response.data if isinstance(response.data, dict) else {}
         if response_data.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
             response_data = {
                 **response_data,
-                "submitted_tags": tags,
-                "omitted_tags": omitted_tags,
-                "omitted_tags_num": len(omitted_tags),
+                **request_context,
             }
             soar.set_message(
                 _with_tag_feedback(
@@ -120,14 +126,6 @@ def run_detonate_url(
     report_uuid = response_data.get("uuid")
     if not report_uuid:
         raise ActionFailure(URLSCAN_REPORT_UUID_MISSING_ERROR)
-
-    request_context = {
-        "requested_url": params.url,
-        "requested_get_result": params.get_result,
-        "submitted_tags": tags,
-        "omitted_tags": omitted_tags,
-        "omitted_tags_num": len(omitted_tags),
-    }
 
     if params.get_result or params.addto_vault:
         message, report_data, added_tags_num = poll_submission(

@@ -26,7 +26,8 @@
     border: 1px solid;
     border-collapse: collapse;
     font-size: 12px;
-    width: auto;
+    table-layout: fixed;
+    width: 100%;
   }
 
   .urlscan .wf-table-horizontal th,
@@ -44,6 +45,11 @@
 
   .urlscan .wf-h4-style {
     font-size: 16px;
+  }
+
+  .urlscan .wrap-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 </style>
 <div class="urlscan">
@@ -64,10 +70,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ row.uuid or "None" }}</td>
-              <td>{{ row.ip or "None" }}</td>
-              <td>{{ row.city or "None" }}</td>
-              <td>{{ row.country or "None" }}</td>
+              <td class="wrap-text">{{ row.uuid or "None" }}</td>
+              <td class="wrap-text">{{ row.ip or "None" }}</td>
+              <td class="wrap-text">{{ row.city or "None" }}</td>
+              <td class="wrap-text">{{ row.country or "None" }}</td>
             </tr>
           </tbody>
         </table>

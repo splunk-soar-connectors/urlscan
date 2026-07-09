@@ -28,6 +28,11 @@ class ViewPageOutput(ActionOutput):
 
 
 class DetonateViewOutput(ActionOutput):
+    status: int | None = OutputField(example_values=[400])
+    message: str | None = OutputField(example_values=["Scan prevented"])
+    description: str | None = OutputField(
+        example_values=["The submitted URL was blocked from scanning."]
+    )
     requested_url: str | None = OutputField(
         cef_types=["url"], example_values=["https://www.yahoo.com"]
     )
@@ -68,6 +73,9 @@ def render_detonate_url(outputs: list[DetonateViewOutput]) -> dict:
     for output in outputs:
         rows.append(
             {
+                "status": output.status,
+                "message": output.message,
+                "description": output.description,
                 "url": output.requested_url,
                 "uuid": output.task.uuid
                 if output.task and output.task.uuid
