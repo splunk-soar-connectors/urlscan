@@ -99,6 +99,7 @@ def run_get_report(
     soar.set_summary(
         ReportSummary(
             added_tags_num=added_tags_num,
+            report_uuid=params.id,
             scan_uuid=task.get("uuid"),
             page_domain=page.get("domain"),
         )
