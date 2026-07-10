@@ -48,10 +48,9 @@ repos:
       - id: mdformat
         exclude: "release_notes/.*"
   - repo: https://github.com/returntocorp/semgrep
-    rev: v1.89.0
+    rev: v1.136.0
     hooks:
       - id: semgrep
-        language_version: python3.13
         additional_dependencies: ["setuptools==81.0.0"]
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
@@ -62,7 +61,7 @@ repos:
         exclude: "README.md"
   # Central hooks
   - repo: https://github.com/phantomcyber/dev-cicd-tools
-    rev: v2.1.0
+    rev: v2.1.4
     hooks:
       - id: build-docs
         language: python
