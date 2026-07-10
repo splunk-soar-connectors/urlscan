@@ -1,1 +1,4 @@
 **Unreleased**
+
+* Migrate urlscan connector from legacy BaseConnector to Splunk SOAR SDK
+* Add new `make request` action for executing arbitrary API calls against the urlscan.io REST API

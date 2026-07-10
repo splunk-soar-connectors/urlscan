@@ -1,0 +1,71 @@
+# Copyright (c) 2026 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+URLSCAN_BASE_URL = "https://urlscan.io"
+URLSCAN_MAX_POLLING_ATTEMPTS = 10
+URLSCAN_POLLING_INTERVAL = 15
+URLSCAN_MAX_TAGS_NUM = 10
+URLSCAN_MAX_TAG_LENGTH = 29
+URLSCAN_BAD_REQUEST_CODE = 400
+URLSCAN_NOT_FOUND_CODE = 404
+
+URLSCAN_SEARCH_ENDPOINT = "/api/v1/search/"
+URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
+URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
+URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
+URLSCAN_SCREENSHOT_ENDPOINT = "/screenshots/{}.png"
+
+URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"
+URLSCAN_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and/or the action parameters."
+URLSCAN_EMPTY_RESPONSE_ERROR = (
+    "Status code: {}. Empty response and no information in the header"
+)
+URLSCAN_HTML_RESPONSE_ERROR = "Status Code: {0}. Data from server: {1}"
+URLSCAN_FILE_RESPONSE_ERROR = "Status Code: {0}. No Screenshot Available"
+URLSCAN_JSON_RESPONSE_PARSE_ERROR = "Unable to parse JSON response. Error: {}"
+URLSCAN_JSON_RESPONSE_SERVER_ERROR = (
+    "Error from server. Status Code: {0}. Data from server: {1}"
+)
+URLSCAN_RATE_LIMIT_ERROR = (
+    "Rate limit exceeded. X-Rate-Limit-Limit: {0}. "
+    "X-Rate-Limit-Remaining: {1}. X-Rate-Limit-Reset: {2}. "
+    "Data from server: {3}"
+)
+URLSCAN_PROCESS_RESPONSE_ERROR = (
+    "Can't process response from server. Status Code: {0} Data from server: {1}"
+)
+URLSCAN_SERVER_CONNECTIVITY_ERROR = "Error Connecting to server. Details: {}"
+URLSCAN_API_KEY_MISSING_ERROR = (
+    "API Key is required to run detonate url"  # pragma: allowlist secret
+)
+URLSCAN_REPORT_UUID_MISSING_ERROR = "Unable to get report UUID from scan"
+URLSCAN_BAD_REQUEST_ERROR = "Error: {0}. Description: {1}"
+URLSCAN_NO_DATA_ERROR = "No data found"
+URLSCAN_REPORT_NOT_FOUND_ERROR = (
+    "Report not available within the polling threshold for report uuid: {}"
+)
+URLSCAN_TAGS_EXCEED_MAX_ERROR = (
+    "The number of tags attached to the scan has exceeded the max limit {}"
+)
+URLSCAN_TAGS_OMITTED_NOTICE = "Omitted {0} tag(s) longer than {1} characters"
+URLSCAN_ACTION_SUCCESS = "Successfully retrieved information"
+URLSCAN_SCREENSHOT_SUCCESS_MESSAGE = (
+    "Screenshot downloaded successfully in container : {container_id}"
+)
+ERROR_INVALID_INT_PARAM = (
+    "Please provide a valid integer value in the '{key}' parameter"
+)
+ERROR_ZERO_INT_PARAM = (
+    "Please provide a non-zero integer value in the '{key}' parameter"
+)
+ERROR_NEG_INT_PARAM = "Please provide a positive integer value in the '{key}' parameter"
