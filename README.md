@@ -1,7 +1,7 @@
 # urlscan.io
 
 Publisher: Splunk <br>
-Connector Version: 2.6.4 <br>
+Connector Version: 3.0.0 <br>
 Product Vendor: urlscan.io <br>
 Product Name: urlscan.io <br>
 Minimum Product Version: 7.0.0
