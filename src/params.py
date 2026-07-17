@@ -126,6 +126,20 @@ class GetScreenshotParams(Params):
         description="Event to add file to, will default to current container id"
     )
 
+    @field_validator("report_id")
+    @classmethod
+    def validate_report_id(cls, value: str) -> str:
+        candidate = value.strip()
+        try:
+            parsed_uuid = uuid.UUID(candidate)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("Please provide a valid report ID") from exc
+
+        if str(parsed_uuid) != candidate.lower():
+            raise ValueError("Please provide a valid report ID")
+
+        return candidate
+
 
 class UrlscanMakeRequestParams(MakeRequestParams):
     endpoint: str = Param(

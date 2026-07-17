@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Updated development tooling. (PAPP-38020)
+* Validated report identifiers before URL construction. (PAPP-38020)
