@@ -105,7 +105,6 @@ action_result.data.\*.data.cookies.\*.session | boolean | | True False |
 action_result.data.\*.data.cookies.\*.size | numeric | | 64 |
 action_result.data.\*.data.cookies.\*.sourcePort | numeric | | 443 |
 action_result.data.\*.data.cookies.\*.sourceScheme | string | | Secure |
-action_result.data.\*.data.cookies.\*.value | string | | cookie-value |
 action_result.data.\*.data.globals.\*.prop | string | | navigator |
 action_result.data.\*.data.globals.\*.type | string | | object |
 action_result.data.\*.data.links.\*.href | string | `url` | https://www.google.com |
@@ -1465,7 +1464,6 @@ action_result.data.\*.data.cookies.\*.session | boolean | | True False |
 action_result.data.\*.data.cookies.\*.size | numeric | | 64 |
 action_result.data.\*.data.cookies.\*.sourcePort | numeric | | 443 |
 action_result.data.\*.data.cookies.\*.sourceScheme | string | | Secure |
-action_result.data.\*.data.cookies.\*.value | string | | cookie-value |
 action_result.data.\*.data.globals.\*.prop | string | | navigator |
 action_result.data.\*.data.globals.\*.type | string | | object |
 action_result.data.\*.data.links.\*.href | string | `url` | https://www.google.com |
