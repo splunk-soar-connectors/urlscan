@@ -1,1 +1,5 @@
 **Unreleased**
+
+* Validated report identifiers before URL construction. (PAPP-38020)
+* Returned failures for rejected or unavailable scans. (PAPP-38020)
+* Redacted captured cookies and authorization headers from action results. (PAPP-38020)

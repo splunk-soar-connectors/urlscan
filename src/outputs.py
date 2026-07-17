@@ -290,7 +290,6 @@ class CookieOutput(PermissiveActionOutput):
     size: int | None = OutputField(example_values=[64])
     sourcePort: int | None = OutputField(example_values=[443])
     sourceScheme: str | None = OutputField(example_values=["Secure"])
-    value: str | None = OutputField(example_values=["cookie-value"])
 
 
 class GlobalOutput(PermissiveActionOutput):

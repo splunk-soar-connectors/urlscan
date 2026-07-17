@@ -100,11 +100,7 @@ def run_detonate_url(
     if not response.ok:
         response_data = response.data if isinstance(response.data, dict) else {}
         if response_data.get("status", 0) == URLSCAN_BAD_REQUEST_CODE:
-            response_data = {
-                **response_data,
-                **request_context,
-            }
-            soar.set_message(
+            raise ActionFailure(
                 _with_tag_feedback(
                     URLSCAN_BAD_REQUEST_ERROR.format(
                         response_data.get("message", "None"),
@@ -113,13 +109,6 @@ def run_detonate_url(
                     omitted_tags,
                 )
             )
-            soar.set_summary(
-                DetonateSummary(
-                    added_tags_num=len(tags),
-                    omitted_tags_num=len(omitted_tags),
-                )
-            )
-            return DetonateActionOutput(**clean_output_data(response_data))
         raise ActionFailure(response.message or URLSCAN_NO_DATA_ERROR)
 
     response_data = response.data if isinstance(response.data, dict) else {}

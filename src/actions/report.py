@@ -81,7 +81,7 @@ def poll_submission(
         tags = (response_data.get("task", {}) or {}).get("tags", []) or []
         return URLSCAN_ACTION_SUCCESS, response_data, len(tags)
 
-    return URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid), None, 0
+    raise ActionFailure(URLSCAN_REPORT_NOT_FOUND_ERROR.format(report_uuid))
 
 
 def run_get_report(
