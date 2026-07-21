@@ -64,7 +64,7 @@ class UrlscanClient:
         return cls(
             api_key=getattr(asset, "api_key", None),
             timeout=getattr(asset, "timeout", None),
-            verify_server_cert=getattr(asset, "verify_server_cert", False),
+            verify_server_cert=getattr(asset, "verify_server_cert", True),
         )
 
     def _get_error_message_from_exception(self, exc: Exception) -> str:
