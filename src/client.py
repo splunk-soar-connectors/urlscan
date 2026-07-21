@@ -13,11 +13,12 @@
 # limitations under the License.
 import json
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, BinaryIO
 
 import httpx
 from bs4 import BeautifulSoup
 from soar_sdk.asset import BaseAsset
+from soar_sdk.exceptions import ActionFailure
 from soar_sdk.logging import getLogger
 
 from .constants import (
@@ -32,6 +33,8 @@ from .constants import (
     URLSCAN_NOT_FOUND_CODE,
     URLSCAN_PROCESS_RESPONSE_ERROR,
     URLSCAN_RATE_LIMIT_ERROR,
+    URLSCAN_SCREENSHOT_CHUNK_SIZE,
+    URLSCAN_SCREENSHOT_TOO_LARGE_ERROR,
     URLSCAN_SERVER_CONNECTIVITY_ERROR,
 )
 
@@ -64,7 +67,7 @@ class UrlscanClient:
         return cls(
             api_key=getattr(asset, "api_key", None),
             timeout=getattr(asset, "timeout", None),
-            verify_server_cert=getattr(asset, "verify_server_cert", False),
+            verify_server_cert=getattr(asset, "verify_server_cert", True),
         )
 
     def _get_error_message_from_exception(self, exc: Exception) -> str:
@@ -204,3 +207,62 @@ class UrlscanClient:
             )
 
         return self._process_response(response)
+
+    def download_screenshot(
+        self, endpoint: str, destination: BinaryIO, max_size_bytes: int
+    ) -> tuple[str, str]:
+        max_size_mb = max_size_bytes // (1024 * 1024)
+        try:
+            with (
+                httpx.Client(
+                    base_url=URLSCAN_BASE_URL,
+                    timeout=self.timeout,
+                    follow_redirects=True,
+                    verify=self.verify_server_cert,
+                ) as client,
+                client.stream("GET", endpoint) as response,
+            ):
+                if response.status_code != 200:
+                    raise ActionFailure(
+                        URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)
+                    )
+
+                content_type = response.headers.get("Content-Type", "")
+                if "image" not in content_type and "octet-stream" not in content_type:
+                    raise ActionFailure(
+                        URLSCAN_FILE_RESPONSE_ERROR.format(response.status_code)
+                    )
+
+                content_length = response.headers.get("Content-Length")
+                if content_length:
+                    try:
+                        declared_size = int(content_length)
+                    except ValueError:
+                        declared_size = None
+                    if declared_size is not None and declared_size > max_size_bytes:
+                        raise ActionFailure(
+                            URLSCAN_SCREENSHOT_TOO_LARGE_ERROR.format(
+                                max_size_mb=max_size_mb
+                            )
+                        )
+
+                downloaded_size = 0
+                for chunk in response.iter_bytes(URLSCAN_SCREENSHOT_CHUNK_SIZE):
+                    downloaded_size += len(chunk)
+                    if downloaded_size > max_size_bytes:
+                        raise ActionFailure(
+                            URLSCAN_SCREENSHOT_TOO_LARGE_ERROR.format(
+                                max_size_mb=max_size_mb
+                            )
+                        )
+                    destination.write(chunk)
+
+                return (
+                    content_type or "application/octet-stream",
+                    response.url.path,
+                )
+        except httpx.HTTPError as exc:
+            error_message = self._get_error_message_from_exception(exc)
+            raise ActionFailure(
+                URLSCAN_SERVER_CONNECTIVITY_ERROR.format(error_message)
+            ) from exc

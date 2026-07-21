@@ -52,7 +52,10 @@ class Asset(BaseAsset):
         description="Timeout period for action (seconds)", default=120.0
     )
     verify_server_cert: bool | None = AssetField(
-        description="Verify server certificate", default=False
+        description="Verify server certificate", default=True
+    )
+    max_screenshot_size_mb: int | None = AssetField(
+        description="Maximum screenshot download size in MiB", default=25
     )
 
 

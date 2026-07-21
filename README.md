@@ -31,6 +31,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **api_key** | optional | password | API key for urlscan.io |
 **timeout** | optional | numeric | Timeout period for action (seconds) |
 **verify_server_cert** | optional | boolean | Verify server certificate |
+**max_screenshot_size_mb** | optional | numeric | Maximum screenshot download size in MiB |
 
 ### Supported Actions
 
