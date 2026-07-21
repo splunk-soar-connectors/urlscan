@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import tempfile
+from pathlib import Path
 from typing import Any
 
 from soar_sdk.abstract import SOARClient
@@ -22,7 +24,8 @@ from ..constants import (
     ERROR_INVALID_INT_PARAM,
     ERROR_NEG_INT_PARAM,
     ERROR_ZERO_INT_PARAM,
-    URLSCAN_NO_DATA_ERROR,
+    URLSCAN_DEFAULT_MAX_SCREENSHOT_SIZE_MB,
+    URLSCAN_INVALID_SCREENSHOT_SIZE_ERROR,
     URLSCAN_SCREENSHOT_ENDPOINT,
     URLSCAN_SCREENSHOT_SUCCESS_MESSAGE,
 )
@@ -42,12 +45,6 @@ def run_get_screenshot(
     if container_id is None:
         container_id = getattr(params, "container_id", None)
 
-    client = UrlscanClient.from_asset(asset)
-    response = client.request(URLSCAN_SCREENSHOT_ENDPOINT.format(report_id))
-
-    if not response.ok or response.response is None:
-        raise ActionFailure(response.message or URLSCAN_NO_DATA_ERROR)
-
     if container_id is None:
         container_id = soar.get_executing_container_id()
 
@@ -63,16 +60,35 @@ def run_get_screenshot(
     if container_id < 0:
         raise ActionFailure(ERROR_NEG_INT_PARAM.format(key="container_id"))
 
-    file_type = response.response.headers.get(
-        "Content-Type", "application/octet-stream"
+    max_size_mb = getattr(
+        asset, "max_screenshot_size_mb", URLSCAN_DEFAULT_MAX_SCREENSHOT_SIZE_MB
     )
-    extension = response.response.url.path.rsplit(".", 1)[-1]
-    file_name = f"{report_id}.{extension}" if extension else report_id
+    if (
+        not isinstance(max_size_mb, int)
+        or isinstance(max_size_mb, bool)
+        or max_size_mb <= 0
+    ):
+        raise ActionFailure(URLSCAN_INVALID_SCREENSHOT_SIZE_ERROR)
+    max_size_bytes = max_size_mb * 1024 * 1024
 
+    temporary_file: Path | None = None
     try:
-        vault_id = soar.vault.create_attachment(
+        with tempfile.NamedTemporaryFile(
+            mode="wb", dir=soar.vault.get_vault_tmp_dir(), delete=False
+        ) as destination:
+            temporary_file = Path(destination.name)
+            client = UrlscanClient.from_asset(asset)
+            file_type, response_path = client.download_screenshot(
+                URLSCAN_SCREENSHOT_ENDPOINT.format(report_id),
+                destination,
+                max_size_bytes,
+            )
+
+        extension = response_path.rsplit(".", 1)[-1]
+        file_name = f"{report_id}.{extension}" if extension else report_id
+        vault_id = soar.vault.add_attachment(
             container_id=container_id,
-            file_content=response.response.content,
+            file_location=str(temporary_file),
             file_name=file_name,
         )
         attachments = soar.vault.get_attachment(
@@ -82,10 +98,13 @@ def run_get_screenshot(
             raise SoarAPIError(
                 "Could not find meta information of the downloaded screenshot's Vault"
             )
-    except SoarAPIError as exc:
+    except (OSError, SoarAPIError) as exc:
         raise ActionFailure(
             f"Failed to download screenshot in Vault. Error : {exc}"
         ) from exc
+    finally:
+        if temporary_file is not None:
+            temporary_file.unlink(missing_ok=True)
 
     attachment = attachments[0]
     screenshot_data = {

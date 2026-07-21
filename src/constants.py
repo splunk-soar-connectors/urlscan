@@ -16,6 +16,8 @@ URLSCAN_MAX_POLLING_ATTEMPTS = 10
 URLSCAN_POLLING_INTERVAL = 15
 URLSCAN_MAX_TAGS_NUM = 10
 URLSCAN_MAX_TAG_LENGTH = 29
+URLSCAN_DEFAULT_MAX_SCREENSHOT_SIZE_MB = 25
+URLSCAN_SCREENSHOT_CHUNK_SIZE = 64 * 1024
 URLSCAN_BAD_REQUEST_CODE = 400
 URLSCAN_NOT_FOUND_CODE = 404
 
@@ -61,6 +63,12 @@ URLSCAN_TAGS_OMITTED_NOTICE = "Omitted {0} tag(s) longer than {1} characters"
 URLSCAN_ACTION_SUCCESS = "Successfully retrieved information"
 URLSCAN_SCREENSHOT_SUCCESS_MESSAGE = (
     "Screenshot downloaded successfully in container : {container_id}"
+)
+URLSCAN_SCREENSHOT_TOO_LARGE_ERROR = (
+    "Screenshot exceeds the configured maximum download size of {max_size_mb} MiB"
+)
+URLSCAN_INVALID_SCREENSHOT_SIZE_ERROR = (
+    "Asset configuration max_screenshot_size_mb must be a positive integer"
 )
 ERROR_INVALID_INT_PARAM = (
     "Please provide a valid integer value in the '{key}' parameter"
