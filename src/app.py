@@ -86,6 +86,7 @@ app.register_action(
     summary_type=ReportSummary,
     view_handler=render_get_report,
     view_template="get_report.html",
+    read_only=True,
 )
 
 
@@ -98,6 +99,7 @@ app.register_action(
     params_class=LookupDomainParams,
     output_class=LookupActionOutput,
     summary_type=LookupSummary,
+    read_only=True,
 )
 
 
@@ -110,6 +112,7 @@ app.register_action(
     params_class=LookupIpParams,
     output_class=LookupActionOutput,
     summary_type=LookupSummary,
+    read_only=True,
 )
 
 
@@ -138,6 +141,7 @@ app.register_action(
     summary_type=ScreenshotSummary,
     view_handler=render_get_screenshot,
     view_template="get_screenshot.html",
+    read_only=True,
 )
 
 
