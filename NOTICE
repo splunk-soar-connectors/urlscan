@@ -593,7 +593,7 @@ SOFTWARE.
 
 @@@@============================================================================
 
-Library: cryptography - 46.0.6
+Library: cryptography - 46.0.7
 Homepage: https://github.com/pyca/cryptography
 License: Apache-2.0 OR BSD-3-Clause
 License Text:
