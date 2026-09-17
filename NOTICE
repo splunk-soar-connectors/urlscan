@@ -4,7 +4,7 @@ Third Party Software Attributions:
 
 @@@@============================================================================
 
-Library: Authlib - 1.6.9
+Library: Authlib - 1.6.12
 Homepage: https://github.com/authlib/authlib
 License: BSD License
 License Text:
@@ -116,7 +116,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @@@@============================================================================
 
-Library: PyJWT - 2.12.1
+Library: PyJWT - 2.13.0
 Homepage: https://github.com/jpadilla/pyjwt
 License: MIT
 License Text:
@@ -496,9 +496,9 @@ documentation is licensed as follows:
 
 @@@@============================================================================
 
-Library: click - 8.1.8
+Library: click - 8.3.3
 Homepage: https://github.com/pallets/click/
-License: BSD License
+License: BSD-3-Clause
 License Text:
 
 Copyright 2014 Pallets
@@ -593,7 +593,7 @@ SOFTWARE.
 
 @@@@============================================================================
 
-Library: cryptography - 46.0.6
+Library: cryptography - 46.0.7
 Homepage: https://github.com/pyca/cryptography
 License: Apache-2.0 OR BSD-3-Clause
 License Text:
@@ -3884,7 +3884,7 @@ License Text:
 
 @@@@============================================================================
 
-Library: typer - 0.17.5
+Library: typer - 0.17.4
 Homepage: https://github.com/fastapi/typer
 License: MIT License
 License Text:
