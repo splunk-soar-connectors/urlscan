@@ -11,16 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from types import SimpleNamespace
-
+from src.app import Asset
 from src.client import UrlscanClient
 
 
 def test_client_defaults_to_tls_verification_for_assets_without_the_field():
-    client = UrlscanClient.from_asset(SimpleNamespace(api_key=None, timeout=None))
+    client = UrlscanClient.from_asset(Asset.model_validate({}))
     assert client.verify_server_cert is True
 
     opt_out = UrlscanClient.from_asset(
-        SimpleNamespace(api_key=None, timeout=None, verify_server_cert=False)
+        Asset.model_validate({"verify_server_cert": False})
     )
     assert opt_out.verify_server_cert is False
