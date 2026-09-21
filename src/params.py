@@ -142,11 +142,6 @@ class GetScreenshotParams(Params):
 
 
 class UrlscanMakeRequestParams(MakeRequestParams):
-    verify_ssl: bool = Param(
-        description="Whether to verify the SSL certificate. Default is True.",
-        required=False,
-        default=True,
-    )
     endpoint: str = Param(
         description=(
             "urlscan.io endpoint path, relative to https://urlscan.io. "
