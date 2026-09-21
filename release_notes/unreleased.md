@@ -1,4 +1,1 @@
 **Unreleased**
-
-* Verify TLS certificates by default for make request actions while retaining an explicit opt-out.
-* Preserve TLS certificate verification for legacy assets that do not store the verification setting.
