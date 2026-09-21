@@ -64,10 +64,13 @@ class UrlscanClient:
 
     @classmethod
     def from_asset(cls, asset: BaseAsset) -> "UrlscanClient":
+        verify_server_cert = getattr(asset, "verify_server_cert", None)
         return cls(
             api_key=getattr(asset, "api_key", None),
             timeout=getattr(asset, "timeout", None),
-            verify_server_cert=getattr(asset, "verify_server_cert", True),
+            verify_server_cert=(
+                True if verify_server_cert is None else verify_server_cert
+            ),
         )
 
     def _get_error_message_from_exception(self, exc: Exception) -> str:
