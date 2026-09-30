@@ -983,7 +983,7 @@ wheels = [
 
 [[package]]
 name = "urlscan"
-version = "5.0.0"
+version = "5.0.1"
 source = { virtual = "." }
 dependencies = [
     { name = "beautifulsoup4" },
