@@ -3,14 +3,15 @@ name = "urlscan"
 version = "5.0.2"
 description = "This app supports investigative actions on urlscan.io"
 license = "Copyright (c) 2017-2026 Splunk Inc."
-requires-python = ">=3.13, <3.14"
+requires-python = ">=3.13, <3.16, !=3.14.*"
 authors = [
     { name = "Jaime Park" },
 ]
 dependencies = [
     "beautifulsoup4>=4.13.5",
     "httpx>=0.28.1",
-    "splunk-soar-sdk>=6.1.2",
+    "pyjwt==2.15.0",
+    "splunk-soar-sdk>=7.1.1",
 ]
 
 [tool.soar.app]
@@ -35,12 +36,17 @@ url = "https://pypi.python.org/simple"
 [tool.uv]
 environments = [
     "sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.13'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.15'",
     "sys_platform == 'linux' and platform_machine == 'aarch64' and python_version == '3.13'",
+    "sys_platform == 'linux' and platform_machine == 'aarch64' and python_version == '3.15'",
     "sys_platform == 'darwin' and platform_machine == 'x86_64' and python_version == '3.13'",
+    "sys_platform == 'darwin' and platform_machine == 'x86_64' and python_version == '3.15'",
     "sys_platform == 'darwin' and platform_machine == 'arm64' and python_version == '3.13'",
+    "sys_platform == 'darwin' and platform_machine == 'arm64' and python_version == '3.15'",
 ]
 required-environments = [
     "sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.13'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.15'",
 ]
 
 [tool.ruff]
