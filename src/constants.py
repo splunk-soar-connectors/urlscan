@@ -26,6 +26,7 @@ URLSCAN_POLL_SUBMISSION_ENDPOINT = "/api/v1/result/{}"
 URLSCAN_DETONATE_URL_ENDPOINT = "/api/v1/scan/"
 URLSCAN_TEST_CONNECTIVITY_ENDPOINT = "/user/quotas/"
 URLSCAN_SCREENSHOT_ENDPOINT = "/screenshots/{}.png"
+URLSCAN_MALICIOUS_DOMAIN_ENDPOINT = "/api/v1/malicious/domain/{}"
 
 URLSCAN_ERROR_CODE_UNAVAILABLE = "Error code unavailable"
 URLSCAN_ERROR_MESSAGE_UNAVAILABLE = "Error message unavailable. Please check the asset configuration and/or the action parameters."
@@ -49,6 +50,13 @@ URLSCAN_PROCESS_RESPONSE_ERROR = (
 URLSCAN_SERVER_CONNECTIVITY_ERROR = "Error Connecting to server. Details: {}"
 URLSCAN_API_KEY_MISSING_ERROR = (
     "API Key is required to run detonate url"  # pragma: allowlist secret
+)
+URLSCAN_PRO_API_KEY_MISSING_ERROR = "A urlscan Pro API key is required to run lookup malicious domain"  # pragma: allowlist secret
+URLSCAN_MALICIOUS_DOMAIN_INVALID_COUNT_ERROR = (
+    "Malicious domain lookup response is missing a valid count"
+)
+URLSCAN_MALICIOUS_DOMAIN_SUCCESS = (
+    "Domain has been seen in {count} malicious scan results"
 )
 URLSCAN_REPORT_UUID_MISSING_ERROR = "Unable to get report UUID from scan"
 URLSCAN_BAD_REQUEST_ERROR = "Error: {0}. Description: {1}"

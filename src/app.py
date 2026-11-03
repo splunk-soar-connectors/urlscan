@@ -16,7 +16,7 @@ from soar_sdk.asset import BaseAsset, AssetField
 
 from .actions.connectivity import run_test_connectivity
 from .actions.detonate import run_detonate_url
-from .actions.lookup import run_hunt_domain, run_hunt_ip
+from .actions.lookup import run_hunt_domain, run_hunt_ip, run_lookup_malicious_domain
 from .actions.make_request import run_make_request
 from .actions.report import run_get_report
 from .actions.screenshot import run_get_screenshot
@@ -25,6 +25,8 @@ from .outputs import (
     DetonateSummary,
     LookupActionOutput,
     LookupSummary,
+    MaliciousDomainOutput,
+    MaliciousDomainSummary,
     ReportSummary,
     ScreenshotActionOutput,
     ScreenshotSummary,
@@ -36,6 +38,7 @@ from .params import (
     GetScreenshotParams,
     LookupDomainParams,
     LookupIpParams,
+    LookupMaliciousDomainParams,
 )
 from .views import (
     render_detonate_url,
@@ -112,6 +115,20 @@ app.register_action(
     params_class=LookupIpParams,
     output_class=LookupActionOutput,
     summary_type=LookupSummary,
+    read_only=True,
+)
+
+
+app.register_action(
+    run_lookup_malicious_domain,
+    name="lookup malicious domain",
+    identifier="lookup_malicious_domain",
+    description="Look up how often a domain has appeared in malicious urlscan.io scan results",
+    action_type="investigate",
+    verbose="Requires a urlscan Pro API key configured on the asset. Looks up an apex/registered domain (for example, example.com) in the urlscan Malicious Lookup API; the lookup covers the domain and all of its subdomains. Returns the number of times the domain has been seen in malicious scan results, along with the first and last seen timestamps. A zero count means no malicious scan history was found for the domain; it does not establish that the domain is safe.",
+    params_class=LookupMaliciousDomainParams,
+    output_class=MaliciousDomainOutput,
+    summary_type=MaliciousDomainSummary,
     read_only=True,
 )
 

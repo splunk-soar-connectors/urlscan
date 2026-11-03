@@ -10,7 +10,17 @@ This app supports investigative actions on urlscan.io
 
 The **api_key** field is not required to use this app, as **urlscan.io** does not require an API key
 for querying its database. However, if you wish to start a scan with **detonate url** , then you
-will need an API key configured.
+will need an API key configured. The **lookup malicious domain** action requires a **urlscan Pro**
+API key configured on the asset.
+
+## Malicious Domain Lookup
+
+The **lookup malicious domain** action calls `GET /api/v1/malicious/domain/{domain}` for an
+apex/registered domain (for example, `example.com`); the lookup covers the domain and all of
+its subdomains. It returns
+`observable`, `type`, `count`, `firstSeen`, and `lastSeen`. The action summary exposes `count`,
+`first_seen`, and `last_seen` for use in playbooks. The timestamps may be null when no malicious
+scan history exists. A zero count does not establish that a domain is safe.
 
 ## Port Information
 
@@ -39,6 +49,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [get report](#action-get-report) - Query for results of an already completed detonation <br>
 [lookup domain](#action-lookup-domain) - Find information about a domain at urlscan.io <br>
 [lookup ip](#action-lookup-ip) - Find information about an IP address at urlscan.io <br>
+[lookup malicious domain](#action-lookup-malicious-domain) - Look up how often a domain has appeared in malicious urlscan.io scan results <br>
 [detonate url](#action-detonate-url) - Detonate a URL at urlscan.io <br>
 [get screenshot](#action-get-screenshot) - Retrieve copy of screenshot file <br>
 [make request](#action-make-request) - Execute an arbitrary HTTP request against a urlscan.io API endpoint.
@@ -1409,6 +1420,39 @@ action_result.data.\*.results.\*.uniq_countries | numeric | | 1 |
 action_result.data.\*.took | numeric | | 25 |
 action_result.data.\*.total | numeric | | 1 |
 action_result.summary.total | numeric | | 1 |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+
+## action: 'lookup malicious domain'
+
+Look up how often a domain has appeared in malicious urlscan.io scan results
+
+Type: **investigate** <br>
+Read only: **True**
+
+Requires a urlscan Pro API key configured on the asset. Looks up an apex/registered domain (for example, example.com) in the urlscan Malicious Lookup API; the lookup covers the domain and all of its subdomains. Returns the number of times the domain has been seen in malicious scan results, along with the first and last seen timestamps. A zero count means no malicious scan history was found for the domain; it does not establish that the domain is safe.
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**domain** | required | Apex/registered domain to look up (for example, example.com) | string | `domain` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success failure |
+action_result.message | string | | |
+action_result.parameter.domain | string | `domain` | |
+action_result.data.\*.observable | string | `domain` | example.com |
+action_result.data.\*.type | string | | domain |
+action_result.data.\*.count | numeric | | 0 2 |
+action_result.data.\*.firstSeen | string | | 2019-08-24T14:15:22Z |
+action_result.data.\*.lastSeen | string | | 2019-08-24T14:15:22Z |
+action_result.summary.count | numeric | | 0 2 |
+action_result.summary.first_seen | string | | 2019-08-24T14:15:22Z |
+action_result.summary.last_seen | string | | 2019-08-24T14:15:22Z |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 

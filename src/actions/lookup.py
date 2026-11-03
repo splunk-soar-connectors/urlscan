@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import Any
+from urllib.parse import quote
 
 from soar_sdk.abstract import SOARClient
 from soar_sdk.asset import BaseAsset
@@ -20,10 +21,19 @@ from soar_sdk.exceptions import ActionFailure
 from ..client import UrlscanClient
 from ..constants import (
     URLSCAN_ACTION_SUCCESS,
+    URLSCAN_MALICIOUS_DOMAIN_ENDPOINT,
+    URLSCAN_MALICIOUS_DOMAIN_INVALID_COUNT_ERROR,
+    URLSCAN_MALICIOUS_DOMAIN_SUCCESS,
     URLSCAN_NO_DATA_ERROR,
+    URLSCAN_PRO_API_KEY_MISSING_ERROR,
     URLSCAN_SEARCH_ENDPOINT,
 )
-from ..outputs import LookupActionOutput, LookupSummary
+from ..outputs import (
+    LookupActionOutput,
+    LookupSummary,
+    MaliciousDomainOutput,
+    MaliciousDomainSummary,
+)
 from ..output_utils import clean_output_data
 
 URLSCAN_SEARCH_RESERVED_CHARS = frozenset('+-=&|><!(){}[]^"~*?:\\/')
@@ -67,3 +77,37 @@ def run_hunt_domain(
 
 def run_hunt_ip(params: Any, soar: SOARClient, asset: BaseAsset) -> LookupActionOutput:
     return _run_lookup(asset, soar, f'ip:"{_escape_search_value(params.ip)}"')
+
+
+def run_lookup_malicious_domain(
+    params: Any, soar: SOARClient, asset: BaseAsset
+) -> MaliciousDomainOutput:
+    client = UrlscanClient.from_asset(asset)
+    if not client.api_key:
+        raise ActionFailure(URLSCAN_PRO_API_KEY_MISSING_ERROR)
+
+    response = client.request(
+        URLSCAN_MALICIOUS_DOMAIN_ENDPOINT.format(quote(params.domain, safe="")),
+        headers={"API-Key": client.api_key},
+    )
+
+    response_data = response.data if isinstance(response.data, dict) else {}
+    if not response.ok:
+        message = (
+            response.message or response_data.get("message") or URLSCAN_NO_DATA_ERROR
+        )
+        raise ActionFailure(message)
+
+    count = response_data.get("count")
+    if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+        raise ActionFailure(URLSCAN_MALICIOUS_DOMAIN_INVALID_COUNT_ERROR)
+
+    soar.set_message(URLSCAN_MALICIOUS_DOMAIN_SUCCESS.format(count=count))
+    soar.set_summary(
+        MaliciousDomainSummary(
+            count=count,
+            first_seen=response_data.get("firstSeen"),
+            last_seen=response_data.get("lastSeen"),
+        )
+    )
+    return MaliciousDomainOutput(**clean_output_data(response_data))

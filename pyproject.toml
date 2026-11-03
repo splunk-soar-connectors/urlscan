@@ -6,6 +6,7 @@ license = "Copyright (c) 2017-2026 Splunk Inc."
 requires-python = ">=3.13, <3.14"
 authors = [
     { name = "Jaime Park" },
+    { name = "Trisha Pancho" },
 ]
 dependencies = [
     "beautifulsoup4>=4.13.5",

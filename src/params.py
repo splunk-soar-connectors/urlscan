@@ -71,6 +71,14 @@ class LookupDomainParams(Params):
         return candidate
 
 
+class LookupMaliciousDomainParams(LookupDomainParams):
+    domain: str = Param(
+        description="Apex/registered domain to look up (for example, example.com)",
+        primary=True,
+        cef_types=["domain"],
+    )
+
+
 class LookupIpParams(Params):
     ip: str = Param(description="IP to lookup", primary=True, cef_types=["ip", "ipv6"])
 

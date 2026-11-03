@@ -47,6 +47,12 @@ class LookupSummary(ActionOutput):
     total: int = OutputField(example_values=[1])
 
 
+class MaliciousDomainSummary(ActionOutput):
+    count: int = OutputField(example_values=[0, 2])
+    first_seen: str | None = OutputField(example_values=["2019-08-24T14:15:22Z"])
+    last_seen: str | None = OutputField(example_values=["2019-08-24T14:15:22Z"])
+
+
 class ScreenshotSummary(ActionOutput):
     id: int = OutputField(example_values=[722])
     name: str = OutputField(example_values=["cf9412df-963e-46a2-849b-de693d055b7b.png"])
@@ -418,6 +424,16 @@ class LookupActionOutput(PermissiveActionOutput):
     results: list[SearchResultItemOutput] | None
     took: int | None = OutputField(example_values=[25])
     total: int | None = OutputField(example_values=[1])
+
+
+class MaliciousDomainOutput(PermissiveActionOutput):
+    observable: str | None = OutputField(
+        cef_types=["domain"], example_values=["example.com"]
+    )
+    type: str | None = OutputField(example_values=["domain"])
+    count: int | None = OutputField(example_values=[0, 2])
+    firstSeen: str | None = OutputField(example_values=["2019-08-24T14:15:22Z"])
+    lastSeen: str | None = OutputField(example_values=["2019-08-24T14:15:22Z"])
 
 
 class UrlscanReportOutput(PermissiveActionOutput):
