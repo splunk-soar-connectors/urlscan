@@ -6,7 +6,8 @@ API key configured on the asset.
 ## Malicious Domain Lookup
 
 The **lookup malicious domain** action calls `GET /api/v1/malicious/domain/{domain}` for an
-apex/registered domain (for example, `example.com`), including its subdomains. It returns
+apex/registered domain (for example, `example.com`); the lookup covers the domain and all of
+its subdomains. It returns
 `observable`, `type`, `count`, `firstSeen`, and `lastSeen`. The action summary exposes `count`,
 `first_seen`, and `last_seen` for use in playbooks. The timestamps may be null when no malicious
 scan history exists. A zero count does not establish that a domain is safe.

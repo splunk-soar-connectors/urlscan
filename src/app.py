@@ -125,7 +125,7 @@ app.register_action(
     identifier="lookup_malicious_domain",
     description="Look up how often a domain has appeared in malicious urlscan.io scan results",
     action_type="investigate",
-    verbose="Requires a urlscan Pro API key configured on the asset. Queries the Malicious Lookup API for an apex/registered domain, including its subdomains. Returns the malicious scan count and first and last seen timestamps. A zero count means no malicious scan history was found; it does not establish that the domain is safe.",
+    verbose="Requires a urlscan Pro API key configured on the asset. Looks up an apex/registered domain (for example, example.com) in the urlscan Malicious Lookup API; the lookup covers the domain and all of its subdomains. Returns the number of times the domain has been seen in malicious scan results, along with the first and last seen timestamps. A zero count means no malicious scan history was found for the domain; it does not establish that the domain is safe.",
     params_class=LookupMaliciousDomainParams,
     output_class=MaliciousDomainOutput,
     summary_type=MaliciousDomainSummary,
