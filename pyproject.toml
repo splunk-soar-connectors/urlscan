@@ -11,7 +11,7 @@ authors = [
 dependencies = [
     "beautifulsoup4>=4.13.5",
     "httpx>=0.28.1",
-    "splunk-soar-sdk>=6.1.2",
+    "splunk-soar-sdk>=7.1.2",
 ]
 
 [tool.soar.app]
